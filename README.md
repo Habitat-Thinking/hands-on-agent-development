@@ -1,136 +1,113 @@
-<img align="left" src="https://github.com/embabel/embabel-agent/blob/main/embabel-agent-api/images/315px-Meister_der_Weltenchronik_001.jpg?raw=true" width="180">
+# Hands-On AI Agent Engineering
 
-# Generated Agent Project
+> Habits for safe, explainable, domain-grounded AI — an UberConf full-day workshop.
 
-![Build](https://github.com/embabel/java-agent-template/actions/workflows/maven.yml/badge.svg)
+You will build **ConfPlanner**: a goal-oriented [Embabel](https://github.com/embabel/embabel-agent)
+agent (Java) that turns a free-text request — *"I'm a senior platform engineer into Kubernetes,
+resilience and DevEx; build me a schedule"* — into a **conflict-free personal conference schedule**.
+The agent is about the very conference you're sitting in. The catalog is synthetic and fictional.
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white) ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
+You learn by **operating git branches**: check out a `*-before` branch, implement the change with
+its worksheet, then diff against the matching `*-after` branch — or just walk the `*-after` branches
+to watch the finished progression.
 
-<br clear="left"/>
+## The dual harness (the through-line)
 
-Starting point for your own agent development using the [Embabel framework](https://github.com/embabel/embabel-agent).
+You work in two harnesses at once, and they teach the same three disciplines —
+**context engineering, architectural constraints, guardrail design** — at two altitudes:
 
-Uses Spring Boot 3.5.9 and Embabel 0.3.1.
+| | Build-time harness | Runtime harness |
+|---|---|---|
+| What | `ai-literacy-superpowers`: orchestrator → implementer, `HARNESS.md` / `AGENTS.md` / `MODEL_ROUTING.md`, constraint-gate, two-stage review | Embabel: DICE domain models, GOAP planning, invariants, traces |
+| You drive it by | climbing the ladder: Dictating → Commanding → Regulating → Orchestrating → Supervising | reading the plan and the trace, not the vibes |
 
-Add your magic here!
+The punchline you'll feel by the end: **Track C builds the Embabel agent using the very disciplines
+the Embabel agent itself embodies.** The harness is a planning loop for your engineering.
 
-Illustrates:
+## What you'll build, lab by lab
 
-- An injected demo showing how any Spring component can be injected with an Embabel `Ai` instance to enable it to
-  perform LLM operations.
-- A simple agent
-- Unit tests for an agent verifying prompts and hyperparameters
+| # | Objective | Embabel mechanism | Habit | Lab |
+|---|---|---|---|---|
+| 1 | Typed domain models (DICE) | `PromptContributor` on `AttendeeProfile` | Model the domain first | `labs/lab1-dice.md` |
+| 2 | Goal-oriented behaviour (GOAP) | add `researchSessions`; the plan re-derives | Name the goal, not the steps | `labs/lab2-goap.md` |
+| 3 | Preconditions & invariants | `noDoubleBooking` gate + precondition + budget + `@SecureAgentTool` | Make the contract explicit | `labs/lab3-guardrails.md` |
+| 4 | Explainability | planning log + Zipkin trace; debug a stuck plan | Read the plan, not the vibes | `labs/lab4-explainability.md` |
+| 5 | Extend without breaking | add a `NetworkingPlan` agent; schedule flow unchanged | Extend by adding, not rewiring | `labs/lab5-extend.md` |
+| 6 | Right-size the model | `withLlmByRole` cheap-vs-strong; `MODEL_ROUTING.md` | Right-size the model | `labs/lab6-model-routing.md` |
 
-> For the Kotlin equivalent, see
-> our [Kotlin agent template](https://github.com/embabel/kotlin-agent-template).
+See **[HABITS.md](HABITS.md)** for the full eight-habit stack.
 
-# Running
+## Prerequisites
 
-Run the shell script to start Embabel under Spring Shell:
+- **Java 21+** and the bundled Maven wrapper (`./mvnw`). No system Maven needed.
+- A model provider key in `.env` — **OpenAI** by default (`OPENAI_API_KEY`) or Anthropic. The
+  **build and all tests are green with no key** (the test harness mocks the LLM); you only need a
+  key to actually *run* the agent against a real model.
+- Optional: **Docker** for the Lab 4 Zipkin trace and any MCP tools. The default lab path needs none.
+- `gh` CLI if you want to fork/clone via GitHub.
 
-```bash
-./scripts/shell.sh
-```
+See **[SETUP.md](SETUP.md)** for keys, the mock-mode profile, the no-Docker fallback, and Codespaces.
 
-There is a single example
-agent, [WriteAndReviewAgent](./src/main/java/com/embabel/template/agent/WriteAndReviewAgent.java).
-It uses one LLM with a high temperature and creative persona to write a story based on your input,
-then another LLM with a low temperature and different persona to review the story.
-
-When the Embabel shell comes up, invoke the story agent like this:
-
-```
-x "Tell me a story about...[your topic]"
-```
-
-Try the following other shell commands:
-
-- `demo`: Runs the same agent, invoked programmatically, instead of dynamically based on user input.
-  See [DemoCommands.java](./src/main/java/com/embabel/template/DemoShell.java) for the
-  implementation.
-- `animal`:  Runs a simple demo using an Embabel injected `Ai` instance to call an LLM.
-  See [InjectedDemo](./src/main/java/com/embabel/template/injected/InjectedDemo.java).
-
-## Suggested Next Steps
-
-To get a feel for working with Embabel, try the following:
-
-- Modify the prompts in `WriteAndReviewAgent` and `InjectedDemo`.
-- Experiment with different models and hyperparameters by modifying `withLlm` calls.
-- Integrate your own services, injecting them with Spring. All Embabel `@Agent` classes are Spring beans.
-- Run the tests with `mvn test` and modify them to experiment with prompt verification.
-
-To see tool support, check out the more
-complex [Embabel Agent API Examples](https://github.com/embabel/embabel-agent-examples) repository.
-
-## Model support
-
-Embabel integrates with any LLM supported by Spring AI.
-
-See [LLM integration guide](docs/llm-docs.md) (work in progress).
-
-Also see [Spring AI models](https://docs.spring.io/spring-ai/reference/api/index.html).
-
-## Testing
-
-This repository includes unit tests and integration tests demonstrating how to test Embabel agents.
-
-### Running Tests
+## Quick start
 
 ```bash
-mvn test
+./mvnw clean verify           # builds green, runs the mocked tests — no keys required
+cp .env.example .env          # then add a provider key to actually run the agent
+./mvnw spring-boot:run        # starts the Embabel shell
+# in the shell:
+x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
+x "..." -p -r                 # add prompt (-p) and result (-r) verbosity to read the plan
 ```
 
-### Unit Tests
+## How to operate the labs by branch
 
-Unit tests use Embabel's `FakeOperationContext` and `FakePromptRunner` to test agent actions in isolation without
-calling actual LLMs.
-
-See [WriteAndReviewAgentTest.java](./src/test/java/com/embabel/template/agent/WriteAndReviewAgentTest.java) for examples
-of:
-
-- Creating a fake context with `FakeOperationContext.create()`
-- Setting up expected responses with `context.expectResponse()`
-- Verifying prompt content contains expected values
-- Inspecting LLM invocations via `promptRunner.getLlmInvocations()`
-
-```java
-var context = FakeOperationContext.create();
-context.expectResponse(new Story("Once upon a time..."));
-
-var story = agent.craftStory(userInput, context.ai());
-
-var prompt = context.getLlmInvocations().getFirst().getMessages().getFirst().getContent();
-assertTrue(prompt.contains("knight"));
+```bash
+git checkout lab1-before                 # the starting point + worksheet + TODO anchors
+$EDITOR labs/lab1-dice.md                # do the lab
+./mvnw -q verify                         # check your work
+git diff lab1-before lab1-after -- src   # compare against the reference solution
 ```
 
-### Integration Tests
+### The walk order
 
-Integration tests extend `EmbabelMockitoIntegrationTest` to test complete agent workflows under Spring Boot with a fully
-configured `AgentPlatform`.
-
-See [WriteAndReviewAgentIntegrationTest.java](./src/test/java/com/embabel/template/agent/WriteAndReviewAgentIntegrationTest.java)
-for examples of:
-
-- Mocking LLM responses with `whenCreateObject()` and `whenGenerateText()`
-- Running complete agent workflows via `AgentInvocation`
-- Verifying LLM calls and hyperparameters with `verifyCreateObjectMatching()` and `verifyGenerateTextMatching()`
-
-```java
-whenCreateObject(prompt -> prompt.contains("Craft a short story"), Story.class)
-    .thenReturn(new Story("AI will transform our world..."));
-
-var invocation = AgentInvocation.create(agentPlatform, ReviewedStory.class);
-var result = invocation.invoke(input);
-
-verifyCreateObjectMatching(
-    prompt -> prompt.contains("Craft a short story"),
-    Story.class,
-    llm -> llm.getLlm().getTemperature() == 0.7
-);
+```
+lab1-before → lab1-after
+lab2-before → lab2-after
+lab3-before → lab3-after
+lab4-broken → lab4-after        ← Lab 4 starts from a deliberately broken plan
+lab5-before → lab5-after
+lab6-before → lab6-after
+main                            ← all labs applied + the workshop docs
 ```
 
-## Contributors
+> `lab4-broken` is the one branch that intentionally **fails** `./mvnw verify`: it compiles but the
+> agent goes `STUCK` at runtime. That failing run is exactly what Lab 4 teaches you to diagnose.
 
-[![Embabel contributors](https://contrib.rocks/image?repo=embabel/java-agent-template)](https://github.com/embabel/java-agent-template/graphs/contributors)
+## Three tracks, every lab
 
+Each lab is the same change, three ways — switch tracks as the day goes on (see each worksheet):
+
+- **Track A — by hand.** Edit Java, run the shell, read the plan. The ground truth.
+- **Track B — coding agent, ungoverned.** A teaching foil: watch it guess the domain and skip the test.
+- **Track C — through the `ai-literacy-superpowers` harness (preferred).** Orchestrator plans it, the
+  Java implementer makes the edit, the constraint-gate and two-stage review gate it. You supervise.
+
+Close every lab with the ritual: **read the planning log, read the trace, confirm the acceptance check.**
+
+## Project layout
+
+```
+src/main/java/com/russmiles/confplanner/
+  domain/        typed records (AttendeeProfile, Session, PersonalSchedule, …)
+  service/       CatalogService — plain code over the synthetic catalog
+  agent/         ConfPlannerAgent, ConfNetworkingAgent, ConfPlanningCapabilities
+  shell/         ConfPlannerShell — run a goal programmatically
+src/main/resources/catalog/uberconf-sample-catalog.json   ← SYNTHETIC, fictional
+labs/            one worksheet per lab
+slides/OUTLINE.md  module-by-module slide spine
+HABITS.md · SETUP.md · MODEL_ROUTING.md
+CLAUDE.md · AGENTS.md · HARNESS.md · REFLECTION_LOG.md     ← build-time harness
+```
+
+Built with Embabel 0.5.0 on Java 21. The catalog is entirely invented — no real UberConf schedule or
+real people's abstracts are reproduced.

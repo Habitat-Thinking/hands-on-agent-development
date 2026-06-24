@@ -1,0 +1,75 @@
+# Setup
+
+## 1. Java 21+
+
+```bash
+java -version    # need 21 or newer
+```
+The repo ships the Maven wrapper (`./mvnw`), so you do **not** need a system Maven.
+
+## 2. Build (no keys needed)
+
+```bash
+./mvnw clean verify
+```
+This is green out of the box: the unit and integration tests **mock the LLM** (via
+`embabel-agent-test`), so no API keys and no network model calls are required to build or to run the
+test suite. Keys are only needed to run the agent against a *real* model (step 3).
+
+> The `lab4-broken` branch is the deliberate exception — it compiles but the agent goes `STUCK` at
+> runtime, so `./mvnw verify` fails there on purpose.
+
+## 3. Keys (only to run the agent for real)
+
+```bash
+cp .env.example .env
+# edit .env and set ONE provider key:
+#   OPENAI_API_KEY=...        (default; application.yml routes to OpenAI models)
+#   ANTHROPIC_API_KEY=...
+```
+`.env` is git-ignored. **Never commit a real key.** The Maven profiles auto-activate the matching
+provider starter when the env var is present.
+
+Run the shell:
+```bash
+./mvnw spring-boot:run
+# then, in the shell:
+x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
+x "..." -p -r     # -p prompts, -r responses — read the plan, not the vibes
+```
+
+## 4. Mock mode (deterministic demos, no model)
+
+For a demo that must not depend on a live model, run with the `mock` profile:
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
+```
+This sets `embabel.agent.platform.test.mock-mode=true`. Use it when you want a repeatable run in the
+room without spending tokens.
+
+## 5. Observability (Lab 4, optional — needs Docker)
+
+```bash
+docker compose up -d        # Zipkin on http://127.0.0.1:9411
+./mvnw -Pobservability spring-boot:run -Dspring-boot.run.profiles=observability
+# open http://127.0.0.1:9411 and find your run
+docker compose down
+```
+The `observability` Maven profile adds the OpenTelemetry + Zipkin exporter; the `observability`
+Spring profile points tracing at the local collector. **Without Docker**, use the planning-log path
+instead (`x "..." -p -r`) — it shows the same world-state the trace does. There is nothing you
+*must* run in Docker for the default labs.
+
+## 6. MCP tools (optional)
+
+The Lab 3 `@SecureAgentTool` is enforced when tools are exposed over an MCP server with an
+authenticated caller. The default shell excludes that web-security auto-config so it boots without a
+web server; enabling MCP is an advanced exercise (see the Embabel `Secured` example and
+`application-secured.yml`). The labs do not require it.
+
+## 7. GitHub Codespace / devcontainer (kill setup friction in the room)
+
+To avoid per-laptop setup, consider running the workshop in a **GitHub Codespace** (or a local
+devcontainer): JDK 21 preinstalled, `./mvnw clean verify` on first boot, and keys provided as
+Codespace secrets. This gets a room of attendees to a green build in minutes rather than fighting
+JDK versions.

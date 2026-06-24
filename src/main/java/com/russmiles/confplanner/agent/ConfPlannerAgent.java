@@ -8,9 +8,11 @@ import com.embabel.agent.domain.io.UserInput;
 import com.russmiles.confplanner.domain.AttendeeProfile;
 import com.russmiles.confplanner.domain.CandidateSessions;
 import com.russmiles.confplanner.domain.PersonalSchedule;
+import com.russmiles.confplanner.domain.ResearchedSessions;
 import com.russmiles.confplanner.domain.ScheduleItem;
 import com.russmiles.confplanner.domain.Session;
 import com.russmiles.confplanner.domain.SessionCatalog;
+import com.russmiles.confplanner.domain.SessionInsight;
 import com.russmiles.confplanner.service.CatalogService;
 
 import java.util.List;
@@ -56,6 +58,14 @@ public class ConfPlannerAgent {
 
     /** What the model returns when assembling: an ordered, clash-free set of ids, plus the rationale. */
     record ScheduleDraft(List<String> sessionIds, String rationale) {
+    }
+
+    /** One researched insight as the model emits it (id-only; code resolves the Session). */
+    record Insight(String sessionId, String whyRelevant, double matchScore) {
+    }
+
+    /** What the model returns when researching: one insight per shortlisted id. */
+    record ResearchOutput(List<Insight> insights) {
     }
 
     // --- 1. Understand the attendee (LLM) -------------------------------------------------
@@ -125,18 +135,44 @@ public class ConfPlannerAgent {
         return new CandidateSessions(chosen);
     }
 
-    // TODO (Lab 2): add an `@Action ResearchedSessions researchSessions(CandidateSessions, Ai)`
-    //   between shortlist and assemble, then change assembleSchedule below to consume
-    //   ResearchedSessions instead of CandidateSessions. Do NOT reorder anything by hand — the
-    //   planner re-derives shortlist -> research -> assemble from the new types. See labs/lab2-goap.md.
+    // --- 3b. Research the shortlist (LLM) — added in Lab 2 --------------------------------
+
+    @Action
+    ResearchedSessions researchSessions(CandidateSessions candidates, Ai ai) {
+        var menu = candidates.sessions().stream()
+                .map(ConfPlannerAgent::menuLine)
+                .collect(Collectors.joining("\n"));
+
+        var output = ai
+                .withDefaultLlm()
+                .creating(ResearchOutput.class)
+                .fromPrompt("""
+                        For each shortlisted session, say in one sentence why it is relevant to an
+                        attendee and give a matchScore between 0.0 and 1.0. Return one entry per id.
+
+                        # Shortlist (id: title [tags] (track, level))
+                        %s
+                        """.formatted(menu));
+
+        var byId = candidates.sessions().stream()
+                .collect(Collectors.toMap(Session::id, Function.identity(), (a, b) -> a));
+        var insights = (output.insights() == null ? List.<Insight>of() : output.insights()).stream()
+                .filter(i -> byId.containsKey(i.sessionId()))
+                .map(i -> new SessionInsight(byId.get(i.sessionId()), i.whyRelevant(), i.matchScore()))
+                .toList();
+        return new ResearchedSessions(insights);
+    }
 
     // --- 4. Assemble a conflict-free schedule (LLM) — the goal ----------------------------
+    //   Note: this now consumes ResearchedSessions, so GOAP routes research before assemble.
 
     @AchievesGoal(description = "Produce a conflict-free personal schedule")
     @Action
-    PersonalSchedule assembleSchedule(AttendeeProfile profile, CandidateSessions candidates, Ai ai) {
-        var menu = candidates.sessions().stream()
-                .map(s -> menuLine(s) + " @ " + s.slot())
+    PersonalSchedule assembleSchedule(AttendeeProfile profile, ResearchedSessions researched, Ai ai) {
+        var sessions = researched.insights().stream().map(SessionInsight::session).toList();
+        var menu = researched.insights().stream()
+                .map(i -> menuLine(i.session()) + " @ " + i.session().slot()
+                        + " — score " + i.matchScore() + " — " + i.whyRelevant())
                 .collect(Collectors.joining("\n"));
 
         var draft = ai
@@ -156,7 +192,7 @@ public class ConfPlannerAgent {
                         %s
                         """.formatted(profile.goals(), menu));
 
-        var items = resolve(candidates.sessions(), draft.sessionIds()).stream()
+        var items = resolve(sessions, draft.sessionIds()).stream()
                 .map(s -> new ScheduleItem(s, s.slot()))
                 .toList();
         return new PersonalSchedule(items, draft.rationale());

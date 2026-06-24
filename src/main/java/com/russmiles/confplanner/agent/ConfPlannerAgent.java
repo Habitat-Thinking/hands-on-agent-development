@@ -125,6 +125,11 @@ public class ConfPlannerAgent {
         return new CandidateSessions(chosen);
     }
 
+    // TODO (Lab 2): add an `@Action ResearchedSessions researchSessions(CandidateSessions, Ai)`
+    //   between shortlist and assemble, then change assembleSchedule below to consume
+    //   ResearchedSessions instead of CandidateSessions. Do NOT reorder anything by hand — the
+    //   planner re-derives shortlist -> research -> assemble from the new types. See labs/lab2-goap.md.
+
     // --- 4. Assemble a conflict-free schedule (LLM) — the goal ----------------------------
 
     @AchievesGoal(description = "Produce a conflict-free personal schedule")

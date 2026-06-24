@@ -23,5 +23,9 @@
 # OS
 .DS_Store
 
+# MkDocs build output
+site/
+.cache/
+
 # Note: .claude/ is intentionally tracked — it ships the workshop's build-time
 # harness (.claude/agents/java-implementer.md). Do not ignore it.

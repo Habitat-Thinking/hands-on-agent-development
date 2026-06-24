@@ -4,6 +4,9 @@ How ConfPlanner routes each action to a model, and why. Routing is a **configura
 code calls `withLlmByRole("cheapest"|"best")`, and `application.yml` maps roles to models. Swap the
 models for whatever you have — including a local Ollama tag where data must stay in the building.
 
+> For the step-by-step recipe (route an action, map the role, keep this table in step), see the
+> how-to guide **[Route models by role](docs/how-to/route-models-by-role.md)**.
+
 ## Agent Routing Table
 
 | Action | Role | Why (return-type complexity) | Default model |
@@ -14,7 +17,7 @@ models for whatever you have — including a local Ollama tag where data must st
 | `researchSessions` | `best` | Reason about relevance + score each pick | `gpt-4.1` |
 | `assembleSchedule` | `best` | Synthesise a conflict-free schedule + rationale | `gpt-4.1` |
 | `confirmSchedule` | _(none — plain code)_ | Repackages a validated draft | — |
-| `planNetworking` | `best` | Reason over speakers to suggest people | `gpt-4.1` |
+| `planNetworking` | `default` (`withDefaultLlm()`) | Reason over speakers to suggest people | `gpt-4.1-mini` |
 | `premiumBriefing` | `default` | Short prose summary (secured tool) | `gpt-4.1-mini` |
 
 Rule of thumb: if the return type is a flat list of strings, route `cheapest`; if it carries

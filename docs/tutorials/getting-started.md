@@ -7,7 +7,7 @@ You do not need to know anything about Embabel, agents, or the codebase. Just fo
 !!! note "What you need before we start"
     - **Java 21 or newer.** Nothing else — the repo ships its own Maven via `./mvnw`.
     - About fifteen minutes.
-    - One model provider key (OpenAI or Anthropic) for the very last steps. We will get a green build *without* it first.
+    - An OpenAI API key for the very last steps. We get a green build *without* any key first. (Prefer another provider? Follow [run with a real model](../how-to/run-with-a-real-model.md) instead at Step 4.)
 
 ## Step 1 — Get the code
 
@@ -50,7 +50,7 @@ Notice that this works with **no API keys and no network model calls**. The test
 BUILD SUCCESS
 ```
 
-You now have a working build. That alone is worth pausing on: you can develop and test this agent all day without spending a token. We only need a key to make the agent talk to a *real* model, which we will do next.
+You now have a working build, green without any API key. Next we add one key so the agent can talk to a real model.
 
 ## Step 4 — Add one provider key
 
@@ -60,15 +60,13 @@ To run the agent for real, create your `.env` file from the example.
 cp .env.example .env
 ```
 
-Now open `.env` in your editor and set **one** provider key. Use whichever you have:
+Now open `.env` in your editor and set your OpenAI key:
 
 ```bash
-OPENAI_API_KEY=sk-...        # the default; the app routes to OpenAI models
-# or, instead:
-ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-...
 ```
 
-Save the file. `.env` is git-ignored, so your key will not be committed. The build automatically picks up the matching model provider when the variable is present — there is nothing else to configure.
+Save the file. `.env` is git-ignored, so your key will not be committed. The app picks up the OpenAI provider automatically — there is nothing else to configure.
 
 ## Step 5 — Start the shell
 
@@ -111,13 +109,9 @@ Kubernetes and resilience tracks, and added a developer-experience session to
 match your DevEx interest. No two picks share a slot.
 ```
 
-Notice three things:
+Look at the result: the sessions match your interests, **no two share a time slot**, and the agent explains its picks in a short rationale. You just ran a goal-oriented AI agent and got a real, usable schedule.
 
-- Every session is something a Kubernetes / resilience / DevEx engineer asked for. The agent read your sentence, built a profile from it, and matched the catalog to it.
-- **No two sessions share a time slot.** That is not luck — the agent is *guaranteed* not to double-book you. (You will see exactly how that guarantee is built in [Lab 3](walk-the-labs.md#lab-3-guardrails-make-the-contract-bite).)
-- The agent explains its picks in a short rationale.
-
-You just ran a goal-oriented AI agent and got a real, usable result. Take the win.
+The no-double-booking is guaranteed, not lucky — but you do not need to know how yet. You will build that guarantee yourself in [Lab 3](walk-the-labs.md#lab-3-guardrails-make-the-contract-bite).
 
 ## Step 7 — Read the plan, not the vibes
 
@@ -134,7 +128,7 @@ extractAttendeeProfile → loadCatalog → shortlistSessions → researchSession
                        → assembleSchedule → confirmSchedule
 ```
 
-Notice that nobody wrote that sequence by hand. The agent *derived* it. Each step declares what it needs and what it produces, and the planner worked out the order — read the request, load the catalog, shortlist sessions, research them, assemble a draft, confirm it. This is the single most important habit the workshop teaches: when something surprises you, **read the plan, not the vibes.**
+Nobody wrote that sequence by hand — the agent *derived* it from what each step needs and produces. Reading this plan is how you understand, and later debug, an agent. For *why* the order is derived rather than coded, see [goal-oriented planning](../explanation/goap.md).
 
 ## Step 8 — Leave the shell
 

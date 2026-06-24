@@ -6,8 +6,9 @@ without hard-coding model names in Java. Routing is a configuration decision: co
 
 ## 1. Route the action in code
 
-Pick the role by return-type complexity: a flat list of strings → `cheapest`; anything carrying
-judgement (scores, a rationale, a conflict-free arrangement) → `best`.
+Choose a role for the action — `cheapest` for simple extraction, `best` for synthesis (the
+[right-sizing models](../explanation/right-sizing-models.md) explanation gives the rule of thumb) —
+and set it on the prompt runner:
 
 ```java
 // cheap work — pulling fields from a sentence

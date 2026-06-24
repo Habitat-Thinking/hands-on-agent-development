@@ -9,7 +9,7 @@ This page is the map of the journey. The turn-by-turn directions for each leg li
 
 ## How the branches work
 
-Each lab is a pair of branches: a `*-before` branch where the change is *not yet made* (with a worksheet and `// TODO` anchors waiting for you), and a `*-after` branch with the finished, reference version. You learn by doing the change on the `before` branch and then diffing against the `after` branch to check your work:
+Each lab is a pair of branches: a `*-before` branch where the change is *not yet made* (with a worksheet and `// TODO` anchors waiting for you), and a `*-after` branch with the finished, reference version. For each lab you check out the `before` branch, make the change, then diff against the `after` branch to check your work:
 
 ```bash
 git checkout lab1-before                 # the starting point + the worksheet's TODO anchors
@@ -18,11 +18,13 @@ git checkout lab1-before                 # the starting point + the worksheet's 
 git diff lab1-before lab1-after -- src   # compare against the reference solution
 ```
 
-If you would rather just *watch* the finished progression without editing anything, walk the `*-after` branches in order and read each diff. Either way, the journey is the same six steps below, in this order:
+The journey is the same six steps below, in this order:
 
 ```
 lab1 → lab2 → lab3 → lab4 → lab5 → lab6
 ```
+
+(Short on time? You can instead just walk the `*-after` branches in order and read each diff, without editing.)
 
 One lab, Lab 4, starts from a branch that *deliberately fails* — that failing run is the whole point of the lesson. We will flag it when we get there.
 

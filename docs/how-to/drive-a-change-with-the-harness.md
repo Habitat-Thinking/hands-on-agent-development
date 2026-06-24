@@ -36,14 +36,10 @@ does **not** commit.
 
 ## 4. Gate the two-stage review
 
-Review the diff against the harness constraints in `HARNESS.md`:
-
-- **C1** typed domain records, no untyped maps between actions
-- **C2** never hard-wire flow order; capability added via new types/actions/agents only
-- **C3** every mutating/tool action is guarded
-- **C4** `@Condition` methods are side-effect-free
-- **C5** an invariant the goal must hold is a `@Condition` the goal action `pre`-requires
-- **C6** LLM choice justified per action by return-type complexity
+Review the diff against the constraints in [`HARNESS.md`](https://github.com/russmiles/hands-on-agent-development/blob/main/HARNESS.md)
+(C1–C9 — typed records, no hard-wired order, guarded actions, side-effect-free conditions,
+goal-gated invariants, justified model choice, and so on). The diff must satisfy every constraint
+that applies before it can land.
 
 ## 5. Confirm the acceptance check, then land
 
@@ -61,5 +57,4 @@ itself. Make that edit deliberately (e.g. follow [Route models by role](route-mo
 
 For the operational ladder (Dictating → … → Supervising) and *why* Track C builds the Embabel agent
 using the disciplines the agent itself embodies, see
-[About the dual harness](../explanation/the-dual-harness.md). The constraints C1–C9 live in
-`HARNESS.md`.
+[About the dual harness](../explanation/the-dual-harness.md).

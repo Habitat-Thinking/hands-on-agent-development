@@ -71,8 +71,8 @@ The whole conference. Loaded once from JSON by `CatalogService`. See
 
 ## CandidateSessions
 
-The shortlist: the sessions that plausibly match the attendee. A distinct type from
-`SessionCatalog`, so the planner knows shortlisting precedes assembly.
+The shortlist: the sessions that plausibly match the attendee. A type distinct from
+`SessionCatalog`, produced by `shortlistSessions`.
 
 | Component | Type | Description |
 |---|---|---|

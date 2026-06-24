@@ -42,8 +42,8 @@ Change the downstream action to consume the new type, so the planner *must* run 
 DraftSchedule assembleSchedule(AttendeeProfile profile, ResearchedSessions researched, Ai ai) { ... }
 ```
 
-Do **not** add a direct call to `researchSessions` from inside `assembleSchedule` — that hard-wires
-the order and defeats GOAP. Let the types drive it.
+Do **not** call `researchSessions` directly from `assembleSchedule`; let the types drive the order.
+(See [goal-oriented planning](../explanation/goap.md) for why.)
 
 ## 4. Build and read the plan
 

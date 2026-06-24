@@ -4,10 +4,9 @@ You want the framework — not a prompt instruction or a code review — to make
 impossible: an invariant the goal must hold, a precondition before an action runs, and a budget so
 the agent cannot run forever. This is the Lab 3 shape.
 
-> **Key fact:** a `post` condition on an `@AchievesGoal` action is a *planning promise*, not a
-> runtime gate. The goal is "achieved" as soon as the action produces its output type, whether or
-> not the post still holds. To make an invariant bite, a **separate goal action must `pre`-require
-> it**. The clean pattern is `assemble → confirm`.
+An invariant only bites if a **separate goal action `pre`-requires it** — use the `assemble → confirm`
+pattern below. (Why a `post` on the goal action is not enough is covered in
+[guardrails & invariants](../explanation/guardrails-and-invariants.md).)
 
 ## Add an invariant the goal pre-requires
 

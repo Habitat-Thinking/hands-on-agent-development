@@ -74,6 +74,32 @@ class ConfPlannerAgentTest {
     }
 
     @Test
+    void noDoubleBookingRejectsTwoSessionsInOneSlot() {
+        var sessions = catalogService.catalog().sessions();
+        var bySlot = sessions.stream()
+                .collect(java.util.stream.Collectors.groupingBy(s -> s.slot()));
+        var clashing = bySlot.values().stream().filter(g -> g.size() >= 2).findFirst().orElseThrow();
+        var a = clashing.get(0);
+        var b = clashing.get(1);
+
+        var clashed = new com.russmiles.confplanner.domain.DraftSchedule(
+                List.of(new com.russmiles.confplanner.domain.ScheduleItem(a, a.slot()),
+                        new com.russmiles.confplanner.domain.ScheduleItem(b, b.slot())), "clash");
+        var clean = new com.russmiles.confplanner.domain.DraftSchedule(
+                List.of(new com.russmiles.confplanner.domain.ScheduleItem(a, a.slot())), "ok");
+
+        assertFalse(agent.noDoubleBooking(clashed), "two sessions in one slot must be rejected");
+        assertTrue(agent.noDoubleBooking(clean), "a single-session draft is fine");
+    }
+
+    @Test
+    void hasCandidatesRejectsAnEmptyShortlist() {
+        assertFalse(agent.hasCandidates(
+                new com.russmiles.confplanner.domain.CandidateSessions(List.of())));
+        assertFalse(agent.hasCandidates(null));
+    }
+
+    @Test
     void shouldAvoidIsCaseInsensitiveOnTags() {
         var profile = new AttendeeProfile(
                 List.of(), "Engineer", "Intermediate", List.of(), List.of("Kubernetes"));

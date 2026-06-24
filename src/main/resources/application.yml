@@ -23,6 +23,12 @@ spring:
   shell:
     interactive:
       enabled: true
+  autoconfigure:
+    # Lab 3: the @SecureAgentTool annotation ships on the classpath so it compiles and is
+    # available as a teaching artifact, but its web-security filter chain needs Spring MVC
+    # (an MCP server). Exclude that auto-config so the no-Docker shell boots green; the labs
+    # that run the MCP server re-enable it. See labs/lab3-guardrails.md.
+    exclude: com.embabel.agent.autoconfigure.mcpserver.security.AgentMcpServerAutoConfiguration
 
 ---
 # Mock profile: deterministic demos with no model calls and no API keys.

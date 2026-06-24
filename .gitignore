@@ -1,13 +1,27 @@
-
-embabel-agent-api/src/main/resources/mcp/**
-
+# Build output
 /target/**
 */target/**
 */*/target/**
 */*/*/target/**
 
+# IDE
 .idea/**
+*.iml
 
-.claude
+# Secrets — NEVER commit real keys. Ship .env.example only.
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.keystore
 
+# Logs
 **/*.log
+
+# OS
+.DS_Store
+
+# Note: .claude/ is intentionally tracked — it ships the workshop's build-time
+# harness (.claude/agents/java-implementer.md). Do not ignore it.

@@ -1,0 +1,90 @@
+site_name: Hands-On AI Agent Engineering
+site_description: The ConfPlanner workshop — engineering AI agents you can trust, with a dual build-time and run-time harness.
+site_url: https://russmiles.github.io/hands-on-agent-development/
+
+repo_url: https://github.com/russmiles/hands-on-agent-development
+repo_name: russmiles/hands-on-agent-development
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - content.code.copy
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - tutorials/index.md
+      - Getting started: tutorials/getting-started.md
+      - Walk the labs: tutorials/walk-the-labs.md
+  - How-to guides:
+      - how-to/index.md
+      - Run with a real model: how-to/run-with-a-real-model.md
+      - Use mock mode: how-to/use-mock-mode.md
+      - Enable Zipkin tracing: how-to/enable-zipkin-tracing.md
+      - Add an action: how-to/add-an-action.md
+      - Add a guardrail: how-to/add-a-guardrail.md
+      - Route models by role: how-to/route-models-by-role.md
+      - Drive a change with the harness: how-to/drive-a-change-with-the-harness.md
+  - Reference:
+      - reference/index.md
+      - Domain model: reference/domain-model.md
+      - Actions, conditions, goals: reference/actions-conditions-goals.md
+      - Configuration: reference/configuration.md
+      - Catalog schema: reference/catalog-schema.md
+      - Annotations: reference/annotations.md
+      - Model routing: reference/model-routing.md
+      - CLI: reference/cli.md
+      - Branch map: reference/branch-map.md
+  - Explanation:
+      - explanation/index.md
+      - DICE: explanation/dice.md
+      - GOAP: explanation/goap.md
+      - Guardrails and invariants: explanation/guardrails-and-invariants.md
+      - Explainability: explanation/explainability.md
+      - The dual harness: explanation/the-dual-harness.md
+      - The runtime harness: explanation/the-runtime-harness.md
+      - The eight habits: explanation/the-eight-habits.md
+      - Right-sizing models: explanation/right-sizing-models.md
+      - Extending the agent: explanation/extending-the-agent.md

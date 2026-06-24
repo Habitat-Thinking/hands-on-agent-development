@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -27,7 +28,8 @@ class ConfPlannerAgentTest {
     void extractAttendeeProfilePutsTheRequestInThePrompt() {
         var context = FakeOperationContext.create();
         context.expectResponse(new AttendeeProfile(
-                List.of("kubernetes"), "Platform Engineer", "Advanced", List.of("ship faster")));
+                List.of("kubernetes"), "Platform Engineer", "Advanced",
+                List.of("ship faster"), List.of()));
 
         Ai ai = context.ai();
         agent.extractAttendeeProfile(
@@ -46,10 +48,37 @@ class ConfPlannerAgentTest {
                 List.of("PC-01", "AI-01", "does-not-exist"), "matches interests"));
 
         var profile = new AttendeeProfile(
-                List.of("kubernetes", "ai"), "Engineer", "Intermediate", List.of("learn"));
+                List.of("kubernetes", "ai"), "Engineer", "Intermediate", List.of("learn"), List.of());
         var candidates = agent.shortlistSessions(profile, catalogService.catalog(), context.ai());
 
         var ids = candidates.sessions().stream().map(s -> s.id()).toList();
         assertEquals(List.of("PC-01", "AI-01"), ids, "unknown ids are dropped, real ones resolved");
+    }
+
+    @Test
+    void avoidedTopicsAreExcludedFromTheShortlistMenu() {
+        var context = FakeOperationContext.create();
+        // Even if the model "picks" an avoided session, it was never offered: the menu is filtered.
+        context.expectResponse(new ConfPlannerAgent.Shortlisting(List.of("PC-01"), "x"));
+
+        // PC-01 is tagged "kubernetes"; avoiding it must keep it out of the offered menu.
+        var profile = new AttendeeProfile(
+                List.of("ai"), "Engineer", "Intermediate", List.of("learn"), List.of("kubernetes"));
+        agent.shortlistSessions(profile, catalogService.catalog(), context.ai());
+
+        var prompt = context.getLlmInvocations().getFirst().getMessages().getFirst().getContent();
+        assertFalse(prompt.contains("PC-01"),
+                "sessions tagged with an avoided topic must not appear in the menu");
+        // The PromptContributor wiring (avoid-list reaching the prompt) is verified at runtime
+        // with `x "..." -p`; FakeOperationContext does not render contributors into the capture.
+    }
+
+    @Test
+    void shouldAvoidIsCaseInsensitiveOnTags() {
+        var profile = new AttendeeProfile(
+                List.of(), "Engineer", "Intermediate", List.of(), List.of("Kubernetes"));
+        var k8sSession = catalogService.catalog().sessions().stream()
+                .filter(s -> s.tags().contains("kubernetes")).findFirst().orElseThrow();
+        assertTrue(profile.shouldAvoid(k8sSession), "avoid match should ignore case");
     }
 }

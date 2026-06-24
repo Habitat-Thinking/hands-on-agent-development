@@ -100,8 +100,9 @@ public class ConfPlannerAgent {
                         + " — score " + i.matchScore() + " — " + i.whyRelevant())
                 .collect(Collectors.joining("\n"));
 
+        // The hardest step: a reasoned, conflict-free schedule + rationale. Strong model (Lab 6).
         var draft = ai
-                .withDefaultLlm()
+                .withLlmByRole("best")
                 .creating(ScheduleDraft.class)
                 .fromPrompt("""
                         Build this attendee a personal schedule from the shortlisted sessions.

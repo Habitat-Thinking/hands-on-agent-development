@@ -14,7 +14,7 @@ You do not need to know anything about Embabel, agents, or the codebase. Just fo
 First, clone the repository and move into it.
 
 ```bash
-git clone https://github.com/russmiles/hands-on-agent-development.git
+git clone https://github.com/Habitat-Thinking/hands-on-agent-development.git
 cd hands-on-agent-development
 ```
 

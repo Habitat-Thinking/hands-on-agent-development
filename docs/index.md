@@ -30,4 +30,4 @@ matches what you are trying to do right now.
 ## Source code
 
 The full source for ConfPlanner and this workshop lives on GitHub:
-[russmiles/hands-on-agent-development](https://github.com/russmiles/hands-on-agent-development).
+[Habitat-Thinking/hands-on-agent-development](https://github.com/Habitat-Thinking/hands-on-agent-development).

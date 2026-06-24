@@ -1,9 +1,9 @@
 site_name: Hands-On AI Agent Engineering
 site_description: The ConfPlanner workshop — engineering AI agents you can trust, with a dual build-time and run-time harness.
-site_url: https://russmiles.github.io/hands-on-agent-development/
+site_url: https://habitat-thinking.github.io/hands-on-agent-development/
 
-repo_url: https://github.com/russmiles/hands-on-agent-development
-repo_name: russmiles/hands-on-agent-development
+repo_url: https://github.com/Habitat-Thinking/hands-on-agent-development
+repo_name: Habitat-Thinking/hands-on-agent-development
 edit_uri: edit/main/docs/
 
 docs_dir: docs

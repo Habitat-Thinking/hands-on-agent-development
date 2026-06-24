@@ -36,7 +36,7 @@ does **not** commit.
 
 ## 4. Gate the two-stage review
 
-Review the diff against the constraints in [`HARNESS.md`](https://github.com/russmiles/hands-on-agent-development/blob/main/HARNESS.md)
+Review the diff against the constraints in [`HARNESS.md`](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/HARNESS.md)
 (C1–C9 — typed records, no hard-wired order, guarded actions, side-effect-free conditions,
 goal-gated invariants, justified model choice, and so on). The diff must satisfy every constraint
 that applies before it can land.

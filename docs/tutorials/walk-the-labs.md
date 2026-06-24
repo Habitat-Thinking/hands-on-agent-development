@@ -34,7 +34,7 @@ Let us begin.
 
 ## Lab 1 — DICE: give the domain a voice
 
-**Branch:** `lab1-before` → `lab1-after` · **Worksheet:** [labs/lab1-dice.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab1-dice.md)
+**Branch:** `lab1-before` → `lab1-after` · **Worksheet:** [labs/lab1-dice.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab1-dice.md)
 
 We start where every well-built agent starts: with the domain. In the baseline, `AttendeeProfile` is a passive bag of fields, and the rule "this attendee hates vendor keynotes" would have to be copy-pasted into every prompt that needs it.
 
@@ -50,7 +50,7 @@ When you have a green build and can see the avoid-list in the prompt, come back 
 
 ## Lab 2 — GOAP: add an action, watch the plan grow
 
-**Branch:** `lab2-before` → `lab2-after` · **Worksheet:** [labs/lab2-goap.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab2-goap.md)
+**Branch:** `lab2-before` → `lab2-after` · **Worksheet:** [labs/lab2-goap.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab2-goap.md)
 
 Now we meet the heart of the agent: it does not run a script you wrote, it *derives a plan*. In Lab 2 you drop a brand-new `researchSessions` action into the middle of the pipeline — and you do **not** reorder anything by hand.
 
@@ -66,7 +66,7 @@ There is a small thrill built into this lab: temporarily `return null;` from the
 
 ## Lab 3 — Guardrails: make the contract bite
 
-**Branch:** `lab3-before` → `lab3-after` · **Worksheet:** [labs/lab3-guardrails.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab3-guardrails.md)
+**Branch:** `lab3-before` → `lab3-after` · **Worksheet:** [labs/lab3-guardrails.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab3-guardrails.md)
 
 So far the agent is helpful. Now we make it *trustworthy*. In Lab 3 you make it impossible for the agent to hand back a double-booked schedule, an empty one, or to run forever — and you refuse a premium tool to callers who lack authority.
 
@@ -85,7 +85,7 @@ Now a clashing draft can never satisfy the goal: the planner re-runs assembly, a
 
 ## Lab 4 — Explainability: debug by reading state
 
-**Branch:** `lab4-broken` → `lab4-after` · **Worksheet:** [labs/lab4-explainability.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab4-explainability.md)
+**Branch:** `lab4-broken` → `lab4-after` · **Worksheet:** [labs/lab4-explainability.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab4-explainability.md)
 
 This is the one lab that starts from a branch that is *meant to fail*. `lab4-broken` compiles, but the agent goes `STUCK` at runtime and `./mvnw verify` fails on purpose — that failing run is exactly what you are here to diagnose.
 
@@ -102,7 +102,7 @@ You will not poke the prompt and re-run. Instead you read the agent's **planning
 
 ## Lab 5 — Extend without breaking (the capstone)
 
-**Branch:** `lab5-before` → `lab5-after` · **Worksheet:** [labs/lab5-extend.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab5-extend.md)
+**Branch:** `lab5-before` → `lab5-after` · **Worksheet:** [labs/lab5-extend.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab5-extend.md)
 
 Now we test whether the agent grows gracefully. You add a whole new capability — a networking plan suggesting people to meet — *without touching* `assembleSchedule`, `confirmSchedule`, or any guardrail. If the schedule's regression test stays green, the seams were in the right place.
 
@@ -121,7 +121,7 @@ The clean way to avoid copy-pasted logic is the one you build: lift the shared u
 
 ## Lab 6 — Model routing: the cheapest model that passes
 
-**Branch:** `lab6-before` → `lab6-after` · **Worksheet:** [labs/lab6-model-routing.md](https://github.com/russmiles/hands-on-agent-development/blob/main/labs/lab6-model-routing.md)
+**Branch:** `lab6-before` → `lab6-after` · **Worksheet:** [labs/lab6-model-routing.md](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab6-model-routing.md)
 
 The final leg makes cost a design parameter. Not every step needs your strongest model: pulling a few fields out of a sentence is cheap work; synthesising a conflict-free schedule with a rationale is not.
 

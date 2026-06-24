@@ -51,6 +51,8 @@ public class ConfPlanningCapabilities {
 
     /** Understand the attendee from free text (LLM). */
     public AttendeeProfile extractProfile(UserInput userInput, Ai ai) {
+        // TODO (Lab 6): this is simple extraction — route it to a cheap model with
+        //   withLlmByRole("cheapest"). Save the strong model for synthesis. See labs/lab6-model-routing.md.
         return ai
                 .withDefaultLlm()
                 .creating(AttendeeProfile.class)

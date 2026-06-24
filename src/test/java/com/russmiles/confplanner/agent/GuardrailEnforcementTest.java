@@ -39,14 +39,14 @@ class GuardrailEnforcementTest extends EmbabelMockitoIntegrationTest {
                         List.of("kubernetes", "ai"), "Engineer", "Advanced", List.of("learn"), List.of()));
 
         whenCreateObject(prompt -> prompt.contains("Pick the 8-14 sessions"),
-                ConfPlannerAgent.Shortlisting.class)
-                .thenReturn(new ConfPlannerAgent.Shortlisting(List.of("PC-01", "AI-01"), "x"));
+                ConfPlanningCapabilities.Shortlisting.class)
+                .thenReturn(new ConfPlanningCapabilities.Shortlisting(List.of("PC-01", "AI-01"), "x"));
 
         whenCreateObject(prompt -> prompt.contains("why it is relevant"),
-                ConfPlannerAgent.ResearchOutput.class)
-                .thenReturn(new ConfPlannerAgent.ResearchOutput(List.of(
-                        new ConfPlannerAgent.Insight("PC-01", "k8s", 0.9),
-                        new ConfPlannerAgent.Insight("AI-01", "ai", 0.9))));
+                ConfPlanningCapabilities.ResearchOutput.class)
+                .thenReturn(new ConfPlanningCapabilities.ResearchOutput(List.of(
+                        new ConfPlanningCapabilities.Insight("PC-01", "k8s", 0.9),
+                        new ConfPlanningCapabilities.Insight("AI-01", "ai", 0.9))));
 
         // Both sessions share the 2026-09-15 09:00 slot — an unavoidable double-booking.
         whenCreateObject(prompt -> prompt.contains("Build this attendee a personal schedule"),

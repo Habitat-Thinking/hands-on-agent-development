@@ -15,9 +15,14 @@ new type and letting the planner route to it. Here we go one step further and ad
 a **separate agent**, so the existing `ConfPlannerAgent` (and every regression test on it) is
 provably untouched.
 
-> **0.5.0 note:** an Embabel `@Agent` may declare only one goal type. `PersonalSchedule` is already
-> `ConfPlannerAgent`'s goal, so `NetworkingPlan` must live in its own agent. This is a feature, not
-> a workaround: a new agent is the strongest possible "extend by adding."
+> **Two 0.5.0 constraints shape the design** (both discovered by reading the planning log):
+> 1. An `@Agent` may declare only **one goal type**. `PersonalSchedule` is already
+>    `ConfPlannerAgent`'s goal, so `NetworkingPlan` needs its own agent.
+> 2. An agent plans **only with its own actions** — it cannot borrow another agent's or an
+>    `@EmbabelComponent`'s actions. So the new agent must declare the upstream steps it needs.
+>
+> The way to avoid copy-pasted logic is to put the pipeline *logic* in a plain `@Service` and let
+> each agent declare thin `@Action` wrappers that delegate to it. Shared logic, per-agent actions.
 
 ## Before state (`lab5-before`)
 
@@ -25,28 +30,26 @@ provably untouched.
 
 ## Steps
 
-1. **Add the domain record:** `NetworkingPlan(List<String> peopleToMeet, String rationale)`.
-2. **Add a new agent** `ConfNetworkingAgent`:
-   ```java
-   @Agent(description = "Suggest who an attendee should meet at the conference")
-   public class ConfNetworkingAgent {
-       @AchievesGoal(description = "Produce a networking plan")
-       @Action
-       NetworkingPlan planNetworking(AttendeeProfile profile, ResearchedSessions researched, Ai ai) { ... }
-   }
-   ```
-   It consumes `AttendeeProfile` and `ResearchedSessions` — types the existing pipeline already
-   produces — so invoking the `NetworkingPlan` goal plans straight through
-   `extract → loadCatalog → shortlist → research → planNetworking`. Suggest people from the
+1. **Add the domain record:** `NetworkingPlan(List<String> peopleToMeet, String rationale)`
+   (implement `HasContent` for a nice render).
+2. **Extract the shared pipeline into a `@Service`** `ConfPlanningCapabilities` with plain methods
+   `extractProfile`, `catalog`, `shortlist`, `research` (move the prompt bodies here). This is the
+   only edit to the schedule path, and it leaves the schedule's *behaviour* identical.
+3. **Make `ConfPlannerAgent` delegate:** its `@Action` methods become one-line wrappers calling the
+   service. Same actions, same plan, same output — the regression test proves it.
+4. **Add `ConfNetworkingAgent`:** a new `@Agent` whose single goal is `NetworkingPlan`. It declares
+   its *own* `extract/loadCatalog/shortlist/research` wrappers (also delegating to the service) plus
+   `@AchievesGoal planNetworking(AttendeeProfile, ResearchedSessions, Ai)`. Suggest people from the
    researched sessions' speakers.
-3. Build: `./mvnw -q verify`.
+5. Build: `./mvnw -q verify`.
 
 ## Acceptance check (framework-enforced)
 
-- Invoking the `NetworkingPlan` goal returns networking suggestions.
-- **Regression:** the original `PersonalSchedule` flow plans and runs unchanged — its integration
-  test (and `GuardrailEnforcementTest`) stay green. `ConfPlannerAgent` has no new edits beyond the
-  anchor comment.
+- Invoking the `NetworkingPlan` goal returns networking suggestions; its planning log shows
+  `extract → loadCatalog → shortlist → research → planNetworking` — the existing pipeline reused.
+- **Regression:** the `PersonalSchedule` flow plans and runs unchanged — its integration test (and
+  `GuardrailEnforcementTest`) stay green. The only change to the schedule path is moving prompt
+  bodies into a service; the plan and output are identical.
 - If done via Track C, the two-stage review passed before the change landed.
 
 ## Three-track notes

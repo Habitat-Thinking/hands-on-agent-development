@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ConfPlannerAgentTest {
 
     private final CatalogService catalogService = new CatalogService(new ObjectMapper());
-    private final ConfPlannerAgent agent = new ConfPlannerAgent(catalogService);
+    private final ConfPlanningCapabilities capabilities = new ConfPlanningCapabilities(catalogService);
+    private final ConfPlannerAgent agent = new ConfPlannerAgent(capabilities);
 
     @Test
     void extractAttendeeProfilePutsTheRequestInThePrompt() {
@@ -32,7 +33,7 @@ class ConfPlannerAgentTest {
                 List.of("ship faster"), List.of()));
 
         Ai ai = context.ai();
-        agent.extractAttendeeProfile(
+        capabilities.extractProfile(
                 new UserInput("I love Kubernetes and resilience"), ai);
 
         var prompt = context.getLlmInvocations().getFirst().getMessages().getFirst().getContent();
@@ -44,12 +45,12 @@ class ConfPlannerAgentTest {
     void shortlistResolvesModelChosenIdsToRealSessions() {
         var context = FakeOperationContext.create();
         // The model only emits ids; the action resolves them against the catalog.
-        context.expectResponse(new ConfPlannerAgent.Shortlisting(
+        context.expectResponse(new ConfPlanningCapabilities.Shortlisting(
                 List.of("PC-01", "AI-01", "does-not-exist"), "matches interests"));
 
         var profile = new AttendeeProfile(
                 List.of("kubernetes", "ai"), "Engineer", "Intermediate", List.of("learn"), List.of());
-        var candidates = agent.shortlistSessions(profile, catalogService.catalog(), context.ai());
+        var candidates = capabilities.shortlist(profile, catalogService.catalog(), context.ai());
 
         var ids = candidates.sessions().stream().map(s -> s.id()).toList();
         assertEquals(List.of("PC-01", "AI-01"), ids, "unknown ids are dropped, real ones resolved");
@@ -59,12 +60,12 @@ class ConfPlannerAgentTest {
     void avoidedTopicsAreExcludedFromTheShortlistMenu() {
         var context = FakeOperationContext.create();
         // Even if the model "picks" an avoided session, it was never offered: the menu is filtered.
-        context.expectResponse(new ConfPlannerAgent.Shortlisting(List.of("PC-01"), "x"));
+        context.expectResponse(new ConfPlanningCapabilities.Shortlisting(List.of("PC-01"), "x"));
 
         // PC-01 is tagged "kubernetes"; avoiding it must keep it out of the offered menu.
         var profile = new AttendeeProfile(
                 List.of("ai"), "Engineer", "Intermediate", List.of("learn"), List.of("kubernetes"));
-        agent.shortlistSessions(profile, catalogService.catalog(), context.ai());
+        capabilities.shortlist(profile, catalogService.catalog(), context.ai());
 
         var prompt = context.getLlmInvocations().getFirst().getMessages().getFirst().getContent();
         assertFalse(prompt.contains("PC-01"),

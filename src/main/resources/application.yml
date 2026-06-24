@@ -1,0 +1,38 @@
+embabel:
+  models:
+    # Default model used by withDefaultLlm(). Override per environment; any model your
+    # configured provider exposes will do. Swap to a local model (e.g. an Ollama tag) to
+    # keep data in the building — see Lab 6 and MODEL_ROUTING.md.
+    default-llm: gpt-4.1-mini
+
+    # Named LLM roles, referenced from code with withLlmByRole("<role>").
+    # Lab 6 routes cheap work (extract/shortlist) to "cheapest" and synthesis
+    # (research/assemble) to "best". Edit these to match what you actually have.
+    llms:
+      cheapest: gpt-4.1-nano
+      best: gpt-4.1
+
+  agent:
+    logging:
+      # Keep the default logging personality off. Set to "starwars" for a bit of fun.
+      personality: default
+
+spring:
+  application:
+    name: confplanner
+  shell:
+    interactive:
+      enabled: true
+
+---
+# Mock profile: deterministic demos with no model calls and no API keys.
+# Activate with --spring.profiles.active=mock (see SETUP.md).
+spring:
+  config:
+    activate:
+      on-profile: mock
+embabel:
+  agent:
+    platform:
+      test:
+        mock-mode: true

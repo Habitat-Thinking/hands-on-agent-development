@@ -1,0 +1,779 @@
+{
+  "sessions": [
+    {
+      "id": "PC-01",
+      "title": "Kubernetes Without the Tears",
+      "abstractText": "Kubernetes Without the Tears: a calm tour of the failure modes that actually page you. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Dr. Priya Venkatasubramanian"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-15",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Intermediate",
+      "tags": [
+        "kubernetes",
+        "platform-engineering",
+        "operations"
+      ]
+    },
+    {
+      "id": "PC-02",
+      "title": "The Internal Developer Platform You Can Afford",
+      "abstractText": "The Internal Developer Platform You Can Afford: building a golden path without a platform team of forty. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Lena Fjordholm"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-16",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "platform-engineering",
+        "developer-experience",
+        "finops"
+      ]
+    },
+    {
+      "id": "PC-03",
+      "title": "FinOps for Engineers Who Hate Spreadsheets",
+      "abstractText": "FinOps for Engineers Who Hate Spreadsheets: tagging, unit economics, and killing zombie clusters. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Hamish McAllister-Quinn"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-17",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Beginner",
+      "tags": [
+        "finops",
+        "cloud",
+        "cost-optimization"
+      ]
+    },
+    {
+      "id": "PC-04",
+      "title": "Multi-Region by Default",
+      "abstractText": "Multi-Region by Default: data residency, latency budgets, and the lies of 'just replicate it'. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Clara Bergstr\u00f6m"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-15",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "cloud",
+        "data-residency",
+        "architecture"
+      ]
+    },
+    {
+      "id": "PC-05",
+      "title": "Progressive Delivery on a Budget",
+      "abstractText": "Progressive Delivery on a Budget: canaries and feature flags without a service mesh tax. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Dr. Priya Venkatasubramanian"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-16",
+      "startTime": "16:00",
+      "endTime": "17:15",
+      "level": "Intermediate",
+      "tags": [
+        "kubernetes",
+        "delivery",
+        "operations"
+      ]
+    },
+    {
+      "id": "PC-06",
+      "title": "Stateful Workloads Nobody Warned You About",
+      "abstractText": "Stateful Workloads Nobody Warned You About: operators, backups, and the 3am restore drill. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Yara Nakimuli"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-17",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Advanced",
+      "tags": [
+        "kubernetes",
+        "data-engineering",
+        "resilience"
+      ]
+    },
+    {
+      "id": "PC-07",
+      "title": "Cloud Cost Postmortems",
+      "abstractText": "Cloud Cost Postmortems: treating a surprise bill like an incident. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Hamish McAllister-Quinn"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-15",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "finops",
+        "cloud",
+        "observability"
+      ]
+    },
+    {
+      "id": "PC-08",
+      "title": "Golden Paths, Real Roads",
+      "abstractText": "Golden Paths, Real Roads: paving developer journeys teams actually take. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Lena Fjordholm"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-16",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Beginner",
+      "tags": [
+        "platform-engineering",
+        "developer-experience",
+        "tooling"
+      ]
+    },
+    {
+      "id": "PC-09",
+      "title": "Edge to Core",
+      "abstractText": "Edge to Core: shipping the same workload to a phone and a datacentre. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Aiko Tanahashi"
+      ],
+      "track": "Platform & Cloud",
+      "room": "Cedar",
+      "day": "2026-09-17",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "cloud",
+        "edge-ai",
+        "architecture"
+      ]
+    },
+    {
+      "id": "AI-01",
+      "title": "Right-Sizing the Model",
+      "abstractText": "Right-Sizing the Model: routing cheap models to easy work and saving the big ones. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Felix Brandauer"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-15",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Intermediate",
+      "tags": [
+        "model-routing",
+        "llm",
+        "cost-optimization"
+      ]
+    },
+    {
+      "id": "AI-02",
+      "title": "Agents That Explain Themselves",
+      "abstractText": "Agents That Explain Themselves: planning logs, traces, and reading the plan not the vibes. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Felix Brandauer"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-16",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "agents",
+        "llm",
+        "observability"
+      ]
+    },
+    {
+      "id": "AI-03",
+      "title": "Small Models, Big Wins",
+      "abstractText": "Small Models, Big Wins: edge inference for teams without a GPU farm. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Aiko Tanahashi"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-17",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Beginner",
+      "tags": [
+        "edge-ai",
+        "machine-learning",
+        "local-models"
+      ]
+    },
+    {
+      "id": "AI-04",
+      "title": "Lakehouse Without Regret",
+      "abstractText": "Lakehouse Without Regret: governance, lineage, and not losing the plot. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Yara Nakimuli"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-15",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Intermediate",
+      "tags": [
+        "lakehouse",
+        "data-engineering",
+        "governance"
+      ]
+    },
+    {
+      "id": "AI-05",
+      "title": "Local Models for Regulated Rooms",
+      "abstractText": "Local Models for Regulated Rooms: when the data simply cannot leave the building. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Felix Brandauer"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-16",
+      "startTime": "16:00",
+      "endTime": "17:15",
+      "level": "Advanced",
+      "tags": [
+        "local-models",
+        "privacy",
+        "data-residency"
+      ]
+    },
+    {
+      "id": "AI-06",
+      "title": "Streaming Features in Practice",
+      "abstractText": "Streaming Features in Practice: feature stores that keep up with the firehose. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Rosa Belmonte"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-17",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Advanced",
+      "tags": [
+        "data-engineering",
+        "event-driven",
+        "machine-learning"
+      ]
+    },
+    {
+      "id": "AI-07",
+      "title": "Prompt Contracts",
+      "abstractText": "Prompt Contracts: typed inputs and outputs for non-deterministic systems. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Aiko Tanahashi"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-15",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "llm",
+        "api-design",
+        "agents"
+      ]
+    },
+    {
+      "id": "AI-08",
+      "title": "From Notebook to Pipeline",
+      "abstractText": "From Notebook to Pipeline: the boring glue that makes ML reproducible. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Yara Nakimuli"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-16",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Beginner",
+      "tags": [
+        "data-engineering",
+        "machine-learning",
+        "tooling"
+      ]
+    },
+    {
+      "id": "AI-09",
+      "title": "Guardrails for Agents",
+      "abstractText": "Guardrails for Agents: preconditions, budgets, and refusing to do the dumb thing. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Felix Brandauer"
+      ],
+      "track": "AI & Data",
+      "room": "Maple",
+      "day": "2026-09-17",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "agents",
+        "security",
+        "llm"
+      ]
+    },
+    {
+      "id": "AD-01",
+      "title": "Every Noun Is a Stream",
+      "abstractText": "Every Noun Is a Stream: event-driven design without drowning in Kafka. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Rosa Belmonte"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-15",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Intermediate",
+      "tags": [
+        "event-driven",
+        "architecture",
+        "kafka"
+      ]
+    },
+    {
+      "id": "AD-02",
+      "title": "API Design That Ages Well",
+      "abstractText": "API Design That Ages Well: versioning, pagination, and kindness to future you. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Sunita Raghunathan"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-16",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Beginner",
+      "tags": [
+        "api-design",
+        "rest",
+        "developer-experience"
+      ]
+    },
+    {
+      "id": "AD-03",
+      "title": "Fast Feedback Loops",
+      "abstractText": "Fast Feedback Loops: build times as a feature, not an afterthought. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Lena Fjordholm"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-17",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Intermediate",
+      "tags": [
+        "developer-experience",
+        "build-systems",
+        "tooling"
+      ]
+    },
+    {
+      "id": "AD-04",
+      "title": "Modular Monoliths in Anger",
+      "abstractText": "Modular Monoliths in Anger: seams, boundaries, and earning the right to microservices. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Rosa Belmonte"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-15",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "architecture",
+        "developer-experience",
+        "design"
+      ]
+    },
+    {
+      "id": "AD-05",
+      "title": "Domain Models First",
+      "abstractText": "Domain Models First: letting the domain shape the code, not the framework. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Sunita Raghunathan"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-16",
+      "startTime": "16:00",
+      "endTime": "17:15",
+      "level": "Intermediate",
+      "tags": [
+        "architecture",
+        "design",
+        "developer-experience"
+      ]
+    },
+    {
+      "id": "AD-06",
+      "title": "The Tooling Tax",
+      "abstractText": "The Tooling Tax: measuring what your inner loop actually costs. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Lena Fjordholm"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-17",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Beginner",
+      "tags": [
+        "developer-experience",
+        "tooling",
+        "build-systems"
+      ]
+    },
+    {
+      "id": "AD-07",
+      "title": "Contracts Between Teams",
+      "abstractText": "Contracts Between Teams: consumer-driven contracts that survive reorgs. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Sunita Raghunathan"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-15",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Advanced",
+      "tags": [
+        "api-design",
+        "architecture",
+        "delivery"
+      ]
+    },
+    {
+      "id": "AD-08",
+      "title": "Designing for Deletion",
+      "abstractText": "Designing for Deletion: systems you can pull apart without a forklift. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Rosa Belmonte"
+      ],
+      "track": "Architecture & DevEx",
+      "room": "Birch",
+      "day": "2026-09-16",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Intermediate",
+      "tags": [
+        "architecture",
+        "design",
+        "resilience"
+      ]
+    },
+    {
+      "id": "SR-01",
+      "title": "Threat Modelling as a Team Sport",
+      "abstractText": "Threat Modelling as a Team Sport: a workshop you can run on a Tuesday. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Tobias Wenningstedt"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-15",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Beginner",
+      "tags": [
+        "security",
+        "threat-modelling",
+        "design"
+      ]
+    },
+    {
+      "id": "SR-02",
+      "title": "Zero Trust Without the Hype",
+      "abstractText": "Zero Trust Without the Hype: what actually changes in your code and pipeline. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Tobias Wenningstedt"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-16",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "security",
+        "zero-trust",
+        "architecture"
+      ]
+    },
+    {
+      "id": "SR-03",
+      "title": "Chaos Engineering for the Anxious",
+      "abstractText": "Chaos Engineering for the Anxious: small blast radius, big confidence. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Marcus Oduya"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-17",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Intermediate",
+      "tags": [
+        "chaos-engineering",
+        "resilience",
+        "observability"
+      ]
+    },
+    {
+      "id": "SR-04",
+      "title": "Error Budgets That Bite",
+      "abstractText": "Error Budgets That Bite: SLOs your product manager will actually respect. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Olalekan Adeyemi"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-15",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "sre",
+        "slo",
+        "resilience"
+      ]
+    },
+    {
+      "id": "SR-05",
+      "title": "Secured Tools and Least Privilege",
+      "abstractText": "Secured Tools and Least Privilege: scoping what your automation is allowed to touch. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Tobias Wenningstedt"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-16",
+      "startTime": "16:00",
+      "endTime": "17:15",
+      "level": "Advanced",
+      "tags": [
+        "security",
+        "zero-trust",
+        "agents"
+      ]
+    },
+    {
+      "id": "SR-06",
+      "title": "Privacy by Construction",
+      "abstractText": "Privacy by Construction: data residency and compliance baked into the design. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Clara Bergstr\u00f6m"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-17",
+      "startTime": "09:00",
+      "endTime": "10:15",
+      "level": "Intermediate",
+      "tags": [
+        "privacy",
+        "compliance",
+        "data-residency"
+      ]
+    },
+    {
+      "id": "SR-07",
+      "title": "Observability You Can Afford",
+      "abstractText": "Observability You Can Afford: traces and SLOs without a six-figure bill. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Marcus Oduya"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-15",
+      "startTime": "10:30",
+      "endTime": "11:45",
+      "level": "Intermediate",
+      "tags": [
+        "observability",
+        "finops",
+        "resilience"
+      ]
+    },
+    {
+      "id": "SR-08",
+      "title": "Incident Reviews Without Blame",
+      "abstractText": "Incident Reviews Without Blame: learning loops that outlast the outage. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Olalekan Adeyemi"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-16",
+      "startTime": "13:00",
+      "endTime": "14:15",
+      "level": "Beginner",
+      "tags": [
+        "resilience",
+        "sre",
+        "operations"
+      ]
+    },
+    {
+      "id": "SR-09",
+      "title": "Resilience Patterns in Code",
+      "abstractText": "Resilience Patterns in Code: bulkheads, timeouts, and circuit breakers that work. Expect live examples, a few strong opinions, and takeaways you can apply on the Monday after the conference.",
+      "speakers": [
+        "Marcus Oduya"
+      ],
+      "track": "Security & Resilience",
+      "room": "Aspen",
+      "day": "2026-09-17",
+      "startTime": "14:30",
+      "endTime": "15:45",
+      "level": "Advanced",
+      "tags": [
+        "resilience",
+        "architecture",
+        "operations"
+      ]
+    }
+  ],
+  "speakers": [
+    {
+      "name": "Dr. Priya Venkatasubramanian",
+      "bio": "Distributed systems researcher turned platform lead; writes the 'Quorum Notes' newsletter.",
+      "topics": [
+        "kubernetes",
+        "consensus",
+        "platform-engineering"
+      ]
+    },
+    {
+      "name": "Marcus Oduya",
+      "bio": "Former SRE who now teaches resilience engineering; collects pager stories.",
+      "topics": [
+        "resilience",
+        "observability",
+        "chaos-engineering"
+      ]
+    },
+    {
+      "name": "Lena Fjordholm",
+      "bio": "Compiler hobbyist and DevEx advocate; obsessed with fast feedback loops.",
+      "topics": [
+        "developer-experience",
+        "build-systems",
+        "tooling"
+      ]
+    },
+    {
+      "name": "Tobias Wenningstedt",
+      "bio": "Security architect with a soft spot for threat modelling workshops.",
+      "topics": [
+        "security",
+        "threat-modelling",
+        "zero-trust"
+      ]
+    },
+    {
+      "name": "Aiko Tanahashi",
+      "bio": "Applied ML engineer; ships small models that fit in a thermostat.",
+      "topics": [
+        "machine-learning",
+        "edge-ai",
+        "model-routing"
+      ]
+    },
+    {
+      "name": "Rosa Belmonte",
+      "bio": "Event-driven systems specialist; believes every noun is a stream.",
+      "topics": [
+        "event-driven",
+        "kafka",
+        "architecture"
+      ]
+    },
+    {
+      "name": "Hamish McAllister-Quinn",
+      "bio": "Cloud cost whisperer; reads billing dashboards for fun.",
+      "topics": [
+        "finops",
+        "cloud",
+        "cost-optimization"
+      ]
+    },
+    {
+      "name": "Yara Nakimuli",
+      "bio": "Data platform engineer; turns swamps into lakehouses.",
+      "topics": [
+        "data-engineering",
+        "lakehouse",
+        "governance"
+      ]
+    },
+    {
+      "name": "Felix Brandauer",
+      "bio": "Agentic AI tinkerer; runs a home lab of local LLMs.",
+      "topics": [
+        "agents",
+        "llm",
+        "local-models"
+      ]
+    },
+    {
+      "name": "Sunita Raghunathan",
+      "bio": "API designer; has strong, kind opinions about pagination.",
+      "topics": [
+        "api-design",
+        "rest",
+        "developer-experience"
+      ]
+    },
+    {
+      "name": "Olalekan Adeyemi",
+      "bio": "Reliability lead; coined his team's 'error budget brunch'.",
+      "topics": [
+        "sre",
+        "slo",
+        "resilience"
+      ]
+    },
+    {
+      "name": "Clara Bergstr\u00f6m",
+      "bio": "Privacy engineer working where regulation meets code.",
+      "topics": [
+        "privacy",
+        "compliance",
+        "data-residency"
+      ]
+    }
+  ]
+}

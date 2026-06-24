@@ -102,6 +102,24 @@
                 </dependency>
             </dependencies>
         </profile>
+
+        <!-- Lab 4: opt-in tracing. Build/run with -Pobservability to add the OpenTelemetry +
+             Zipkin exporter, then activate the `observability` Spring profile. Kept out of the
+             default build so the no-Docker lab path stays lean. -->
+        <profile>
+            <id>observability</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.embabel.agent</groupId>
+                    <artifactId>embabel-agent-starter-observability</artifactId>
+                    <version>${embabel-agent.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>io.opentelemetry</groupId>
+                    <artifactId>opentelemetry-exporter-zipkin</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <!-- Uncomment these lines to enable Embabel repositories and use snapshots -->

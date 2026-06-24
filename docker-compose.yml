@@ -1,0 +1,12 @@
+# Zipkin trace collector for the Lab 4 observability exercise.
+#   docker compose up -d        # starts Zipkin on http://127.0.0.1:9411
+#   docker compose down
+# Then run the app with the `observability` Spring profile (see SETUP.md / labs/lab4).
+# This is OPTIONAL: the default lab path (reading the planning log with -p -r) needs no Docker.
+services:
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: confplanner-zipkin
+    ports:
+      - "9411:9411"
+    restart: unless-stopped

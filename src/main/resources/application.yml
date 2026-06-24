@@ -42,3 +42,28 @@ embabel:
     platform:
       test:
         mock-mode: true
+
+---
+# Observability profile (Lab 4): export traces to Zipkin. Build/run with the Maven
+# `observability` profile so the OpenTelemetry + Zipkin exporter is on the classpath:
+#   docker compose up -d
+#   ./mvnw -Pobservability spring-boot:run -Dspring-boot.run.profiles=observability
+# Then open http://127.0.0.1:9411. The default lab path needs none of this.
+spring:
+  config:
+    activate:
+      on-profile: observability
+embabel:
+  agent:
+    platform:
+      observability:
+        enabled: true
+        service-name: confplanner
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans

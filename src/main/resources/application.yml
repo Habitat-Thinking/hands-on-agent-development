@@ -54,9 +54,20 @@ spring:
     activate:
       on-profile: mock
 embabel:
+  models:
+    # Point every model role at the in-JVM stub (MockLlmService, @Profile("mock"), getName()="mock").
+    # ConfigurableModelProvider collects all LlmService beans and resolves roles by name, so these
+    # overrides route the whole flow through the stub — no provider name collisions, no network,
+    # no key.
+    default-llm: mock
+    llms:
+      cheapest: mock
+      best: mock
   agent:
     platform:
       test:
+        # INERT at 0.5.0: no runtime class consults this flag. The real seam is the MockLlmService
+        # bean above; kept here only to document that the platform property does nothing on its own.
         mock-mode: true
 
 ---

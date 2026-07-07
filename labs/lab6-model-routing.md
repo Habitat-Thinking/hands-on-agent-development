@@ -25,6 +25,10 @@ step to a **local** model when its data cannot leave the building.
    to `ai.withLlmByRole("cheapest")`.
 2. **Route the strong steps.** Change `research` (in the service) and `assembleSchedule` (in
    `ConfPlannerAgent`) to `ai.withLlmByRole("best")`.
+   > Note the two naming layers: you edit the **service methods** (`extractProfile`, `shortlist`,
+   > `research` on `ConfPlanningCapabilities`), but `MODEL_ROUTING.md` and the reference tables list
+   > the **`@Action` wrapper names** (`extractAttendeeProfile`, `shortlistSessions`,
+   > `researchSessions`) that call them — same steps, different label.
 3. **Make the config real.** Confirm `application.yml` maps the roles, e.g.:
    ```yaml
    embabel:

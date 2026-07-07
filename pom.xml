@@ -9,16 +9,16 @@
         <version>3.5.13</version>
         <relativePath/> <!-- Lookup parent from repository -->
     </parent>
-    <groupId>com.embabel.template</groupId>
-    <artifactId>ProjectName</artifactId>
+    <groupId>com.russmiles</groupId>
+    <artifactId>confplanner</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>My first agent</name>
-    <description>Generated agent project</description>
+    <name>ConfPlanner</name>
+    <description>Hands-on agent development workshop: an Embabel conference-planning agent</description>
 
     <properties>
         <java.version>21</java.version>
-        <embabel-agent.version>0.3.5</embabel-agent.version>
+        <embabel-agent.version>0.5.0</embabel-agent.version>
     </properties>
 
     <dependencies>
@@ -33,6 +33,39 @@
         <dependency>
             <groupId>com.embabel.agent</groupId>
             <artifactId>embabel-agent-starter-shell</artifactId>
+            <version>${embabel-agent.version}</version>
+        </dependency>
+
+        <!-- Provider starters are always on the classpath so the app boots the same way for every
+             learner, whether or not a key is present. Which provider actually resolves models is a
+             runtime decision (the key you set), not a build-time one — see SETUP.md and
+             docs/how-to/run-with-a-real-model.md. -->
+        <dependency>
+            <groupId>com.embabel.agent</groupId>
+            <artifactId>embabel-agent-starter-openai</artifactId>
+            <version>${embabel-agent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.embabel.agent</groupId>
+            <artifactId>embabel-agent-starter-anthropic</artifactId>
+            <version>${embabel-agent.version}</version>
+        </dependency>
+
+        <!-- Load .env into the Spring Environment at startup so OPENAI_API_KEY / ANTHROPIC_API_KEY
+             set in .env are picked up without exporting them. (Maven profiles cannot read .env —
+             that is why the provider starters above are unconditional rather than profile-gated.) -->
+        <dependency>
+            <groupId>me.paulschwarz</groupId>
+            <artifactId>spring-dotenv</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
+        <!-- Lab 3: access control on agent tools (@SecureAgentTool). Enforced when tools are
+             exposed over MCP with an authenticated caller; the default in-process flow is
+             unaffected, so the no-Docker lab path still works. -->
+        <dependency>
+            <groupId>com.embabel.agent</groupId>
+            <artifactId>embabel-agent-starter-mcpserver-security</artifactId>
             <version>${embabel-agent.version}</version>
         </dependency>
 
@@ -63,33 +96,20 @@
     </build>
 
     <profiles>
+        <!-- Lab 4: opt-in tracing. Build/run with -Pobservability to add the OpenTelemetry +
+             Zipkin exporter, then activate the `observability` Spring profile. Kept out of the
+             default build so the no-Docker lab path stays lean. -->
         <profile>
-            <id>openai-models</id>
-            <activation>
-                <property>
-                    <name>env.OPENAI_API_KEY</name>
-                </property>
-            </activation>
+            <id>observability</id>
             <dependencies>
                 <dependency>
                     <groupId>com.embabel.agent</groupId>
-                    <artifactId>embabel-agent-starter-openai</artifactId>
+                    <artifactId>embabel-agent-starter-observability</artifactId>
                     <version>${embabel-agent.version}</version>
                 </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>anthropic-models</id>
-            <activation>
-                <property>
-                    <name>env.ANTHROPIC_API_KEY</name>
-                </property>
-            </activation>
-            <dependencies>
                 <dependency>
-                    <groupId>com.embabel.agent</groupId>
-                    <artifactId>embabel-agent-starter-anthropic</artifactId>
-                    <version>${embabel-agent.version}</version>
+                    <groupId>io.opentelemetry</groupId>
+                    <artifactId>opentelemetry-exporter-zipkin</artifactId>
                 </dependency>
             </dependencies>
         </profile>

@@ -1,0 +1,96 @@
+embabel:
+  models:
+    # Default model used by withDefaultLlm(). Override per environment; any model your
+    # configured provider exposes will do. Swap to a local model (e.g. an Ollama tag) to
+    # keep data in the building — see Lab 6 and MODEL_ROUTING.md.
+    default-llm: gpt-4.1-mini
+
+    # Named LLM roles, referenced from code with withLlmByRole("<role>").
+    # Lab 6 routes cheap work (extract/shortlist) to "cheapest" and synthesis
+    # (research/assemble) to "best". Edit these to match what you actually have.
+    llms:
+      cheapest: gpt-4.1-nano
+      best: gpt-4.1
+
+  agent:
+    logging:
+      # Logging personality. Options at 0.5.0: default | starwars | severance | hitchhiker
+      # | montypython | colossus. The Lab 4 stuck-plan demo lands brilliantly under
+      # "severance" or "starwars" — same world-state evidence, impossible to ignore.
+      personality: default
+    platform:
+      models:
+        # The provider starters are always on the classpath (see pom.xml), and their
+        # config beans need *some* key value at startup or the context fails to load —
+        # even the keyless, fully-mocked `./mvnw verify`. Prefer a real key from the
+        # environment or .env (spring-dotenv loads .env into the Environment); fall back
+        # to a harmless placeholder so keyless boot and the mocked tests still start.
+        # A placeholder key never makes a live call succeed — for a no-key run use the
+        # `mock` profile (see docs/how-to/use-mock-mode.md), which serves canned responses.
+        openai:
+          api-key: ${OPENAI_API_KEY:noop-openai-key-set-a-real-one-in-.env}
+        anthropic:
+          api-key: ${ANTHROPIC_API_KEY:noop-anthropic-key-set-a-real-one-in-.env}
+
+spring:
+  application:
+    name: confplanner
+  shell:
+    interactive:
+      enabled: true
+  autoconfigure:
+    # Lab 3: the @SecureAgentTool annotation ships on the classpath so it compiles and is
+    # available as a teaching artifact, but its web-security filter chain needs Spring MVC
+    # (an MCP server). Exclude that auto-config so the no-Docker shell boots green; the labs
+    # that run the MCP server re-enable it. See labs/lab3-guardrails.md.
+    exclude: com.embabel.agent.autoconfigure.mcpserver.security.AgentMcpServerAutoConfiguration
+
+---
+# Mock profile: deterministic demos with no model calls and no API keys.
+# Activate with SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run (see SETUP.md).
+# (Not -Dspring-boot.run.profiles=mock — that reaches Spring Shell as a command and fails.)
+spring:
+  config:
+    activate:
+      on-profile: mock
+embabel:
+  models:
+    # Point every model role at the in-JVM stub (MockLlmService, @Profile("mock"), getName()="mock").
+    # ConfigurableModelProvider collects all LlmService beans and resolves roles by name, so these
+    # overrides route the whole flow through the stub — no provider name collisions, no network,
+    # no key.
+    default-llm: mock
+    llms:
+      cheapest: mock
+      best: mock
+  agent:
+    platform:
+      test:
+        # INERT at 0.5.0: no runtime class consults this flag. The real seam is the MockLlmService
+        # bean above; kept here only to document that the platform property does nothing on its own.
+        mock-mode: true
+
+---
+# Observability profile (Lab 4): export traces to Zipkin. Build/run with the Maven
+# `observability` profile so the OpenTelemetry + Zipkin exporter is on the classpath:
+#   docker compose up -d
+#   SPRING_PROFILES_ACTIVE=observability ./mvnw -Pobservability spring-boot:run
+# Then open http://127.0.0.1:9411. The default lab path needs none of this.
+spring:
+  config:
+    activate:
+      on-profile: observability
+embabel:
+  agent:
+    platform:
+      observability:
+        enabled: true
+        service-name: confplanner
+management:
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans

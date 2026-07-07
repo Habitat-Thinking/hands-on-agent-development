@@ -9,8 +9,15 @@ needs no API key — for a demo, an offline machine, or a flaky-network venue.
 SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
 ```
 
-This activates the `mock` Spring profile, which sets
-`embabel.agent.platform.test.mock-mode=true`. No provider key is read and no model is called.
+This activates the `mock` Spring profile, which registers a deterministic in-JVM stub model and
+routes every LLM role (`default-llm`, `cheapest`, `best`) to it. The stub matches each ConfPlanner
+prompt and returns canned, valid responses — so a run completes end-to-end (you get a real
+`PersonalSchedule`) while **no provider key is read and no network call is made**. It spends no
+tokens and works fully offline.
+
+> The output is fixed (the same platform-leaning schedule every time) — that is the point: a
+> repeatable demo. For a run against your own request and a real model, use a key instead
+> (see [Run against a real model](run-with-a-real-model.md)).
 
 > Pass the profile through the environment, not `-Dspring-boot.run.profiles=mock`: the Boot plugin
 > forwards that flag as a program argument, which Spring Shell tries to execute as a command and

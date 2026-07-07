@@ -90,6 +90,43 @@ lacking `conf:premium` is denied before any LLM spend. `@SecureAgentTool` needs 
 shell app excludes `AgentMcpServerAutoConfiguration` to boot without a web server (already set in
 `application.yml`).
 
+## Add a content guardrail (screen input before any model sees it)
+
+The shapes above guard the **plan**. A content guardrail guards the **content**: it validates the
+raw user request (or a model's response) on every LLM exchange, deterministically, before any
+spend. Implement `UserInputGuardRail` (package `com.embabel.agent.api.validation.guardrails`):
+
+```java
+public class RequestContentGuardRail implements UserInputGuardRail {
+
+    @Override
+    public String getName() { return "attendeeRequestGuard"; }
+
+    @Override
+    public String getDescription() {
+        return "Rejects attendee requests that attempt to override the agent's instructions";
+    }
+
+    @Override
+    public ValidationResult validate(String content, Blackboard blackboard) {
+        // deterministic checks; return new ValidationResult(ok, errors)
+    }
+}
+```
+
+Attach it where raw input first meets a model, on the prompt runner:
+
+```java
+ai.withLlmByRole("cheapest")
+  .withGuardRails(new RequestContentGuardRail())
+  .creating(AttendeeProfile.class)
+  .fromPrompt(...);
+```
+
+A failing validation raises `GuardRailViolationException` before the call is made. Because the
+check is plain code, test it directly — no mock LLM needed (see `RequestContentGuardRailTest`).
+`AssistantMessageGuardRail` is the same idea pointed at model *output*.
+
 ## Build and prove it bites
 
 ```bash

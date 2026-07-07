@@ -86,3 +86,13 @@ broken schedule.
 - Make `noDoubleBooking` forbid *overlapping* times, not just identical start slots.
 - Run the secured example with JWT (`application-secured.yml` in the Embabel examples) and watch a
   `conf:premium` vs non-premium token get different results.
+- **The fifth shape — a content guardrail.** The four shapes above guard the *plan*; Embabel's
+  guardrail framework (0.3.3+) also guards the *content* of every LLM exchange. `main` carries a
+  worked example: `RequestContentGuardRail` implements `UserInputGuardRail` and screens the raw
+  attendee request for prompt-injection markers before any model sees it — deterministic, no LLM
+  spend on a rejected request. It is attached with `.withGuardRails(...)` on the prompt runner in
+  `ConfPlanningCapabilities.extractProfile`, and `RequestContentGuardRailTest` proves it bites
+  with no keys. Try adding a marker of your own and watching the test catch it — then compare
+  this to Lab 1's belt-and-braces: DICE protects the schedule from a model that slips; the
+  content guard protects the model from input that lies. (See the how-to guide *Add a guardrail*
+  for the recipe.)

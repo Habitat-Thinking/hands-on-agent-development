@@ -51,8 +51,11 @@ public class ConfPlanningCapabilities {
 
     /** Understand the attendee from free text (LLM). Cheap work — pulling fields from a sentence. */
     public AttendeeProfile extractProfile(UserInput userInput, Ai ai) {
+        // Content guardrail: screen the raw request before any model sees it. Deterministic,
+        // no LLM spend on a rejected request. The plan-level guardrails live in the agents.
         return ai
                 .withLlmByRole("cheapest")
+                .withGuardRails(new RequestContentGuardRail())
                 .creating(AttendeeProfile.class)
                 .fromPrompt("""
                         Read the attendee's request and extract a structured profile.

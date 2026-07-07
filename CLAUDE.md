@@ -38,3 +38,7 @@ A running log of what bit us, so it doesn't bite again. (Detail lives in `AGENTS
   no `toolGroups` member — add tool groups on the prompt runner (`withToolGroup(CoreToolGroups.WEB)`).
 - `@SecureAgentTool` needs Spring MVC; on a shell-only app, exclude
   `AgentMcpServerAutoConfiguration` so the app still boots.
+- Content guardrails (0.5.0): implement `UserInputGuardRail` / `AssistantMessageGuardRail`
+  (`com.embabel.agent.api.validation.guardrails`) and attach with `.withGuardRails(...)` on the
+  prompt runner. `validate(content, blackboard)` returns a `ValidationResult`; a failing guard
+  raises `GuardRailViolationException` before any LLM call.

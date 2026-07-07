@@ -18,6 +18,19 @@ embabel:
       # | montypython | colossus. The Lab 4 stuck-plan demo lands brilliantly under
       # "severance" or "starwars" — same world-state evidence, impossible to ignore.
       personality: default
+    platform:
+      models:
+        # The provider starters are always on the classpath (see pom.xml), and their
+        # config beans need *some* key value at startup or the context fails to load —
+        # even the keyless, fully-mocked `./mvnw verify`. Prefer a real key from the
+        # environment or .env (spring-dotenv loads .env into the Environment); fall back
+        # to a harmless placeholder so keyless boot and the mocked tests still start.
+        # A placeholder key never makes a live call succeed — for a no-key run use the
+        # `mock` profile (see docs/how-to/use-mock-mode.md), which serves canned responses.
+        openai:
+          api-key: ${OPENAI_API_KEY:noop-openai-key-set-a-real-one-in-.env}
+        anthropic:
+          api-key: ${ANTHROPIC_API_KEY:noop-anthropic-key-set-a-real-one-in-.env}
 
 spring:
   application:

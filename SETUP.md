@@ -27,8 +27,10 @@ cp .env.example .env
 #   OPENAI_API_KEY=...        (default; application.yml routes to OpenAI models)
 #   ANTHROPIC_API_KEY=...
 ```
-`.env` is git-ignored. **Never commit a real key.** The Maven profiles auto-activate the matching
-provider starter when the env var is present.
+`.env` is git-ignored. **Never commit a real key.** Both provider starters are always on the
+classpath, and `.env` is loaded into the app at startup (via `spring-dotenv`) — so a key in `.env` is
+all you need; there is nothing else to configure. (If you set the Anthropic key, also point the model
+roles at Anthropic models — see [Route models by role](docs/how-to/route-models-by-role.md).)
 
 Run the shell:
 ```bash

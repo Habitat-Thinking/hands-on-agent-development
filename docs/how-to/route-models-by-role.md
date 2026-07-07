@@ -23,14 +23,32 @@ the logic stays untouched.
 
 ## 2. Map the roles in `application.yml`
 
-```yaml
-embabel:
-  models:
-    default-llm: gpt-4.1-mini
-    llms:
-      cheapest: gpt-4.1-nano
-      best: gpt-4.1
-```
+=== "OpenAI (default)"
+
+    ```yaml
+    embabel:
+      models:
+        default-llm: gpt-4.1-mini
+        llms:
+          cheapest: gpt-4.1-nano
+          best: gpt-4.1
+    ```
+
+=== "Anthropic"
+
+    ```yaml
+    embabel:
+      models:
+        default-llm: claude-sonnet-5     # must resolve, or the app has no default LLM
+        llms:
+          cheapest: claude-haiku-4-5
+          best: claude-opus-4-8
+    ```
+
+    Point the roles at Anthropic models and set `ANTHROPIC_API_KEY` (see
+    [Run against a real model](run-with-a-real-model.md)). **`default-llm` must change too** — every
+    action that calls `withDefaultLlm()` (e.g. `planNetworking`) resolves it, so leaving it on a
+    `gpt-4.1*` id while routing the roles to `claude-*` leaves the app with no resolvable default.
 
 Swap these for whatever you actually have — including a local Ollama tag for `cheapest` when data
 must stay in the building.
@@ -39,9 +57,10 @@ must stay in the building.
 
 Keep the routing table in `MODEL_ROUTING.md` matching the code: one row per action with its role,
 the justification (return-type complexity), and the default model. The repo's table already covers
-`extractAttendeeProfile`/`shortlistSessions` (`cheapest`), `researchSessions`/`assembleSchedule`/
-`planNetworking` (`best`), `premiumBriefing` (`default`), and the plain-code steps (`loadCatalog`,
-`confirmSchedule`). When you add or re-route an action, add or edit its row there.
+`extractAttendeeProfile`/`shortlistSessions` (`cheapest`), `researchSessions`/`assembleSchedule`
+(`best`), `planNetworking`/`premiumBriefing` (`default`, via `withDefaultLlm()`), and the plain-code
+steps (`loadCatalog`, `confirmSchedule`). When you add or re-route an action, add or edit its row
+there. (`planNetworking` uses the **default** LLM — it is not routed to `best`.)
 
 ## 4. Build
 

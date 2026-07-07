@@ -42,16 +42,20 @@ x "..." -p -r     # -p prompts, -r responses — read the plan, not the vibes
 
 For a demo that must not depend on a live model, run with the `mock` profile:
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
+SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
 ```
 This sets `embabel.agent.platform.test.mock-mode=true`. Use it when you want a repeatable run in the
 room without spending tokens.
+
+> Pass the profile through the environment, not `-Dspring-boot.run.profiles=…`: the Boot plugin
+> forwards that flag as a *program argument*, which Spring Shell tries to run as a command and fails
+> with `CommandNotFound`.
 
 ## 5. Observability (Lab 4, optional — needs Docker)
 
 ```bash
 docker compose up -d        # Zipkin on http://127.0.0.1:9411
-./mvnw -Pobservability spring-boot:run -Dspring-boot.run.profiles=observability
+SPRING_PROFILES_ACTIVE=observability ./mvnw -Pobservability spring-boot:run
 # open http://127.0.0.1:9411 and find your run
 docker compose down
 ```

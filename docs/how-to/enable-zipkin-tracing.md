@@ -16,8 +16,12 @@ You need the Maven `observability` profile (to put the OpenTelemetry + Zipkin ex
 classpath) **and** the `observability` Spring profile (to point tracing at the local collector):
 
 ```bash
-./mvnw -Pobservability spring-boot:run -Dspring-boot.run.profiles=observability
+SPRING_PROFILES_ACTIVE=observability ./mvnw -Pobservability spring-boot:run
 ```
+
+> Pass the Spring profile through the environment, not `-Dspring-boot.run.profiles=observability`:
+> the Boot plugin forwards that flag as a program argument, which Spring Shell tries to run as a
+> command and fails with `CommandNotFound`.
 
 ## 3. Invoke a goal
 

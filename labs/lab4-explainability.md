@@ -37,8 +37,12 @@ instead of the session's real slot. With more than one session that is always a 
 3. **(Optional) Read the trace in Zipkin:**
    ```
    docker compose up -d            # starts Zipkin on 9411
-   ./mvnw spring-boot:run -Dspring-boot.run.profiles=observability
+   SPRING_PROFILES_ACTIVE=observability ./mvnw -Pobservability spring-boot:run
    ```
+   (The `-Pobservability` Maven profile puts the OpenTelemetry + Zipkin exporter on the classpath;
+   without it Zipkin stays silently empty. Pass the Spring profile via the environment — the
+   `-Dspring-boot.run.profiles=…` flag reaches Spring Shell as a command and fails with
+   `CommandNotFound`.)
    Open <http://127.0.0.1:9411>, find the run, and watch `assembleSchedule` execute repeatedly
    while the goal span never closes. (Needs Docker — the planning-log path above does not.)
 4. **State the root cause in one sentence** before editing: *"assembleSchedule puts every item in

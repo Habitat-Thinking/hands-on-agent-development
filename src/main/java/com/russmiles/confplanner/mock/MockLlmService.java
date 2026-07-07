@@ -76,7 +76,8 @@ public class MockLlmService implements LlmService<MockLlmService> {
                     }
                     """;
         }
-        // ConfPlannerAgent.Shortlisting(sessionIds, reasoning) — real catalog ids.
+        // ConfPlanningCapabilities.Shortlisting(sessionIds, reasoning) — real catalog ids.
+        // (Relocated to the shared @Service in Lab 5; the mock matches on prompt text, not type.)
         if (prompt.contains("Pick the 8-14 sessions")) {
             return """
                     {
@@ -85,7 +86,7 @@ public class MockLlmService implements LlmService<MockLlmService> {
                     }
                     """;
         }
-        // ConfPlannerAgent.ResearchOutput(insights) — one Insight(sessionId, whyRelevant,
+        // ConfPlanningCapabilities.ResearchOutput(insights) — one Insight(sessionId, whyRelevant,
         // matchScore) per shortlisted id. Added in Lab 2: assembleSchedule now consumes
         // ResearchedSessions, so GOAP routes research between shortlist and assemble.
         if (prompt.contains("why it is relevant")) {
@@ -108,6 +109,18 @@ public class MockLlmService implements LlmService<MockLlmService> {
                     {
                       "sessionIds": ["PC-01", "PC-02", "PC-03"],
                       "rationale": "Three platform-leaning sessions across three days, no clashes."
+                    }
+                    """;
+        }
+        // ConfNetworkingAgent.NetworkingDraft(peopleToMeet, rationale) — the Lab 5 goal. Reached by
+        // a SEPARATE agent that reuses the same pipeline; names are the real speakers of the
+        // shortlisted sessions (PC-01/02/03, SR-09). Not exercised by MockModeIntegrationTest, but
+        // present so `SPRING_PROFILES_ACTIVE=mock` can demo the networking goal end to end.
+        if (prompt.contains("Suggest up to five people")) {
+            return """
+                    {
+                      "peopleToMeet": ["Dr. Priya Venkatasubramanian", "Marcus Oduya", "Lena Fjordholm"],
+                      "rationale": "Their platform and resilience talks map directly onto your interests and goals."
                     }
                     """;
         }

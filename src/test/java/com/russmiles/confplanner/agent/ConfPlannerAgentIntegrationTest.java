@@ -43,17 +43,17 @@ class ConfPlannerAgentIntegrationTest extends EmbabelMockitoIntegrationTest {
                         List.of("level up platform work"), List.of()));
 
         whenCreateObject(prompt -> prompt.contains("Pick the 8-14 sessions"),
-                ConfPlannerAgent.Shortlisting.class)
-                .thenReturn(new ConfPlannerAgent.Shortlisting(
+                ConfPlanningCapabilities.Shortlisting.class)
+                .thenReturn(new ConfPlanningCapabilities.Shortlisting(
                         List.of("PC-01", "PC-02", "PC-03", "SR-09"), "match interests"));
 
         whenCreateObject(prompt -> prompt.contains("why it is relevant"),
-                ConfPlannerAgent.ResearchOutput.class)
-                .thenReturn(new ConfPlannerAgent.ResearchOutput(List.of(
-                        new ConfPlannerAgent.Insight("PC-01", "core platform topic", 0.9),
-                        new ConfPlannerAgent.Insight("PC-02", "golden paths", 0.8),
-                        new ConfPlannerAgent.Insight("PC-03", "cost awareness", 0.7),
-                        new ConfPlannerAgent.Insight("SR-09", "resilience patterns", 0.85))));
+                ConfPlanningCapabilities.ResearchOutput.class)
+                .thenReturn(new ConfPlanningCapabilities.ResearchOutput(List.of(
+                        new ConfPlanningCapabilities.Insight("PC-01", "core platform topic", 0.9),
+                        new ConfPlanningCapabilities.Insight("PC-02", "golden paths", 0.8),
+                        new ConfPlanningCapabilities.Insight("PC-03", "cost awareness", 0.7),
+                        new ConfPlanningCapabilities.Insight("SR-09", "resilience patterns", 0.85))));
 
         whenCreateObject(prompt -> prompt.contains("Build this attendee a personal schedule"),
                 ConfPlannerAgent.ScheduleDraft.class)

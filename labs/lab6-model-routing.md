@@ -58,3 +58,9 @@ step to a **local** model when its data cannot leave the building.
 - Put one action behind a **local model** under a Spring profile (Ollama/Docker), so a regulated
   step keeps its data in the building. Note the trade-off in `MODEL_ROUTING.md`'s token-budget table.
 - Measure: run the same request with all-`best` vs routed, and compare the token budget in the log.
+  Since 0.4.0 Embabel also tracks **cost per LLM call** (aggregated across subprocesses), so the
+  comparison can be read in dollars per action, not just tokens — record what you observe in
+  `MODEL_ROUTING.md`'s observed-cost column.
+- **The third lever: prompt caching.** After routing and budgets, 0.4.0 adds Anthropic prompt
+  caching support — repeated context (like the catalog menu) can be cached at the provider.
+  Routing picks the model, the budget caps the run, caching cuts the price of what's left.

@@ -40,3 +40,22 @@ Levers:
   leave the building — trades latency/quality for data residency.
 - Tighten the `Budget` to fail fast in CI or demos.
 - Measure before optimising: run with all-`best` vs routed and compare the budget line in the log.
+  Embabel 0.4.0+ also reports **cost per LLM call** (aggregated across subprocesses) — read the
+  comparison in dollars per action, not just tokens.
+- **Prompt caching** (0.4.0+, Anthropic): repeated context such as the catalog menu can be cached
+  at the provider. Routing picks the model; the budget caps the run; caching cuts the price of
+  what's left.
+
+## Observed cost per action
+
+Fill this in from the per-call cost lines in the planning log after a routed run and an all-`best`
+run of the same request — the routing decision should be *measured*, not assumed. Re-measure when
+models or the catalog change.
+
+| Action | Routed cost (USD) | All-`best` cost (USD) | Notes |
+|---|---|---|---|
+| `extractAttendeeProfile` | _measure_ | _measure_ | |
+| `shortlistSessions` | _measure_ | _measure_ | catalog menu dominates input tokens |
+| `researchSessions` | _measure_ | _measure_ | |
+| `assembleSchedule` | _measure_ | _measure_ | |
+| **Total per run** | _measure_ | _measure_ | |

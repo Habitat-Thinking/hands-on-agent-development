@@ -67,7 +67,22 @@ authenticated caller. The default shell excludes that web-security auto-config s
 web server; enabling MCP is an advanced exercise (see the Embabel `Secured` example and
 `application-secured.yml`). The labs do not require it.
 
-## 7. GitHub Codespace / devcontainer (kill setup friction in the room)
+## 7. Embabel help inside your coding agent (optional, Track C)
+
+Embabel's **Guide** project (<https://github.com/embabel/guide>) is itself an MCP server that
+answers Embabel questions with RAG over the docs — and you can wire it into the same Claude Code
+you use as the build-time harness. Track C then has framework-accurate help on tap while the
+orchestrator works: the dual harness eating its own dog food.
+
+```bash
+# from the guide repo's README — register it as an MCP server in Claude Code, e.g.:
+claude mcp add embabel-guide -- <run command from the guide README>
+```
+
+Also worth bookmarking: **Embabel Hub** (<https://hub.embabel.com>) — a talk-to-the-docs agent —
+and the `embabel-agent-examples` repo (tracks snapshots, i.e. current best practice).
+
+## 8. GitHub Codespace / devcontainer (kill setup friction in the room)
 
 To avoid per-laptop setup, consider running the workshop in a **GitHub Codespace** (or a local
 devcontainer): JDK 21 preinstalled, `./mvnw clean verify` on first boot, and keys provided as

@@ -14,7 +14,9 @@ embabel:
 
   agent:
     logging:
-      # Keep the default logging personality off. Set to "starwars" for a bit of fun.
+      # Logging personality. Options at 0.5.0: default | starwars | severance | hitchhiker
+      # | montypython | colossus. The Lab 4 stuck-plan demo lands brilliantly under
+      # "severance" or "starwars" — same world-state evidence, impossible to ignore.
       personality: default
 
 spring:

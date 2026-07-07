@@ -66,3 +66,13 @@ instead of the session's real slot. With more than one session that is always a 
 - Inject a *different* fault (give `researchSessions` a return type `assembleSchedule` does not
   consume) and confirm the failure's *shape* changes: a severed produces/consumes link shows up as
   a type that is never `TRUE`, versus a condition that flips false.
+- **A third failure shape: exceptions.** Since 0.4.0 Embabel classifies action exceptions as
+  retriable vs non-retriable. Make `researchSessions` throw a transient exception and re-run:
+  the retry shows up in the log as its own signature — distinct from a condition that stays
+  `FALSE` (this lab) and a type never produced (above). Three faults, three log shapes: that's a
+  diagnosis table, not vibes.
+- **Read the log in style.** Set `embabel.agent.logging.personality` in `application.yml` to one
+  of `starwars | severance | hitchhiker | montypython | colossus` and re-run the broken branch. A
+  stuck plan narrated by Vader is still a stuck plan — the world-state lines carry the same
+  evidence. (Genuinely useful for demos: the personality makes the planning log impossible to
+  ignore.)

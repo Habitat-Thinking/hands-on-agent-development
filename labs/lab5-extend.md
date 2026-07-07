@@ -68,3 +68,10 @@ provably untouched.
 - Have `planNetworking` also read the secured `PremiumBriefing` when the caller is authorised,
   composing Lab 3's access control with the new capability.
 - Surface both goals from one shell command that invokes `PersonalSchedule` then `NetworkingPlan`.
+- **Pick a planner on purpose.** GOAP is one of *four* planner styles Embabel documents at 0.5.0
+  (GOAP, Utility AI, Supervisor/LLM planner, `@State` typed state machines — one programming
+  model across all four). As a design exercise, decide which you'd reach for if ConfPlanner grew:
+  a multi-day conference where preferences evolve as sessions are attended (utility — no fixed
+  goal, maximise value); a registration wizard with branching and human confirmation (`@State`);
+  an open-ended "concierge" answering arbitrary requests (supervisor). The typed
+  actions/conditions you built today are what all four plan over — the discipline transfers.

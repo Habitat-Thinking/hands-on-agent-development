@@ -33,7 +33,8 @@ import java.util.List;
  * that call expects. Embabel parses that text into the target record &mdash; the sender only needs
  * to match the prompt and return the right JSON. The fragment&rarr;shape mapping mirrors, exactly,
  * the baseline choreography in {@code ConfPlannerAgentIntegrationTest}
- * (extractAttendeeProfile &rarr; shortlistSessions &rarr; assembleSchedule).
+ * (extractAttendeeProfile &rarr; shortlistSessions &rarr; researchSessions &rarr;
+ * assembleSchedule).
  *
  * <p>This bean is {@code @Profile("mock")} only, so the keyless {@code ./mvnw verify} (which does
  * not activate {@code mock}) never sees it and is entirely unaffected.
@@ -80,6 +81,21 @@ public class MockLlmService implements LlmService<MockLlmService> {
                     {
                       "sessionIds": ["PC-01", "PC-02", "PC-03", "SR-09"],
                       "reasoning": "match interests"
+                    }
+                    """;
+        }
+        // ConfPlannerAgent.ResearchOutput(insights) — one Insight(sessionId, whyRelevant,
+        // matchScore) per shortlisted id. Added in Lab 2: assembleSchedule now consumes
+        // ResearchedSessions, so GOAP routes research between shortlist and assemble.
+        if (prompt.contains("why it is relevant")) {
+            return """
+                    {
+                      "insights": [
+                        {"sessionId": "PC-01", "whyRelevant": "core platform topic", "matchScore": 0.9},
+                        {"sessionId": "PC-02", "whyRelevant": "golden paths", "matchScore": 0.8},
+                        {"sessionId": "PC-03", "whyRelevant": "cost awareness", "matchScore": 0.7},
+                        {"sessionId": "SR-09", "whyRelevant": "resilience patterns", "matchScore": 0.85}
+                      ]
                     }
                     """;
         }

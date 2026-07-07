@@ -17,7 +17,8 @@ avoid-list to the prompt.
 ## Before state (`lab1-before`)
 
 - `AttendeeProfile` has `interests`, `role`, `experienceLevel`, `goals`. No notion of topics to avoid.
-- `extractAttendeeProfile` and `shortlistSessions` carry `// TODO (Lab 1)` anchors.
+- Three `// TODO (Lab 1)` anchors: in `AttendeeProfile` (the new record component), and in
+  `extractAttendeeProfile` and `shortlistSessions`.
 - `shortlistSessions` matches on interests only.
 
 ## Steps
@@ -36,18 +37,38 @@ avoid-list to the prompt.
    }
    ```
 3. **Populate it.** Update the `extractAttendeeProfile` prompt to also extract `avoidTopics`.
-4. **Honour it.** In `shortlistSessions`, attach the profile so its contribution reaches the model
-   (`ai.withDefaultLlm().withPromptContributor(profile).creating(...)`), **and** belt-and-braces,
-   filter the `menu` to drop any session whose `tags` intersect `avoidTopics`.
-5. Build: `./mvnw -q verify`.
+4. **Honour it — with a domain method, not an inline filter.** Add
+   `boolean shouldAvoid(Session session)` to `AttendeeProfile` (behaviour on the domain object is the
+   whole DICE point), then in `shortlistSessions` attach the profile so its contribution reaches the
+   model (`ai.withDefaultLlm().withPromptContributor(profile).creating(...)`) **and**, belt-and-braces,
+   drop any session where `profile.shouldAvoid(session)`.
+5. **Update the tests broken by the new field** (see the note below), then build: `./mvnw -q verify`.
+
+> **Your diff will also show…** adding `avoidTopics` as a fifth record component changes the
+> `AttendeeProfile` constructor arity, so every `new AttendeeProfile(...)` in the tests stops
+> compiling:
+>
+> ```
+> constructor AttendeeProfile in record AttendeeProfile cannot be applied to given types;
+>   required: List<String>,String,String,List<String>,List<String>
+> ```
+>
+> Add `List.of()` (an empty avoid-list) as the fifth argument in `ConfPlannerAgentTest` and
+> `ConfPlannerAgentIntegrationTest`. The `lab1-after` reference also adds two new unit tests —
+> `avoidedTopicsAreExcludedFromTheShortlistMenu` and `shouldAvoidIsCaseInsensitiveOnTags` — that
+> prove the filter and the domain method. Writing them is optional but they are the key-free
+> acceptance proof (see below).
 
 ## Acceptance check (framework-enforced)
 
-- For a request like *"…but no vendor keynotes"*, sessions tagged with the avoided topic are
-  **absent** from the schedule.
-- Run with `x "..." -p` and confirm the avoid-list appears in the prompt log — proof the
-  `PromptContributor` is wired in, not just the field added.
-- A unit test (see `lab1-after`) asserts the filtered shortlist excludes avoided tags.
+- **Keyless (no API key needed):** `./mvnw -q verify` is green, and the `lab1-after` unit test
+  `avoidedTopicsAreExcludedFromTheShortlistMenu` asserts the filtered shortlist excludes avoided
+  tags. This is the acceptance proof you can run offline — give it equal billing with the live run.
+- **Live (needs a key):** for a request like *"…but no vendor keynotes"*, sessions tagged with the
+  avoided topic are **absent** from the schedule; run with `x "..." -p` and confirm the avoid-list
+  appears in the prompt log — proof the `PromptContributor` is wired in, not just the field added
+  (`FakeOperationContext` does not render contributors into its capture, so only the live run shows
+  this).
 
 ## Three-track notes
 
@@ -60,7 +81,9 @@ avoid-list to the prompt.
 
 ## Going further
 
-- Add `@Tool boolean shouldAvoid(String tag)` to `AttendeeProfile` and let the model call it as a
-  tool instead of reading a sentence. Compare the prompt logs.
+- You already wrote `shouldAvoid(Session)` in step 4. Now add a *tool* variant —
+  `@Tool boolean shouldAvoid(String tag)` on `AttendeeProfile` — and let the model call it instead
+  of reading the contributed sentence. Compare the prompt logs: the sentence pushes the rule in; the
+  tool lets the model pull it on demand.
 - What happens if `avoidTopics` and `interests` conflict (same tag in both)? Decide the precedence
   and encode it on the domain object, not in the prompt.

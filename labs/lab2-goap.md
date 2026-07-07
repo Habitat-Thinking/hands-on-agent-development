@@ -24,19 +24,54 @@ own — because the new action produces what a downstream action now needs.
 1. **Add two domain records:**
    - `SessionInsight(Session session, String whyRelevant, double matchScore)`
    - `ResearchedSessions(List<SessionInsight> insights)`
-2. **Add the action:**
+2. **Add the action — with an inner id-only output record.** Following the same idiom as
+   `shortlistSessions`/`Shortlisting`, create an inner LLM-output record the model fills in, then
+   resolve its ids back to real `Session`s:
    ```java
+   // inner output records (id-only — what the model returns)
+   record Insight(String sessionId, String whyRelevant, double matchScore) {}
+   record ResearchOutput(List<Insight> insights) {}
+
    @Action
-   ResearchedSessions researchSessions(CandidateSessions candidates, Ai ai) { ... }
+   ResearchedSessions researchSessions(CandidateSessions candidates, Ai ai) {
+       // model → ResearchOutput (ids), then map each Insight to a SessionInsight (resolved Session)
+   }
    ```
-   Have the model return, per shortlisted session, *why it is relevant* and a 0–1 match score.
-   (Keep the id-only pattern: the model emits `sessionId` + `whyRelevant` + `matchScore`; code
-   resolves ids back to `Session`.)
+   Have the model return, per shortlisted session, *why it is relevant* and a 0–1 match score. The
+   id-only `ResearchOutput`/`Insight` is the LLM's contract; `ResearchedSessions`/`SessionInsight`
+   (step 1) is the resolved domain type the rest of the plan consumes.
 3. **Re-point the goal:** change `assembleSchedule` to consume `ResearchedSessions` instead of
    `CandidateSessions`. Do **not** reorder anything by hand.
-4. Build and run with `x "..." -p -r`. Read the planning log.
-5. **Replanning exercise:** temporarily `return null;` from `researchSessions` and re-run. Watch the
-   planner mark the produces/consumes link unsatisfied and **replan** rather than crash. Put it back.
+4. **Add the research stub to the integration test, then build** (`./mvnw -q verify`) — see the note
+   below.
+5. **(Live model — needs a key)** Run with `x "..." -p -r` and read the planning log.
+6. **(Live model — needs a key) Replanning exercise:** temporarily `return null;` from
+   `researchSessions` and re-run. Watch the planner mark the produces/consumes link unsatisfied and
+   **replan** rather than crash. Put it back.
+
+> **Your diff will also show…** the new `researchSessions` action runs inside the mocked
+> integration test, so the test needs a stub for it or `./mvnw verify` fails with:
+>
+> ```
+> NullPointerException: Cannot invoke "…ConfPlannerAgent$ResearchOutput.insights()"
+>   because "output" is null
+> ```
+>
+> Add a `whenCreateObject` matcher for the research step in `ConfPlannerAgentIntegrationTest`,
+> alongside the existing shortlist and schedule stubs:
+>
+> ```java
+> whenCreateObject(prompt -> prompt.contains("why it is relevant"),
+>         ConfPlannerAgent.ResearchOutput.class)
+>     .thenReturn(new ConfPlannerAgent.ResearchOutput(List.of(
+>         new ConfPlannerAgent.Insight("PC-01", "core platform topic", 0.9),
+>         new ConfPlannerAgent.Insight("PC-02", "golden paths", 0.8))));
+> ```
+>
+> **Keyless acceptance:** this mocked integration test *is* the key-free proof — its console output
+> prints the full planning log (`… → shortlistSessions → researchSessions → assembleSchedule → …`)
+> during `./mvnw verify`, so you can confirm the new action landed in the plan without a live model.
+> Steps 5–6 above only add the live view.
 
 ## Acceptance check (framework-enforced)
 

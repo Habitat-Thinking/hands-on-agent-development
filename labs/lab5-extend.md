@@ -48,9 +48,17 @@ provably untouched.
 - Invoking the `NetworkingPlan` goal returns networking suggestions; its planning log shows
   `extract → loadCatalog → shortlist → research → planNetworking` — the existing pipeline reused.
 - **Regression:** the `PersonalSchedule` flow plans and runs unchanged — its integration test (and
-  `GuardrailEnforcementTest`) stay green. The only change to the schedule path is moving prompt
-  bodies into a service; the plan and output are identical.
+  `GuardrailEnforcementTest`) are green **after you update their mock references** (see the note).
+  The plan and output are identical; only the *location* of the prompt bodies and inner records moves.
 - If done via Track C, the two-stage review passed before the change landed.
+
+> **Your diff will also show…** extracting the pipeline into `ConfPlanningCapabilities` relocates the
+> inner LLM-output records (`Shortlisting`, `ResearchOutput`, `Insight`, `ScheduleDraft`) from
+> `ConfPlannerAgent.*` to `ConfPlanningCapabilities.*`. Mid-refactor the existing tests stop
+> compiling with a run of `cannot find symbol` errors until you re-point their `whenCreateObject`
+> stubs (`ConfPlannerAgentTest`, `ConfPlannerAgentIntegrationTest`, `GuardrailEnforcementTest`). The
+> reference also adds `ConfNetworkingAgentIntegrationTest` — the key-free proof for the new agent.
+> "Stay green" means *after* those mechanical updates, not that the test files are untouched.
 
 ## Three-track notes
 

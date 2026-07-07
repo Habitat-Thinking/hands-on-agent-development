@@ -64,6 +64,14 @@ broken schedule.
    (`PremiumBriefing`) the goal never consumes, so the free flow is untouched.
 7. Build: `./mvnw -q verify`.
 
+> **Your diff will also show…** the `lab3-after` reference adds test content the steps above don't
+> spell out: two `@Condition` unit tests and the whole `GuardrailEnforcementTest` (the key-free
+> proof that a double-booked draft never reaches the goal). `GuardrailEnforcementTest` does not exist
+> on `lab3-before` — you write it in the `EmbabelMockitoIntegrationTest` style, mocking each step.
+> The deeper Lab 3 setup (the `pom.xml` dependency and the `application.yml` auto-config exclusion
+> that Step 6 needs) is called out in its own steps — do not skip the pom/yml changes just because
+> `git diff … -- src` hides them.
+
 ## Acceptance check (framework-enforced)
 
 - A draft with two sessions in one slot **never** reaches the goal (`GuardrailEnforcementTest`

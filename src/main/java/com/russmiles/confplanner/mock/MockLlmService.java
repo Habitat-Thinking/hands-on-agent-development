@@ -34,7 +34,8 @@ import java.util.List;
  * to match the prompt and return the right JSON. The fragment&rarr;shape mapping mirrors, exactly,
  * the baseline choreography in {@code ConfPlannerAgentIntegrationTest}
  * (extractAttendeeProfile &rarr; shortlistSessions &rarr; researchSessions &rarr;
- * assembleSchedule).
+ * assembleSchedule &rarr; confirmSchedule). Only the LLM-backed steps need canned JSON;
+ * {@code confirmSchedule} (Lab 3) is pure transformation, so it consumes no prompt fragment.
  *
  * <p>This bean is {@code @Profile("mock")} only, so the keyless {@code ./mvnw verify} (which does
  * not activate {@code mock}) never sees it and is entirely unaffected.
@@ -99,8 +100,9 @@ public class MockLlmService implements LlmService<MockLlmService> {
                     }
                     """;
         }
-        // ConfPlannerAgent.ScheduleDraft(sessionIds, rationale) — PC-01/02/03 sit in three
-        // distinct day+time slots, so the picks never clash.
+        // ConfPlannerAgent.ScheduleDraft(sessionIds, rationale) — assembleSchedule turns this into
+        // a DraftSchedule (Lab 3). PC-01/02/03 sit in three distinct day+time slots, so the picks
+        // never clash: the noDoubleBooking invariant holds and confirmSchedule reaches the goal.
         if (prompt.contains("Build this attendee a personal schedule")) {
             return """
                     {

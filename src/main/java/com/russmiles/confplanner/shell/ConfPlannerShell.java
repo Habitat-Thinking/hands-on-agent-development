@@ -2,6 +2,8 @@ package com.russmiles.confplanner.shell;
 
 import com.embabel.agent.api.invocation.AgentInvocation;
 import com.embabel.agent.core.AgentPlatform;
+import com.embabel.agent.core.Budget;
+import com.embabel.agent.core.ProcessOptions;
 import com.embabel.agent.domain.io.UserInput;
 import com.russmiles.confplanner.domain.PersonalSchedule;
 import org.springframework.shell.standard.ShellComponent;
@@ -23,8 +25,16 @@ public record ConfPlannerShell(AgentPlatform agentPlatform) {
     public String plan(
             @ShellOption(defaultValue = "I'm a senior platform engineer into Kubernetes, "
                     + "resilience and DevEx; build me a schedule") String request) {
+        // Lab 3 — a budget the planner cannot exceed: cap cost (USD), actions, and tokens.
+        // If a run would blow the cap it stops early rather than spinning, and the stop is
+        // visible in the planning log.
+        var budget = new Budget(0.50, 20, 200_000);
+        var options = ProcessOptions.DEFAULT.withBudget(budget);
+
         var schedule = AgentInvocation
-                .create(agentPlatform, PersonalSchedule.class)
+                .builder(agentPlatform)
+                .options(options)
+                .build(PersonalSchedule.class)
                 .invoke(new UserInput(request));
         return schedule.getContent();
     }

@@ -3,11 +3,15 @@ package com.russmiles.confplanner.agent;
 import com.embabel.agent.api.annotation.AchievesGoal;
 import com.embabel.agent.api.annotation.Action;
 import com.embabel.agent.api.annotation.Agent;
+import com.embabel.agent.api.annotation.Condition;
 import com.embabel.agent.api.common.Ai;
 import com.embabel.agent.domain.io.UserInput;
+import com.embabel.agent.mcpserver.security.SecureAgentTool;
 import com.russmiles.confplanner.domain.AttendeeProfile;
 import com.russmiles.confplanner.domain.CandidateSessions;
+import com.russmiles.confplanner.domain.DraftSchedule;
 import com.russmiles.confplanner.domain.PersonalSchedule;
+import com.russmiles.confplanner.domain.PremiumBriefing;
 import com.russmiles.confplanner.domain.ResearchedSessions;
 import com.russmiles.confplanner.domain.ScheduleItem;
 import com.russmiles.confplanner.domain.Session;
@@ -15,6 +19,7 @@ import com.russmiles.confplanner.domain.SessionCatalog;
 import com.russmiles.confplanner.domain.SessionInsight;
 import com.russmiles.confplanner.service.CatalogService;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -101,7 +106,7 @@ public class ConfPlannerAgent {
 
     // --- 3. Shortlist sessions that match the attendee (LLM) ------------------------------
 
-    @Action
+    @Action(post = {"hasCandidates"})
     CandidateSessions shortlistSessions(AttendeeProfile profile, SessionCatalog catalog, Ai ai) {
         // Belt: drop avoided sessions in plain code so the rule holds even if the model slips.
         var menu = catalog.sessions().stream()
@@ -163,21 +168,30 @@ public class ConfPlannerAgent {
         return new ResearchedSessions(insights);
     }
 
-    // --- 4. Assemble a conflict-free schedule (LLM) — the goal ----------------------------
-    //   Note: this now consumes ResearchedSessions, so GOAP routes research before assemble.
-    //
-    // TODO (Lab 3): guard this goal so the invariant actually bites at runtime.
-    //   - split assembly: have assembleSchedule produce a DraftSchedule (post = "noDoubleBooking",
-    //     canRerun = true) and add an @AchievesGoal confirmSchedule(DraftSchedule) with
-    //     pre = "noDoubleBooking" — a clashing draft then never satisfies the goal;
-    //   - add @Condition noDoubleBooking(DraftSchedule) and @Condition hasCandidates(CandidateSessions);
-    //   - have shortlistSessions post "hasCandidates" and add pre = "hasCandidates" to assemble;
-    //   - add a Budget (ProcessOptions) in ConfPlannerShell;
-    //   - add a @SecureAgentTool premium action. See labs/lab3-guardrails.md.
+    // --- Guardrails (Lab 3) ---------------------------------------------------------------
+    //   The invariant only bites if the GOAL depends on it. So assembleSchedule produces a
+    //   DraftSchedule (post = noDoubleBooking, canRerun = true) and the goal action
+    //   confirmSchedule requires noDoubleBooking as a precondition. A clashing draft never
+    //   satisfies the goal, so the planner re-runs assembly instead of returning a broken plan;
+    //   with no clash-free option it stops at the budget rather than spinning.
 
-    @AchievesGoal(description = "Produce a conflict-free personal schedule")
-    @Action
-    PersonalSchedule assembleSchedule(AttendeeProfile profile, ResearchedSessions researched, Ai ai) {
+    // The precondition: never assemble from an empty shortlist. Posted by shortlistSessions.
+    @Condition(name = "hasCandidates")
+    boolean hasCandidates(CandidateSessions candidates) {
+        return candidates != null && !candidates.sessions().isEmpty();
+    }
+
+    // The invariant: no two sessions in one slot. Side-effect-free, reassessed every cycle.
+    @Condition(name = "noDoubleBooking")
+    boolean noDoubleBooking(DraftSchedule draft) {
+        var slots = draft.items().stream().map(ScheduleItem::slot).toList();
+        return slots.size() == new HashSet<>(slots).size();
+    }
+
+    // --- 4. Assemble a draft schedule (LLM) ----------------------------------------------
+
+    @Action(pre = {"hasCandidates"}, post = {"noDoubleBooking"}, canRerun = true)
+    DraftSchedule assembleSchedule(AttendeeProfile profile, ResearchedSessions researched, Ai ai) {
         var sessions = researched.insights().stream().map(SessionInsight::session).toList();
         var menu = researched.insights().stream()
                 .map(i -> menuLine(i.session()) + " @ " + i.session().slot()
@@ -204,7 +218,34 @@ public class ConfPlannerAgent {
         var items = resolve(sessions, draft.sessionIds()).stream()
                 .map(s -> new ScheduleItem(s, s.slot()))
                 .toList();
-        return new PersonalSchedule(items, draft.rationale());
+        return new DraftSchedule(items, draft.rationale());
+    }
+
+    // --- 5. Confirm the schedule — the goal, gated by the invariant ----------------------
+
+    @AchievesGoal(description = "Produce a conflict-free personal schedule")
+    @Action(pre = {"noDoubleBooking"})
+    PersonalSchedule confirmSchedule(DraftSchedule draft) {
+        // Only reachable when noDoubleBooking holds, so the goal is conflict-free by construction.
+        return new PersonalSchedule(draft.items(), draft.rationale());
+    }
+
+    // --- Secured premium tool (Lab 3) -----------------------------------------------------
+    //   @SecureAgentTool gates this action with a Spring-Security authority expression. When the
+    //   tool is exposed over MCP, a caller without 'conf:premium' is denied BEFORE any LLM spend.
+    //   It produces PremiumBriefing, a type the schedule goal never consumes, so the free flow is
+    //   untouched and the no-Docker lab path still builds and runs green.
+
+    @SecureAgentTool("hasAuthority('conf:premium')")
+    @Action
+    PremiumBriefing premiumBriefing(ResearchedSessions researched, Ai ai) {
+        var titles = researched.insights().stream()
+                .map(i -> i.session().title())
+                .collect(Collectors.joining("; "));
+        return ai
+                .withDefaultLlm()
+                .creating(PremiumBriefing.class)
+                .fromPrompt("Write a one-paragraph premium briefing across these sessions: " + titles);
     }
 
     // --- helpers --------------------------------------------------------------------------

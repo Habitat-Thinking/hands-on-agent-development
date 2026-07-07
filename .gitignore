@@ -27,5 +27,10 @@
 site/
 .cache/
 
+# Local source materials (The Sovereign Engineer PDF + distilled models) — not for
+# distribution; slide specs under slides/ carry the quotes and citations they need.
+# Anchored to the repo root so docs/reference/ (the docs-site section) stays tracked.
+/reference/
+
 # Note: .claude/ is intentionally tracked — it ships the workshop's build-time
 # harness (.claude/agents/java-implementer.md). Do not ignore it.

@@ -49,12 +49,10 @@ public class ConfPlanningCapabilities {
     public record ResearchOutput(List<Insight> insights) {
     }
 
-    /** Understand the attendee from free text (LLM). */
+    /** Understand the attendee from free text (LLM). Cheap work — pulling fields from a sentence. */
     public AttendeeProfile extractProfile(UserInput userInput, Ai ai) {
-        // TODO (Lab 6): this is simple extraction — route it to a cheap model with
-        //   withLlmByRole("cheapest"). Save the strong model for synthesis. See labs/lab6-model-routing.md.
         return ai
-                .withDefaultLlm()
+                .withLlmByRole("cheapest")
                 .creating(AttendeeProfile.class)
                 .fromPrompt("""
                         Read the attendee's request and extract a structured profile.
@@ -86,8 +84,9 @@ public class ConfPlanningCapabilities {
 
         // Braces: attach the profile as a PromptContributor so its avoid-list rides along in
         // the prompt automatically — the rule lives on the domain object (DICE), not here.
+        // Cheap work: matching tags to a menu. Route to the cheapest model (Lab 6).
         var shortlisting = ai
-                .withDefaultLlm()
+                .withLlmByRole("cheapest")
                 .withPromptContributor(profile)
                 .creating(Shortlisting.class)
                 .fromPrompt("""
@@ -115,8 +114,9 @@ public class ConfPlanningCapabilities {
                 .map(ConfPlanningCapabilities::menuLine)
                 .collect(Collectors.joining("\n"));
 
+        // Reasoning about relevance and scoring — route to the strong model (Lab 6).
         var output = ai
-                .withDefaultLlm()
+                .withLlmByRole("best")
                 .creating(ResearchOutput.class)
                 .fromPrompt("""
                         For each shortlisted session, say in one sentence why it is relevant to an

@@ -1,4 +1,4 @@
-# Deck M4 — Explainability: debug by reading state (10 slides)
+# Deck M4 — Explainability: debug by reading state (11 slides)
 
 > Shown 13:50, first after lunch — run as a whodunit; keep slides dark and theatrical.
 > Habit badge: "Habit 4 — Read the plan, not the vibes". Speaker notes:
@@ -75,7 +75,27 @@
   - Citation line: "Sigelman et al. 2010 · OTel GenAI semconv · EU AI Act Art. 12/86 · NIST AI RMF"
 - **Notes:** cash in the M0 compliance promise here.
 
-## Slide 9 — Foil + lab
+## Slide 9 — Observability you build (the black-box recorder)
+- **Layout:** code + log pair with an event stream between them.
+- **Visual:** left: a compact code card — `@Component class PlanFlightRecorder implements
+  AgenticEventListener` with `onProcessEvent(...)` visible and the `@Component` annotation
+  highlighted (the whole registration story is that one annotation). Centre: an event stream —
+  small chips flowing from a platform box into the listener: "plan formulated · action executed
+  (+duration) · goal achieved · STUCK". Right: a log panel with the real output line:
+  `[flight-recorder] sharp_payne finished — 6 planning cycle(s), 5 replan(s), 6 action run(s)`.
+- **On-slide copy:**
+  - Headline: "The third surface: any Spring bean implementing `AgenticEventListener` gets
+    every event."
+  - "The same stream the logging personalities render — plans, actions with durations, goals,
+    `STUCK`"
+  - "`PlanFlightRecorder` (on `main`): one summary line per run. On `lab4-broken`, the replan
+    count IS the diagnosis — one integer."
+  - Sub: "No Docker, no keys — it fires even inside the mocked integration tests. Pipe it into
+    the observability estate you already run."
+- **Notes:** this is where observability stops being something you read and becomes something
+  you build; going-further in the worksheet extends it to count LLM requests per action.
+
+## Slide 10 — Foil + lab
 - **Layout:** checklist + task card.
 - **On-slide copy:**
   - Forecast (Track B): "☐ Paste the stuck log into an agent and let it guess — the guess may
@@ -85,7 +105,7 @@
   - Acceptance: "you name the failed condition BEFORE editing; goal span completes after"
   - "Worksheet: `labs/lab4-explainability.md` · 40 min"
 
-## Slide 10 — Keystone + transition
+## Slide 11 — Keystone + transition
 - **Layout:** keystone table, row 4 highlighted; ritual footer.
 - **On-slide copy:**
   - Row 4 lit: "Explainability · planning log + Zipkin trace · Read the plan, not the vibes"

@@ -34,7 +34,19 @@ branch, and the only branch where `./mvnw verify` failing is correct.
 5. **Zipkin path (optional).** `docker compose up -d`, observability profile, port 9411 — watch
    `assembleSchedule` execute repeatedly while the goal span never closes. Say explicitly: the
    planning-log path needs no Docker; nobody is blocked.
-6. **Keystone table callback** — row 4.
+6. **Observability you build** (`AgenticEventListener`). The planning log and the trace are
+   surfaces Embabel gives you; the third kind you build. Any Spring bean implementing
+   `AgenticEventListener` receives every process event — the `@Component` annotation is the
+   entire registration story. `main` carries `PlanFlightRecorder`: per-process counters and one
+   `[flight-recorder]` summary line; **replans are derived** (cycles beyond the first), so on
+   `lab4-broken` one integer is the whole diagnosis. Two beats to land: (a) the logging
+   personalities they've been watching all day are implemented as exactly this kind of
+   listener; (b) this is the on-ramp for piping plan events into whatever observability estate
+   they already run — the maturity model's observability dimension climbs Eyeballs → Captured →
+   Instrumented → **Aggregated** → Closed loop, and this listener is the first step off
+   Instrumented. Demo: it fires inside the mocked integration tests (`./mvnw verify`, no keys,
+   no Docker).
+7. **Keystone table callback** — row 4.
 
 ## Live demo script — run it as a whodunit
 

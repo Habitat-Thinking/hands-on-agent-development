@@ -76,3 +76,16 @@ instead of the session's real slot. With more than one session that is always a 
   stuck plan narrated by Vader is still a stuck plan — the world-state lines carry the same
   evidence. (Genuinely useful for demos: the personality makes the planning log impossible to
   ignore.)
+- **Build your own black box.** The planning log and the trace are Embabel's observability
+  surfaces; the third kind is one you *build*. Any Spring bean implementing
+  `AgenticEventListener` (`com.embabel.agent.api.event`) is picked up by the platform and
+  receives every process event — plans formulated (with the `WorldState` and `Plan`), action
+  results (with durations), goals achieved, `STUCK`. `main` carries a worked example:
+  `PlanFlightRecorder` keeps per-process counters and emits one `[flight-recorder]` summary
+  line per run — *replans* are derived (every planning cycle beyond the first), so on
+  `lab4-broken` that one number races upward while the goal never arrives: the whole diagnosis,
+  one integer. It needs no Docker and no keys — watch it fire inside the mocked integration
+  tests, and `PlanFlightRecorderTest` drives it with synthetic events. Exercise: extend it to
+  also count `LlmRequestEvent`s per action, or forward the summary to the observability system
+  you already run. (The logging personalities are implemented as exactly this kind of
+  listener — you have been watching one all day.)

@@ -17,7 +17,7 @@ slide: **Layout** (structural hint), **Visual** (what to draw), **On-slide copy*
 | M1 DICE | [deck-m1.md](deck-m1.md) | before Lab 1 hands-on | 9 |
 | M2 GOAP | [deck-m2.md](deck-m2.md) | before Lab 2 | 10 |
 | M3 Guardrails | [deck-m3.md](deck-m3.md) | before Lab 3 | 11 |
-| M4 Explainability | [deck-m4.md](deck-m4.md) | after lunch, before Lab 4 | 10 |
+| M4 Explainability | [deck-m4.md](deck-m4.md) | after lunch, before Lab 4 | 11 |
 | M5 Extend | [deck-m5.md](deck-m5.md) | before Lab 5 | 10 |
 | M6 Model routing | [deck-m6.md](deck-m6.md) | before Lab 6 | 10 |
 | M7 Wrap | [deck-m7.md](deck-m7.md) | 17:10, close | 10 |

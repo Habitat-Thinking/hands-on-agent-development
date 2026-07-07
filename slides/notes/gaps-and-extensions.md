@@ -136,6 +136,7 @@ montypython | colossus`. The repo's `application.yml` already winks at `starwars
 | New | Stretch Lab 7: ToolishRag over the catalog | ✅ worksheet `labs/lab7-rag.md` (take-home; code sketches, no lab7 branches — branch contract unchanged) |
 | New | "Where this is going" wrap slide | ✅ `deck-m7.md` slide 8 |
 | New | Risk register | ✅ docs site: `docs/reference/risk-register.md` |
+| M4 | `AgenticEventListener` exercise — observability you build | ✅ **implemented on `main`**: `PlanFlightRecorder` (+ test, fires in mocked integration tests); Lab 4 going-further; `deck-m4.md` slide 9 |
 
 Remaining deliberate non-adoptions: the M4 retry *demo code* (a throwing `researchSessions`
 variant) stays a worksheet exercise rather than landed code — landing it would mean rippling the

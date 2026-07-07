@@ -1,6 +1,6 @@
 # Master deck spec — Hands-On AI Agent Engineering (complete handover)
 
-**To Claude Design:** this single document specifies **eight slide decks (84 slides)** for a
+**To Claude Design:** this single document specifies **eight slide decks (85 slides)** for a
 full-day conference workshop. Build them as eight separate decks sharing ONE design system
 (Part 1). Part 2 gives per-slide specs: layout, a **Graphic** instruction, verbatim on-slide
 copy, and a speaker cue. Deliver in deck order M0 → M7.
@@ -19,7 +19,7 @@ house style.
 | M1 | DICE: behaviour on domain objects | 9 | before Lab 1 |
 | M2 | GOAP: name the goal, not the steps | 10 | before Lab 2 |
 | M3 | Guardrails: make the contract explicit | 11 | before Lab 3 |
-| M4 | Explainability: debug by reading state | 10 | after lunch, before Lab 4 |
+| M4 | Explainability: debug by reading state | 11 | after lunch, before Lab 4 |
 | M5 | Extend without breaking | 10 | before Lab 5 |
 | M6 | Model routing | 10 | before Lab 6 |
 | M7 | Wrap: govern the loop | 10 | 17:10 close |
@@ -614,7 +614,7 @@ the day — give it maximum visual weight.*
 
 ---
 
-## Deck M4 — Explainability: debug by reading state (10 slides)
+## Deck M4 — Explainability: debug by reading state (11 slides)
 *Habit badge: "Habit 4 · Read the plan, not the vibes". Post-lunch: keep slides dark,
 theatrical, whodunit-flavoured.*
 
@@ -695,7 +695,28 @@ theatrical, whodunit-flavoured.*
   - Caption: "Sigelman et al. 2010 · OTel GenAI semconv · EU AI Act Art. 12/86 · NIST AI RMF"
 - **Cue:** cash in the M0 compliance promise.
 
-### M4.9 — Foil + lab
+### M4.9 — Observability you build (the black-box recorder)
+- **Layout:** code + log pair with an event stream between them.
+- **Graphic:** three-part composition, left to right. (1) A compact code card:
+  `@Component class PlanFlightRecorder implements AgenticEventListener` with
+  `onProcessEvent(...)` visible and ONLY the `@Component` annotation highlighted — the entire
+  registration story is that one token. (2) An event stream: small labelled chips flowing from
+  a platform box into the listener — "plan formulated" · "action executed (+duration)" ·
+  "goal achieved" · "STUCK" (the STUCK chip red). Arrows = event delivery. (3) A log panel
+  showing the real output line:
+  `[flight-recorder] sharp_payne finished — 6 planning cycle(s), 5 replan(s), 6 action run(s)`.
+- **Copy:**
+  - "The third surface: any Spring bean implementing `AgenticEventListener` gets every event."
+  - "The same stream the logging personalities render — plans, actions with durations, goals,
+    `STUCK`"
+  - "`PlanFlightRecorder` (on `main`): one summary line per run. On `lab4-broken`, the replan
+    count IS the diagnosis — one integer."
+  - "No Docker, no keys — it fires even inside the mocked integration tests. Pipe it into the
+    observability estate you already run."
+- **Cue:** observability stops being something you read and becomes something you build; the
+  worksheet's going-further extends it to count LLM requests per action.
+
+### M4.10 — Foil + lab
 - **Layout:** forecast checklist + task card.
 - **Copy:**
   - "☐ Pastes the stuck log into an agent and lets it guess — maybe even right, but
@@ -705,7 +726,7 @@ theatrical, whodunit-flavoured.*
   - "Acceptance: you name the failed condition BEFORE editing; goal span completes after"
   - "Worksheet: `labs/lab4-explainability.md` · 40 min"
 
-### M4.10 — Keystone + transition
+### M4.11 — Keystone + transition
 - **Layout:** keystone table, row 4 highlighted; ritual footer.
 - **Copy:**
   - Row 4 lit.

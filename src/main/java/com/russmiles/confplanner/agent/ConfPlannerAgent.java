@@ -72,8 +72,8 @@ public class ConfPlannerAgent {
                         - role: their job role if stated, else a reasonable guess
                         - experienceLevel: one of Beginner, Intermediate, Advanced
                         - goals: what they want out of the conference, as short phrases
-                        // TODO (Lab 1): also extract `avoidTopics` — things the attendee does
-                        //   not want (e.g. "no vendor keynotes"). See labs/lab1-dice.md.
+                        - avoidTopics: topics/tags the attendee explicitly does NOT want
+                          (e.g. "no vendor keynotes" -> ["vendor", "keynote"]); empty if none
 
                         # Attendee request
                         %s
@@ -93,15 +93,17 @@ public class ConfPlannerAgent {
 
     @Action
     CandidateSessions shortlistSessions(AttendeeProfile profile, SessionCatalog catalog, Ai ai) {
+        // Belt: drop avoided sessions in plain code so the rule holds even if the model slips.
         var menu = catalog.sessions().stream()
+                .filter(s -> !profile.shouldAvoid(s))
                 .map(ConfPlannerAgent::menuLine)
                 .collect(Collectors.joining("\n"));
 
-        // TODO (Lab 1): once AttendeeProfile carries avoidTopics, exclude any session whose
-        //   tags intersect the avoid-list — either by filtering `menu` here, or by adding the
-        //   profile as a PromptContributor so the rule rides along in the prompt automatically.
+        // Braces: attach the profile as a PromptContributor so its avoid-list rides along in
+        // the prompt automatically — the rule lives on the domain object (DICE), not here.
         var shortlisting = ai
                 .withDefaultLlm()
+                .withPromptContributor(profile)
                 .creating(Shortlisting.class)
                 .fromPrompt("""
                         Pick the 8-14 sessions from the catalog that best match this attendee.

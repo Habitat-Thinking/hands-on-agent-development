@@ -165,6 +165,15 @@ public class ConfPlannerAgent {
 
     // --- 4. Assemble a conflict-free schedule (LLM) — the goal ----------------------------
     //   Note: this now consumes ResearchedSessions, so GOAP routes research before assemble.
+    //
+    // TODO (Lab 3): guard this goal so the invariant actually bites at runtime.
+    //   - split assembly: have assembleSchedule produce a DraftSchedule (post = "noDoubleBooking",
+    //     canRerun = true) and add an @AchievesGoal confirmSchedule(DraftSchedule) with
+    //     pre = "noDoubleBooking" — a clashing draft then never satisfies the goal;
+    //   - add @Condition noDoubleBooking(DraftSchedule) and @Condition hasCandidates(CandidateSessions);
+    //   - have shortlistSessions post "hasCandidates" and add pre = "hasCandidates" to assemble;
+    //   - add a Budget (ProcessOptions) in ConfPlannerShell;
+    //   - add a @SecureAgentTool premium action. See labs/lab3-guardrails.md.
 
     @AchievesGoal(description = "Produce a conflict-free personal schedule")
     @Action

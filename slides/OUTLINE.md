@@ -4,12 +4,27 @@ Module-by-module. Each module: a short frame, a live demo on the matching branch
 work the lab in their chosen track. The keystone slide is the objective→mechanism→habit table (M0),
 referenced back at every module.
 
+> Deck-building material lives in two layers: [decks/](decks/README.md) holds the
+> slide-by-slide build specs for Claude Design (layouts, visuals, verbatim copy, shared design
+> system); [notes/](notes/README.md) holds the per-module speaker notes, demo scripts, research
+> citations, and Q&A prep, alongside the [gaps-and-extensions](notes/gaps-and-extensions.md)
+> review of the workshop against the current Embabel state of play.
+
 ## M0 — Orientation (frame the day)
 
 - Why agents fail in production: ungrounded domains, hidden steps, no contract, no trace.
+- **Two crafts hide inside "AI agents"**: *agentic building* (agents as your workforce — agentic
+  workflows, harnesses, habitat thinking; *The Sovereign Engineer*) vs *building agents* (the
+  agent as your product — Embabel). Declare it: today is mostly building agents, driven via
+  agentic building (Track C).
 - **The dual harness**: build-time (`ai-literacy-superpowers`) and runtime (Embabel) teach the same
-  three disciplines — context engineering, architectural constraints, guardrail design.
-- The operational ladder: Dictating → Commanding → Regulating → Orchestrating → Supervising.
+  three disciplines — context engineering, architectural constraints, guardrail design. The amber
+  column is the agentic-building craft; the blue column is the building-agents craft.
+- **Two ladders**: operational (what the habitat delivers — Dictating → Commanding → Regulating
+  → Orchestrating → Supervising; the Agentic Experience maturity model's agent-behaviour
+  dimension) and cognitive (what you can think and do — Aware → Prompter → Verifier → Habitat
+  Engineer → Specification Architect → Sovereign Engineer; *The Sovereign Engineer*). The gap
+  between them is the Habitat Build Gap; coherence is the signal. Sources in `reference/`.
 - **Keystone slide** — the table:
 
   | # | Objective | Embabel mechanism | Habit |

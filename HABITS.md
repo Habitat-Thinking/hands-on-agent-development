@@ -30,6 +30,12 @@ day goes on:
 
 **Dictating → Commanding → Regulating → Orchestrating → Supervising.**
 
+> Provenance: these five verbs are the *agent behaviour* dimension of the Agentic Experience
+> 5-level habitat maturity model (see `reference/agentic-maturity-model.md`). Its cognitive
+> twin — what a team can *think and do*, L0–L5, ending at the Sovereign Engineer — and the
+> Habitat Build Gap between the two reads are in `reference/cognitive-ladder.md` and *The
+> Sovereign Engineer* (`reference/thesovereignengineer.pdf`).
+
 - *Dictating / Commanding* — you type or prompt each change (Tracks A/B).
 - *Regulating* — you set the constraints and let the agent work inside them.
 - *Orchestrating / Supervising* — the orchestrator plans and dispatches; you read the plan, gate the

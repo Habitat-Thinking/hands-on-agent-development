@@ -232,6 +232,11 @@ public class ConfPlannerAgent {
         return new PersonalSchedule(draft.items(), draft.rationale());
     }
 
+    // TODO (Lab 5): add a networking capability WITHOUT editing this agent. Create a separate
+    //   @Agent (ConfNetworkingAgent) that produces a NetworkingPlan from AttendeeProfile +
+    //   ResearchedSessions. Adding a new agent leaves this one — and its regression tests —
+    //   untouched. See labs/lab5-extend.md.
+
     // --- Secured premium tool (Lab 3) -----------------------------------------------------
     //   @SecureAgentTool gates this action with a Spring-Security authority expression. When the
     //   tool is exposed over MCP, a caller without 'conf:premium' is denied BEFORE any LLM spend.

@@ -82,7 +82,7 @@ be understood, not just memorised:
 - **An agent plans only with its own actions.** A second agent cannot borrow another agent's actions
   for planning. This is *why* the networking capability is a separate agent that re-declares its
   upstream steps as thin wrappers over a shared service — covered in
-  [guardrails and invariants](guardrails-and-invariants.md) and the extend lab.
+  [extending the agent](extending-the-agent.md) and the extend lab.
 - **A postcondition is a planning promise, not a runtime gate.** The planner believes an action's
   `post` will hold; it does not re-check it to decide the goal is done. That single fact is the most
   important nuance in the whole workshop and has its own page —

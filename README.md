@@ -34,8 +34,21 @@ the Embabel agent itself embodies.** The harness is a planning loop for your eng
 | 4 | Explainability | planning log + Zipkin trace; debug a stuck plan | Read the plan, not the vibes | `labs/lab4-explainability.md` |
 | 5 | Extend without breaking | add a `NetworkingPlan` agent; schedule flow unchanged | Extend by adding, not rewiring | `labs/lab5-extend.md` |
 | 6 | Right-size the model | `withLlmByRole` cheap-vs-strong; `MODEL_ROUTING.md` | Right-size the model | `labs/lab6-model-routing.md` |
+| 7 (stretch, take-home) | Agentic RAG over the catalog | retrieval as a tool feeding the plan | Extend by adding, not rewiring | `labs/lab7-rag.md` |
 
 See **[HABITS.md](HABITS.md)** for the full eight-habit stack.
+
+## Documentation
+
+The full workshop documentation — tutorials, how-to guides, reference, and explanation — is published
+at **<https://habitat-thinking.github.io/hands-on-agent-development/>** (source in [`docs/`](docs/)).
+
+To build and serve the docs site locally:
+
+```bash
+pip install -r docs/requirements.txt
+mkdocs serve      # then open http://127.0.0.1:8000
+```
 
 ## Prerequisites
 

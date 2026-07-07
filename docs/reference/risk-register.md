@@ -31,7 +31,7 @@ expectations. Revisit the README's "Spring Boot 3.5.x" claim when 2.0 reaches RC
 
 | ID | Risk | Likelihood | Impact | Status |
 |---|---|---|---|---|
-| R1 | **Branch drift.** The lesson lives in `lab{1..6}-{before,after}` + `lab4-broken`; a fix applied to `main` but not rippled through the branch progression silently diverges the walk. | Medium | High | Open |
+| R1 | **Branch drift.** The lesson lives in the `*-before`/`*-after` pairs (Lab 4 starts from `lab4-broken` instead of a `-before`); a fix applied to `main` but not rippled through the branch progression silently diverges the walk. | Medium | High | Open |
 | R2 | **`lab4-broken` CI confusion.** It is the *only* branch allowed to fail `./mvnw verify`; a well-meaning fix (human or agent) would destroy Lab 4. | Medium | High | Open |
 | R3 | **Worksheet/branch skew.** Worksheets on `main` now include post-0.5.0 extensions (content guardrail, cost lines) that the older `-before` branch snapshots don't mention. | Certain | Low | Open |
 

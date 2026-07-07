@@ -24,6 +24,8 @@ The following Embabel 0.5.0 facts govern these declarations:
 | `ConfNetworkingAgent` | `...confplanner.agent` | `@Agent` | `NetworkingPlan` |
 | `ConfPlanningCapabilities` | `...confplanner.agent` | `@Service` | — (no actions; shared logic) |
 | `CatalogService` | `...confplanner.service` | `@Service` | — (loads the catalog) |
+| `RequestContentGuardRail` | `...confplanner.agent` | `UserInputGuardRail` | — (validates raw user input; attached via `withGuardRails(...)` on `extractProfile`) |
+| `PlanFlightRecorder` | `...confplanner.observability` | `@Component` / `AgenticEventListener` | — (records planning cycles, replans, and action runs; emits one `[flight-recorder]` summary line on finish or `STUCK`) |
 
 `@Agent` descriptions:
 

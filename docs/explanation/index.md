@@ -19,5 +19,11 @@ embodies.
   shared disciplines, the operational ladder, and why Track C is the punchline.
 - **[The eight habits](the-eight-habits.md)** — the habit stack, and how each habit maps to a
   concrete Embabel mechanism and a lab.
+- **[Explainability](explainability.md)** — why a goal-oriented agent is legible by construction: the
+  planning log and trace *are* the explanation, not an add-on.
+- **[The runtime harness](the-runtime-harness.md)** — how Embabel constrains the agent at run time,
+  and how that mirrors the build-time harness.
+- **[Extending the agent](extending-the-agent.md)** — why a new capability is a *new agent* over a
+  shared `@Service`, since an agent plans only with its own actions.
 - **[Right-sizing models](right-sizing-models.md)** — cost as a design parameter, routing by
   return-type complexity, and the local-model / data-residency angle.

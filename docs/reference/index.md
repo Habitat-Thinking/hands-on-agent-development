@@ -14,6 +14,9 @@ a task, see the [how-to guides](../how-to/index.md); to learn by doing, see the
   variables, and the `ProcessOptions` budget.
 - **[Catalog schema](catalog-schema.md)** — the JSON shape of the synthetic conference catalog,
   field by field, with counts.
+- **[Annotations](annotations.md)** — the Embabel annotations ConfPlanner uses (`@Agent`, `@Action`,
+  `@AchievesGoal`, `@Condition`) and their member attributes.
+- **[Model routing](model-routing.md)** — the role→model table and how `withLlmByRole` resolves it.
 - **[CLI](cli.md)** — the Embabel shell commands and how to run the app.
 - **[Branch map](branch-map.md)** — the 13 git refs and the walk order.
 - **[Risk register](risk-register.md)** — framework, repo, workshop-day, and content risks, with

@@ -97,16 +97,23 @@ The `x` command hands your sentence to the agent and lets it match the request t
 The output should look something like this (the exact sessions and wording will vary — the model writes the rationale fresh each time):
 
 ```
-Your personal UberConf schedule
---------------------------------
-Day 1  09:00  Taming Kubernetes Operators at Scale       (Platform, Advanced)
-Day 1  11:00  Resilience Patterns for Distributed Systems (Platform, Advanced)
-Day 2  09:00  Developer Experience as a Product           (DevEx, Intermediate)
-...
+# Your UberConf schedule
 
-Rationale: I leaned into your platform-engineering focus, prioritising the
-Kubernetes and resilience tracks, and added a developer-experience session to
-match your DevEx interest. No two picks share a slot.
+- **2026-09-15 09:00** — Kubernetes Without the Tears
+  _Platform & Cloud · Cedar · Dr. Priya Venkatasubramanian_
+- **2026-09-15 10:30** — Cloud Cost Postmortems
+  _Platform & Cloud · Cedar · Hamish McAllister-Quinn_
+- **2026-09-16 13:00** — Golden Paths, Real Roads
+  _Platform & Cloud · Cedar · Lena Fjordholm_
+- **2026-09-17 13:00** — Fast Feedback Loops
+  _Architecture & DevEx · Birch · Lena Fjordholm_
+
+## Why this schedule
+
+I leaned into your platform-engineering focus — Kubernetes operations, cost
+discipline, and internal developer platforms — and added a fast-feedback DevEx
+session to match your developer-experience interest. Every pick sits in its own
+day-and-time slot, so nothing clashes.
 ```
 
 Look at the result: the sessions match your interests, **no two share a time slot**, and the agent explains its picks in a short rationale. You just ran a goal-oriented AI agent and got a real, usable schedule.

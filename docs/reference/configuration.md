@@ -22,7 +22,10 @@ the role→model mapping here.
 
 ## Spring profiles
 
-Activated with `--spring.profiles.active=<name>` or `-Dspring-boot.run.profiles=<name>`.
+Activated with the `SPRING_PROFILES_ACTIVE=<name>` environment variable, e.g.
+`SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run`. Do **not** use
+`-Dspring-boot.run.profiles=<name>`: the Boot plugin forwards it as a program argument, which Spring
+Shell tries to execute as a command and rejects with `CommandNotFound`.
 
 | Profile | Sets | Effect |
 |---|---|---|

@@ -6,11 +6,15 @@ needs no API key — for a demo, an offline machine, or a flaky-network venue.
 ## Run with the `mock` profile
 
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=mock
+SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
 ```
 
 This activates the `mock` Spring profile, which sets
 `embabel.agent.platform.test.mock-mode=true`. No provider key is read and no model is called.
+
+> Pass the profile through the environment, not `-Dspring-boot.run.profiles=mock`: the Boot plugin
+> forwards that flag as a program argument, which Spring Shell tries to execute as a command and
+> fails with `CommandNotFound`.
 
 ## Invoke a goal as usual
 

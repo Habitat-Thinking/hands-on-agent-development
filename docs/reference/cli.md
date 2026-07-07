@@ -11,8 +11,8 @@ in the workshop. To run the agent for the first time, see
 |---|---|
 | `./mvnw clean verify` | Compile, run unit + Mockito integration tests. Green with no API keys. |
 | `./mvnw spring-boot:run` | Start the Embabel shell. |
-| `./mvnw spring-boot:run -Dspring-boot.run.profiles=mock` | Start the shell in mock mode (no model calls). |
-| `./mvnw -Pobservability spring-boot:run -Dspring-boot.run.profiles=observability` | Start the shell with Zipkin tracing enabled. |
+| `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run` | Start the shell in mock mode (no model calls). |
+| `SPRING_PROFILES_ACTIVE=observability ./mvnw -Pobservability spring-boot:run` | Start the shell with Zipkin tracing enabled. |
 
 Requires Java 21 and the bundled Maven wrapper (`./mvnw`); no system Maven is needed.
 

@@ -32,5 +32,11 @@ site/
 # Anchored to the repo root so docs/reference/ (the docs-site section) stays tracked.
 /reference/
 
+# Runtime observability artifacts — the AgenticEventListener flight recorder writes
+# affordance-invocations.json to observability/ at the repo root when the app runs.
+# Anchored to the root so the source packages src/**/observability/ stay tracked
+# (they share the name).
+/observability/
+
 # Note: .claude/ is intentionally tracked — it ships the workshop's build-time
 # harness (.claude/agents/java-implementer.md). Do not ignore it.

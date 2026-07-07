@@ -17,9 +17,9 @@ OPENAI_API_KEY=sk-...        # default; application.yml routes to OpenAI models
 ANTHROPIC_API_KEY=sk-ant-...
 ```
 
-The matching Maven provider profile auto-activates from the env var (`openai-models` on
-`OPENAI_API_KEY`, `anthropic-models` on `ANTHROPIC_API_KEY`), so the provider starter lands on the
-classpath. If you set the Anthropic key, also point the model roles at Anthropic models in
+Both provider starters are always on the classpath, and `.env` is loaded into the app at startup
+(via `spring-dotenv`), so the key you set here is picked up automatically — there is nothing else to
+configure. If you set the Anthropic key, also point the model roles at Anthropic models in
 `application.yml` — see [Route models by role](route-models-by-role.md).
 
 ## 2. Start the shell

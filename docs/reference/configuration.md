@@ -34,14 +34,23 @@ Shell tries to execute as a command and rejects with `CommandNotFound`.
 
 No profile is active by default.
 
+## Providers on the classpath
+
+Both provider starters (`embabel-agent-starter-openai`, `embabel-agent-starter-anthropic`) are
+**always** on the classpath — plain `pom.xml` dependencies, not Maven-profile-gated. Which provider
+actually resolves models is a runtime decision (the key you set), not a build-time one. So the app
+boots the same way for every learner, keyed or not.
+
+To keep the keyless build green, `application.yml` gives each provider's `api-key` a placeholder
+fallback (`${OPENAI_API_KEY:noop-…}`); a real key from the environment or `.env` overrides it. A
+placeholder never makes a live call succeed — for a no-key run use the `mock` profile.
+
 ## Maven profiles
 
-In `pom.xml`. Provider profiles auto-activate on the matching environment variable.
+In `pom.xml`. Only one profile remains:
 
 | Profile | Activation | Adds dependency |
 |---|---|---|
-| `openai-models` | env `OPENAI_API_KEY` present | `embabel-agent-starter-openai` |
-| `anthropic-models` | env `ANTHROPIC_API_KEY` present | `embabel-agent-starter-anthropic` |
 | `observability` | manual (`-Pobservability`) | `embabel-agent-starter-observability`, `opentelemetry-exporter-zipkin` |
 
 Pinned versions: `embabel-agent.version` = `0.5.0`, `java.version` = `21`, Spring Boot parent =
@@ -49,13 +58,15 @@ Pinned versions: `embabel-agent.version` = `0.5.0`, `java.version` = `21`, Sprin
 
 ## Environment variables (.env)
 
-`.env` is git-ignored; copy `.env.example` to `.env` and set one provider key. Keys are only needed
-to run the agent against a real model — the build and tests are green without any key.
+`.env` is git-ignored; copy `.env.example` to `.env` and set one provider key. `.env` is loaded into
+the Spring `Environment` at startup by `spring-dotenv`, so a key placed there is picked up without
+exporting it. Keys are only needed to run the agent against a real model — the build and tests are
+green without any key.
 
 | Variable | Description |
 |---|---|
-| `OPENAI_API_KEY` | OpenAI provider key. Activates the `openai-models` Maven profile. Default provider. |
-| `ANTHROPIC_API_KEY` | Anthropic provider key. Activates the `anthropic-models` Maven profile. |
+| `OPENAI_API_KEY` | OpenAI provider key (default provider). Read via `${OPENAI_API_KEY}` in `application.yml`. |
+| `ANTHROPIC_API_KEY` | Anthropic provider key. Read via `${ANTHROPIC_API_KEY}` in `application.yml`. |
 
 ## ProcessOptions budget
 

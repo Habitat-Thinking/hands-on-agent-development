@@ -70,5 +70,11 @@ class ConfPlannerAgentIntegrationTest extends EmbabelMockitoIntegrationTest {
         assertFalse(schedule.rationale().isBlank(), "schedule must explain itself");
         assertTrue(schedule.getContent().contains("Kubernetes Without the Tears"),
                 "rendered schedule should name a chosen session");
+
+        // Regression (Lab 4): every item must be in its own distinct slot — the fault placed them
+        // all in one slot, which the noDoubleBooking invariant rightly refused.
+        var slots = schedule.items().stream().map(i -> i.slot()).toList();
+        assertEquals(slots.size(), new java.util.HashSet<>(slots).size(),
+                "no two scheduled sessions may share a slot");
     }
 }

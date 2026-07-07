@@ -215,13 +215,10 @@ public class ConfPlannerAgent {
                         %s
                         """.formatted(profile.goals(), menu));
 
-        // BUG (Lab 4): every item is pinned to the same placeholder slot instead of the session's
-        // real slot. With more than one session this is always a double-booking, so noDoubleBooking
-        // never holds, confirmSchedule's precondition is never met, and the agent goes STUCK.
-        // Diagnose it from the planning log + trace BEFORE reading this comment; the fix is on
-        // branch lab4-after (restore s.slot()).
+        // Each item goes in its session's real slot, so distinct sessions occupy distinct slots
+        // and noDoubleBooking can hold. (Lab 4 fixed this — see lab4-broken for the fault.)
         var items = resolve(sessions, draft.sessionIds()).stream()
-                .map(s -> new ScheduleItem(s, "TBD"))
+                .map(s -> new ScheduleItem(s, s.slot()))
                 .toList();
         return new DraftSchedule(items, draft.rationale());
     }

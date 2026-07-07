@@ -77,6 +77,7 @@ nav:
       - Model routing: reference/model-routing.md
       - CLI: reference/cli.md
       - Branch map: reference/branch-map.md
+      - Risk register: reference/risk-register.md
   - Explanation:
       - explanation/index.md
       - DICE: explanation/dice.md

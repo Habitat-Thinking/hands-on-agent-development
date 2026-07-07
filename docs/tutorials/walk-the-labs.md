@@ -146,6 +146,10 @@ Step back and look at the journey. You started with a passive data record and fi
 
 Those are the first six habits, made concrete (the [eight-habit stack](../explanation/the-eight-habits.md) adds two — *test the seams* and *govern the loop* — that run throughout). Close every change the way the workshop does: **read the planning log, read the trace, confirm the acceptance check.** That ritual is the whole discipline in three lines.
 
+## Going further: Lab 7 — agentic RAG (stretch, take-home)
+
+There is a seventh lab you take home. **Lab 7 — [agentic RAG](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/labs/lab7-rag.md)** adds retrieval over the catalog as a *tool* the agent calls while it plans, rather than stuffing the whole catalog into the prompt. It has no `-before`/`-after` branches — it builds on `main` — and it retroactively pays off model routing (Lab 6): retrieval keeps the strong-model prompts small. Do it on your own machine after the day.
+
 ## Where to go next
 
 - Ready to *get specific jobs done* now — switch providers, run in mock mode, add a new action, expose a secured tool? Head to the [How-to guides](../how-to/index.md).

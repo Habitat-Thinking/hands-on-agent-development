@@ -5,6 +5,22 @@ by hand. The orchestrator plans the change, the `java-implementer` agent makes t
 `src/main/java/**`, and the constraint-gate plus two-stage review gate it before it lands. You
 supervise: read the plan, gate the review, confirm the acceptance check.
 
+## Prerequisites
+
+Track C's orchestrator, constraint-gate, and two-stage review come from the
+**`ai-literacy-superpowers`** Claude Code plugin. Install it from the marketplace before you start:
+
+```text
+/plugin marketplace add Habitat-Thinking/ai-literacy-superpowers
+/plugin install ai-literacy-superpowers@ai-literacy-superpowers
+```
+
+**No plugin? You can still run Track C by hand.** This repo ships the implementer agent at
+[`.claude/agents/java-implementer.md`](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/.claude/agents/java-implementer.md):
+dispatch it directly with your scoped task, then review the diff against
+[`HARNESS.md`](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/HARNESS.md)
+constraints **C1–C6** yourself. You lose the automated gating, not the discipline.
+
 ## 1. State the goal and the acceptance check
 
 Give the orchestrator the intent, not the steps — and the acceptance check the framework will
@@ -36,10 +52,11 @@ does **not** commit.
 
 ## 4. Gate the two-stage review
 
-Review the diff against the constraints in [`HARNESS.md`](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/HARNESS.md)
-(C1–C9 — typed records, no hard-wired order, guarded actions, side-effect-free conditions,
-goal-gated invariants, justified model choice, and so on). The diff must satisfy every constraint
-that applies before it can land.
+Review the diff against the constraints in [`HARNESS.md`](https://github.com/Habitat-Thinking/hands-on-agent-development/blob/main/HARNESS.md).
+Track C's two-stage review is scoped to **C1–C6** — typed records, no hard-wired order, guarded
+actions, side-effect-free conditions, goal-gated invariants, and justified model choice. (C7–C9 —
+no secrets, green-without-keys, synthetic catalog — are enforced by CI and the secret scan, not this
+review.) The diff must satisfy every constraint that applies before it can land.
 
 ## 5. Confirm the acceptance check, then land
 

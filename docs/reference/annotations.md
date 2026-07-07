@@ -23,6 +23,7 @@ consumed types.
 |---|---|---|
 | `pre` | `String[]` | Names of conditions that must hold **before** the action can run. |
 | `post` | `String[]` | Names of conditions promised **after** the action runs (a planning promise, not a runtime gate). |
+| `canRerun` | `boolean` | Whether the planner may run the action more than once in a plan. Defaults to `false`; set `true` when the action must fire on every replan cycle — e.g. `assembleSchedule` at `ConfPlannerAgent.java:95`, which re-runs while `noDoubleBooking` is still `FALSE`. |
 
 !!! note
     A `post` condition on an `@AchievesGoal` action is a planning promise, not a runtime gate. To make

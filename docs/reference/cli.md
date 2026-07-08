@@ -21,7 +21,7 @@ Requires Java 21 and the bundled Maven wrapper (`./mvnw`); no system Maven is ne
 | Command | Alias | Description |
 |---|---|---|
 | `x "<request>"` | `execute "<request>"` | Match the free-text request to a goal and run the plan. |
-| `plan "<request>"` | — | Invoke the `PersonalSchedule` goal directly via `AgentInvocation` (provided by `ConfPlannerShell`). |
+| `plan "<request>"` | — | Invoke the `PersonalSchedule` goal directly via `AgentInvocation` (provided by `ConfPlannerShell`). Bypasses the LLM goal-ranker, so it is the **key-free / mock-mode** invocation; prints the planning log by default and takes no verbosity flags. |
 
 `x` / `execute` let the platform match the request to a registered goal. `plan` is a custom
 `@ShellMethod` that calls a specific goal programmatically; its `request` argument defaults to
@@ -29,7 +29,9 @@ Requires Java 21 and the bundled Maven wrapper (`./mvnw`); no system Maven is ne
 
 ## Verbosity flags
 
-Appended to `x` / `execute` to surface the planning detail.
+Appended to `x` / `execute` to surface the planning detail. They are **not** available on `plan`, and
+`x` needs a live model to rank the request — for a key-free run use `plan`, which prints the planning
+log by default.
 
 | Flag | Effect |
 |---|---|

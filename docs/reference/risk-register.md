@@ -5,7 +5,7 @@ mitigations and explicit review triggers. Review this page **before every delive
 an Embabel release tags. Statuses: **Open** (live risk, mitigation in place), **Watch** (horizon
 risk, no action yet), **Closed** (superseded).
 
-Last reviewed: 2026-07-07 · Embabel pin: **0.5.0 "Darwin"** (latest release as of review date).
+Last reviewed: 2026-07-08 · Embabel pin: **0.5.0 "Darwin"** (latest release as of review date).
 
 ## Framework and dependency risks
 
@@ -33,15 +33,17 @@ expectations. Revisit the README's "Spring Boot 3.5.x" claim when 2.0 reaches RC
 |---|---|---|---|---|
 | R1 | **Branch drift.** The lesson lives in the `*-before`/`*-after` pairs (Lab 4 starts from `lab4-broken` instead of a `-before`); a fix applied to `main` but not rippled through the branch progression silently diverges the walk. | Medium | High | Open |
 | R2 | **`lab4-broken` CI confusion.** It is the *only* branch allowed to fail `./mvnw verify`; a well-meaning fix (human or agent) would destroy Lab 4. | Medium | High | Open |
-| R3 | **Worksheet/branch skew.** Worksheets on `main` now include post-0.5.0 extensions (content guardrail, cost lines) that the older `-before` branch snapshots don't mention. | Certain | Low | Open |
+| R3 | **Worksheet/branch skew.** The lab-branch `labs/*.md` copies must stay identical to `main` (a learner reads the branch copy after `git checkout labN-before`). A worksheet fix or extension landing on `main` alone silently diverges the walk — and the skew can reach *core steps*, not just *Going further* sections. | Certain | Medium | Open |
 
 **R1 mitigation:** any change to lab-path code lands branch-by-branch in walk order and is
 verified with `git diff labN-before labN-after -- src`; `main`-only additions (like the content
 guardrail) must sit *off* the lab diff path.
 **R2 mitigation:** the expected failure is documented in README, SETUP and the Lab 4 worksheet;
 never "fix" `lab4-broken` — the fix lives on `lab4-after`.
-**R3 mitigation:** extensions are added as *Going further* sections only, so the core steps match
-every branch snapshot; full re-ripple is deliberate, not accidental.
+**R3 mitigation:** any `labs/*.md` (or lab-relevant `docs/**`) change lands on `main` **and** is
+rippled to every `labN-{before,after}` / `lab4-broken` copy in the same batch; verify with
+`git diff main labN-before -- labs/` (expect empty). Do not assume changes are confined to *Going
+further* — the 2026-07 learner audit found core-step skew (worksheet stubs that failed `verify`).
 
 ## Workshop-day risks
 

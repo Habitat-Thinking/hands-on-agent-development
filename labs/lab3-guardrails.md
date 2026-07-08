@@ -54,11 +54,17 @@ broken schedule.
    `@Action(pre = {"hasCandidates"}, post = {"noDoubleBooking"}, canRerun = true)`, and add
    `@AchievesGoal @Action(pre = {"noDoubleBooking"}) PersonalSchedule confirmSchedule(DraftSchedule)`.
    Have `shortlistSessions` post `hasCandidates` (`@Action(post = {"hasCandidates"})`).
-5. **Budget** in `ConfPlannerShell`:
+5. **Budget** in `ConfPlannerShell` — `Budget(cost, actions, tokens)`: max USD spend, max action
+   executions, and max tokens per run.
    ```java
    var options = ProcessOptions.DEFAULT.withBudget(new Budget(0.50, 20, 200_000));
    AgentInvocation.builder(agentPlatform).options(options).build(PersonalSchedule.class).invoke(...);
    ```
+   > What actually stops the assemble → confirm re-run loop is the platform's **default**
+   > `MaxActionsEarlyTerminationPolicy(maxActions = 50)` — that is the policy name you'll see in the
+   > log — with this `Budget` acting as the cost/token backstop. Drop the `Budget`'s action count
+   > below 50 and *it* becomes the stop; leave it high and the default 50-action policy halts the loop.
+   > Either way the run ends with `error=true` and `invoke` throws rather than returning a clash.
 6. **Access control:** add `@SecureAgentTool("hasAuthority('conf:premium')")` (package
    `com.embabel.agent.mcpserver.security`) on a premium action producing a side type
    (`PremiumBriefing`) the goal never consumes, so the free flow is untouched.
@@ -68,9 +74,17 @@ broken schedule.
 > spell out: two `@Condition` unit tests and the whole `GuardrailEnforcementTest` (the key-free
 > proof that a double-booked draft never reaches the goal). `GuardrailEnforcementTest` does not exist
 > on `lab3-before` — you write it in the `EmbabelMockitoIntegrationTest` style, mocking each step.
-> The deeper Lab 3 setup (the `pom.xml` dependency and the `application.yml` auto-config exclusion
-> that Step 6 needs) is called out in its own steps — do not skip the pom/yml changes just because
-> `git diff … -- src` hides them.
+> **To force a guaranteed clash,** mock the draft to place two sessions that share a slot: the slot
+> key is `Session.slot()` = `day + " " + startTime` (there is no literal `slot` field), and on the
+> synthetic catalog `PC-01` and `AI-01` both sit at `2026-09-15 09:00`. The existing
+> `ConfPlannerAgentIntegrationTest` is the closest template — copy its mock wiring and the inner
+> record names (`Shortlisting`, `ResearchOutput`, `Insight`, `ScheduleDraft`).
+>
+> **You do not touch `pom.xml` or `application.yml` in this lab.** The mcpserver-security dependency
+> and the `AgentMcpServerAutoConfiguration` exclusion Step 6 relies on are **already provided on
+> `lab3-before`** (so `@SecureAgentTool` compiles and the shell-only app still boots) — which is why
+> `git diff lab3-before lab3-after -- pom.xml src/main/resources` is empty. Read them if you're
+> curious how the secured tool is wired; there is no pom/yml edit to make.
 
 ## Acceptance check (framework-enforced)
 

@@ -22,8 +22,9 @@ import java.util.List;
 /**
  * A deterministic, in-JVM stand-in for a real LLM, active only under the {@code mock} Spring
  * profile. It exists so a learner can run the whole ConfPlanner flow with <em>no API key and no
- * network call</em>: {@code SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run}, then {@code x "..."}
- * produces a real {@code PersonalSchedule}.
+ * network call</em>: {@code SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run}, then {@code plan "..."}
+ * produces a real {@code PersonalSchedule}. (Use {@code plan}, not {@code x} — {@code x} ranks the
+ * request against goals via the LLM, which this stub does not answer.)
  *
  * <p>Why a bean rather than a platform flag? The 0.5.0 property
  * {@code embabel.agent.platform.test.mock-mode} is inert &mdash; no runtime class consults it. The

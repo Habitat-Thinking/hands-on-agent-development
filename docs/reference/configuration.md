@@ -29,7 +29,7 @@ Shell tries to execute as a command and rejects with `CommandNotFound`.
 
 | Profile | Sets | Effect |
 |---|---|---|
-| `mock` | `embabel.agent.platform.test.mock-mode: true` | Deterministic runs with no model calls and no keys. |
+| `mock` | Routes every LLM role to the in-JVM stub — `embabel.models.default-llm: mock` and `llms.cheapest` / `llms.best: mock`. (It also sets `embabel.agent.platform.test.mock-mode: true`, but that flag is **inert** at 0.5.0 — no runtime class reads it; the role overrides are the real seam.) | Deterministic runs with no model calls and no keys. Invoke with `plan`, not `x`. |
 | `observability` | `embabel.agent.platform.observability.enabled: true`, `embabel.agent.platform.observability.service-name: confplanner`, `management.tracing.enabled: true`, `management.tracing.sampling.probability: 1.0`, `management.zipkin.tracing.endpoint: http://127.0.0.1:9411/api/v2/spans` | Exports traces to a local Zipkin collector. Pair with the `observability` Maven profile. |
 
 No profile is active by default.

@@ -47,17 +47,25 @@ provably untouched.
 
 - Invoking the `NetworkingPlan` goal returns networking suggestions; its planning log shows
   `extract → loadCatalog → shortlist → research → planNetworking` — the existing pipeline reused.
+  (For the **key-free** `SPRING_PROFILES_ACTIVE=mock` demo to return real people rather than an empty
+  plan, add a `MockLlmService` branch keyed on your `planNetworking` prompt — the reference matches
+  `"Suggest up to five people"` and returns canned `peopleToMeet`. `./mvnw verify` itself is
+  unaffected: the integration tests use `whenCreateObject`, not `MockLlmService`.)
 - **Regression:** the `PersonalSchedule` flow plans and runs unchanged — its integration test (and
   `GuardrailEnforcementTest`) are green **after you update their mock references** (see the note).
   The plan and output are identical; only the *location* of the prompt bodies and inner records moves.
 - If done via Track C, the two-stage review passed before the change landed.
 
 > **Your diff will also show…** extracting the pipeline into `ConfPlanningCapabilities` relocates the
-> inner LLM-output records (`Shortlisting`, `ResearchOutput`, `Insight`, `ScheduleDraft`) from
-> `ConfPlannerAgent.*` to `ConfPlanningCapabilities.*`. Mid-refactor the existing tests stop
-> compiling with a run of `cannot find symbol` errors until you re-point their `whenCreateObject`
-> stubs (`ConfPlannerAgentTest`, `ConfPlannerAgentIntegrationTest`, `GuardrailEnforcementTest`). The
-> reference also adds `ConfNetworkingAgentIntegrationTest` — the key-free proof for the new agent.
+> inner LLM-output records `Shortlisting`, `ResearchOutput` and `Insight` from `ConfPlannerAgent.*`
+> to `ConfPlanningCapabilities.*`. **`ScheduleDraft` stays on `ConfPlannerAgent`** — `assembleSchedule`
+> is *not* extracted into the service, so its stub keeps the name `ConfPlannerAgent.ScheduleDraft`;
+> re-point only the three records that actually moved. Mid-refactor the existing tests stop compiling
+> with a run of `cannot find symbol` errors until you re-point their `whenCreateObject` stubs
+> (`ConfPlannerAgentTest`, `ConfPlannerAgentIntegrationTest`, `GuardrailEnforcementTest`). The
+> reference also adds `ConfNetworkingAgentIntegrationTest` — the key-free proof for the new agent; to
+> write your own, mock the new agent's inner record `ConfNetworkingAgent.NetworkingDraft` and match
+> the `planNetworking` prompt (the reference keys on the substring `"Suggest up to five people"`).
 > "Stay green" means *after* those mechanical updates, not that the test files are untouched.
 
 ## Three-track notes

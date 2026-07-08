@@ -5,6 +5,13 @@ The agent's behaviour is defined by typed `@Action` methods, `@Condition` method
 output types and its `pre`/`post` condition contracts. Types are described in the
 [domain model](domain-model.md).
 
+!!! note "This reference describes the finished agent (`main`)"
+    The components and actions below are the **end-state** after all six labs. Earlier lab branches
+    carry a subset — e.g. before Lab 3, `assembleSchedule` *is* the goal and returns `PersonalSchedule`
+    (there is no `DraftSchedule` / `confirmSchedule`); `ConfPlanningCapabilities`, `ConfNetworkingAgent`,
+    and the `cheapest` / `best` roles arrive in Labs 5–6. For what exists at a given step, follow that
+    lab's worksheet.
+
 The following Embabel 0.5.0 facts govern these declarations:
 
 - A `post` on the `@AchievesGoal` action is a planning promise, not a runtime gate. An invariant

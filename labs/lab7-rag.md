@@ -6,10 +6,12 @@
 > **Habit:** composes habits 1, 2 and 5 — typed domain, derived plan, right-sized spend.
 > **Branch:** work on `main` (this is a take-home / follow-up lab; there are no
 > `lab7-before/after` branches — the workshop branch contract stays `lab1..lab6`).
-> **Status:** stretch lab. The steps are verified against Embabel 0.5.0's module layout
-> (`embabel-agent-rag-core` ships `ToolishRag`); the code blocks are sketches to adapt against
-> the [0.5.0 user guide's RAG section](https://docs.embabel.com/embabel-agent/guide/0.5.0/), not
-> drop-in solutions like Labs 1–6.
+> **Status:** stretch lab. There is no `-before`/`-after` branch; you build on `main`. The concrete
+> recipe below — the dependency, a **keyless** store, the `ToolishRag` construction, and how to
+> attach it — was **compile-verified against Embabel 0.5.0**. What stays a *sketch* is the tuning
+> (chunking, which `Retrievable` types you search, filters, reranking), which you adapt against the
+> RAG section of the [0.5.0 user guide](https://docs.embabel.com/embabel-agent/guide/0.5.0/). It is
+> not a drop-in like Labs 1–6.
 
 ## Why this lab
 
@@ -25,15 +27,49 @@ off Lab 6: the cheap model's job gets smaller again.
 
 ## Steps (sketch)
 
-1. **Add the RAG modules.** `embabel-agent-rag-core` (and the ingestion pipeline /
-   Lucene-backed store per the 0.5.0 guide — artifact names are in the guide's module directory).
-2. **Ingest the catalog.** At startup, index each `Session`'s title, abstract and tags into the
-   store, keyed by session id. Keep the id-only idiom: the store returns ids + snippets; code
-   resolves ids to `Session` via `CatalogService`, exactly as `resolve(...)` does today.
-3. **Give shortlisting search instead of a menu.** In `ConfPlanningCapabilities.shortlist`,
-   replace the rendered menu with `ToolishRag` search tools on the prompt runner, and reword the
-   prompt: *"search the catalog for sessions matching the attendee's interests; return the ids
-   you chose."*
+1. **Add the RAG module.** One dependency, pinned like every other (it is *not* on the classpath
+   today, so the add is genuinely required):
+   ```xml
+   <dependency>
+     <groupId>com.embabel.agent</groupId>
+     <artifactId>embabel-agent-rag-core</artifactId>
+     <version>${embabel-agent.version}</version>
+   </dependency>
+   ```
+   It ships `ToolishRag` plus ready `SearchOperations` backends. **Pick the keyless one:**
+   `DirectoryTextSearch` does in-JVM text/regex search over a directory and needs **no embeddings**,
+   so the build stays green with no keys (rag-core pulls no Lucene — it is self-contained). The
+   vector path (`SpringVectorStoreVectorSearch`, or any `SearchOperationsBuilder.withEmbeddingService(...)`)
+   needs a real `EmbeddingService` — a provider key or a local model — which **breaks the repo's
+   keyless property**. Start with the text store; move to vectors only once you've wired an embedding
+   model.
+2. **Ingest the catalog into the search directory.** At startup, write each `Session` as a small
+   text file **named by its id** (`PC-01.txt`, contents = title + abstract + tags) into a directory,
+   then point the store at it with `new DirectoryTextSearch(dir)`. Naming the file by the session id
+   is what keeps the id-only idiom alive: retrieval hands you back ids, and code resolves them to
+   `Session` via `CatalogService`, exactly as `resolve(...)` does today. (For real hits, also list the
+   `Retrievable` chunk type you ingest in `ToolishRag`'s `textSearchFor` argument — see step 3.)
+3. **Give shortlisting search instead of a menu.** Attach the tool with **`.withReference(...)`** — a
+   `ToolishRag` is an `LlmReference`, *not* a tool group, so do **not** reach for `withToolGroup`. The
+   0.5.0 Java constructor is wide (no builder yet); this minimal shape compiles:
+   ```java
+   var rag = new ToolishRag(
+       "catalogSearch", "Search the conference catalog",
+       new DirectoryTextSearch(dir), ToolishRag.Companion.getDEFAULT_GOAL(),
+       SimpleRetrievableResultsFormatter.INSTANCE,
+       List.of(),        // vectorSearchFor — none, this is a text store
+       List.of(),        // textSearchFor — add your ingested Retrievable type here for real hits
+       List.of(),        // hints
+       event -> { },     // ResultsListener
+       null, null,       // metadata / entity filters — none
+       5000, "");        // maxZoomOutChars, childToolUsageNotes
+
+   // in ConfPlanningCapabilities.shortlist, replace the rendered menu:
+   ai.withLlmByRole("cheapest").withReference(rag)
+       .withPromptContributor(profile)
+       .creating(Shortlisting.class)
+       .fromPrompt("Search the catalog for sessions matching the attendee's interests; return the ids you chose.");
+   ```
 4. **Keep the belt.** The avoid-topics filter from Lab 1 must still hold: filter retrieved ids
    through `profile.shouldAvoid(...)` in code before building `CandidateSessions`. Retrieval
    changes where candidates come from, never what the guardrails allow.

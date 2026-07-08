@@ -6,6 +6,13 @@ hand-wired call order. The planner derives the sequence from what each action *c
 
 This is the Lab 2 shape: inserting a research step between shortlist and assemble.
 
+!!! note "Lab 2 vs the final structure"
+    The snippets below show the **end-state** structure (`main`), where each agent method is a thin
+    wrapper delegating to a shared `ConfPlanningCapabilities` `@Service` (`steps.research(...)`). That
+    service is introduced in **Lab 5**. In **Lab 2** there is no `steps` field — the prompt body and
+    id resolution live *inline* in `ConfPlannerAgent.researchSessions`. The GOAP lesson is identical
+    either way; only where the body lives differs.
+
 ## 1. Add the domain records the action moves
 
 Domain types are immutable Java records under `domain/`. For a research step:

@@ -64,7 +64,8 @@ own — because the new action produces what a downstream action now needs.
 >
 > Add a `whenCreateObject` matcher for the research step in `ConfPlannerAgentIntegrationTest`,
 > alongside the existing shortlist and schedule stubs. **Return an insight for every id the existing
-> schedule-draft stub places** (`PC-01`, `PC-02`, `PC-03`) — `assembleSchedule` now consumes the
+> schedule-draft stub places** (`PC-01`, `PC-02`, `PC-03`; the stub below returns a spare `SR-09` too —
+> harmless, since an insight for a non-drafted id is simply not placed) — `assembleSchedule` now consumes the
 > *researched* sessions, so any drafted id without an insight silently drops out and the test's
 > "all three drafted sessions should be placed" assertion fails with `expected: <3> but was: <2>`:
 >

@@ -51,9 +51,13 @@
 - **Layout:** near-empty demo slide.
 - **Visual:** log panel, live; a magnifying glass motif.
 - **On-slide copy:**
-  - "`git checkout lab4-broken` · `x \"…\" -p -r`"
+  - "`git checkout lab4-broken` · `x \"…\" -p -r`  (keyless: `SPRING_PROFILES_ACTIVE=mock … ` → `plan \"…\"`)"
   - "Find the condition that never flips TRUE. Call it out."
-- **Notes:** scroll WITH the room; let someone spot `noDoubleBooking: FALSE` recurring.
+- **Notes:** scroll WITH the room; let someone spot `noDoubleBooking: FALSE` recurring. The mock
+  profile reproduces the stall too (`MockModeIntegrationTest` fails the same way), so keyless
+  attendees run `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run` then `plan "…"` — `x` fails
+  under the mock, and `-p -r` are `x`-only, but `plan` prints the same stuck planning log. No shell
+  at all? `./mvnw test` already prints the world-state (Lab 4 Step 1).
 
 ## Slide 7 — The reveal
 - **Layout:** one-line diff card.

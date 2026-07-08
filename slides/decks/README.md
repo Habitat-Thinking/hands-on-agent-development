@@ -19,7 +19,7 @@ slide: **Layout** (structural hint), **Visual** (what to draw), **On-slide copy*
 | M3 Guardrails | [deck-m3.md](deck-m3.md) | before Lab 3 | 11 |
 | M4 Explainability | [deck-m4.md](deck-m4.md) | after lunch, before Lab 4 | 11 |
 | M5 Extend | [deck-m5.md](deck-m5.md) | before Lab 5 | 10 |
-| M6 Model routing | [deck-m6.md](deck-m6.md) | before Lab 6 | 10 |
+| M6 Model routing | [deck-m6.md](deck-m6.md) | before Lab 6 | 11 |
 | M7 Wrap | [deck-m7.md](deck-m7.md) | 17:10, close | 10 |
 
 ## Design system (paste this into Claude Design first)

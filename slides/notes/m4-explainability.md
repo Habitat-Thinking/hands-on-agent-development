@@ -53,9 +53,25 @@ branch, and the only branch where `./mvnw verify` failing is correct.
 ```bash
 git checkout lab4-broken
 ./mvnw test          # watch it fail — this branch is SUPPOSED to fail; say so twice
+                     # (both ConfPlannerAgentIntegrationTest AND MockModeIntegrationTest → Errors: 2)
 ./mvnw spring-boot:run
 x "I'm a senior platform engineer into Kubernetes, resilience and DevEx" -p -r
 ```
+
+No key? The mock profile reproduces the stall (that's why `MockModeIntegrationTest` fails too), so
+run it keyless — but invoke with `plan`, not `x`:
+
+```bash
+SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
+plan "I'm a senior platform engineer into Kubernetes, resilience and DevEx"   # prints the plan; no flags
+```
+
+`x` needs a live model to rank the request against goals, so it fails under the mock profile, and
+the `-p -r` flags are `x`-only — but `plan` prints the same stuck planning log (assemble looping,
+`noDoubleBooking` staying FALSE). Simplest of all: `./mvnw test` in the first line already prints
+that world-state, so the diagnosis works with no shell at all. (This mirrors the two paths the Lab 4
+worksheet now spells out — see the residual note in `gaps-and-extensions.md` on aligning the
+worksheet's own run block.)
 
 Scroll the world-state lines **with the room**, don't narrate ahead. Let someone spot
 `noDoubleBooking: FALSE` recurring after every assembly. Ask the room for the one-sentence root

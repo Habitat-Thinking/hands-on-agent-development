@@ -12,6 +12,17 @@ question — route a step to a *local* model when its data can't leave the build
 
 ## Slide beats
 
+0. **The reframe: the window is the budget** (new lead-in, Slide 2). Before the cost mechanics,
+   name the resource. Everything the day has done is one lever or another on a single finite budget —
+   the context window: tokens in + tokens out + the model's ceiling, all competing. Draw the
+   through-line the labs never named out loud: **DICE (Lab 1) fills it efficiently** (say the domain
+   rule once via `PromptContributor`, not in every prompt) · **the Budget guardrail (Lab 3) caps
+   it** · **routing (this lab) prices it** · **RAG (Lab 7, take-home) shrinks it** (500 sessions →
+   the relevant handful). "Context engineering" — the M0 discipline — *is* context-window
+   management; this slide cashes that in and sets up the spend picture. Keep it to ~60 seconds: it's
+   a synthesis, not a new topic. Do **not** open cross-turn memory here — that's a *different*
+   window problem (state across turns, not budget within a call); it's the M7 horizon.
+
 1. **The uneven-spend slide.** Token share of one schedule run (from the explanation doc):
    extract+shortlist ~15%, research ~35%, assemble ~45%, confirm ~0% (plain code). "If everything
    uses your best model, you're paying premium rates to pull five fields out of a sentence."
@@ -43,8 +54,15 @@ question — route a step to a *local* model when its data can't leave the build
 git checkout lab6-after
 grep -n "withLlmByRole" -r src/main/java   # four call sites, two roles — the whole diff
 ./mvnw spring-boot:run
-x "…" -p -r     # planning log shows which model served each action + the token/budget lines
+x "…" -p -r     # planning log shows which model served each action + the token/budget/cost lines
 ```
+
+Unlike the M0/M3/M4 demos, **this one wants a real key**: the mock profile spends no tokens and
+makes no provider call, so there are no per-call cost lines to compare — and the whole point of the
+module is reading the routed-vs-all-`best` comparison in dollars. (Keyless attendees still get the
+*routing* lesson from the diff and `MODEL_ROUTING.md`; they just can't run the measurement beat. If
+you must demo keyless, use `plan "…"` under the mock to show which role each action carries, then
+show the cost table in `MODEL_ROUTING.md` rather than live numbers.)
 
 If time allows, the measurement beat: flip `cheapest: gpt-4.1-nano` to the same model as `best`,
 re-run, compare the budget lines live. Close on `MODEL_ROUTING.md`: the table is the *reviewable*

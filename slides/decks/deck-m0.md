@@ -164,6 +164,10 @@
     schedule\" -p`"
   - Sub: "Nobody wrote the sequence you're about to see."
 - **Notes:** demo script in notes; goal = make the planning log an object of curiosity.
+  **Keyless venue?** run `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run` and invoke with
+  `plan "…"` instead — `x` ranks the request against goals with an LLM call, so it fails under the
+  mock profile (`Text content cannot be empty`); `plan` invokes the goal directly and prints the
+  planning log with no flags. See `docs/how-to/use-mock-mode.md`.
 
 ## Slide 14 — Transition
 - **Layout:** single line.

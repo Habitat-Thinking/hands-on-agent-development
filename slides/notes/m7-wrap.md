@@ -86,8 +86,19 @@ underneath. "Read the plan. Read the trace. Confirm the check."
 - *"How much of this transfers off Embabel?"* — the habits and ritual entirely; the mechanisms
   have equivalents (conditions ≈ output validators/state machines; planning log ≈ decision
   logging; roles ≈ router layer). Embabel is the cleanest JVM expression, not the only one.
-- *"What about multi-turn / human-in-the-loop / RAG?"* — deliberately out of today's scope;
-  point at the gaps-and-extensions doc and the Embabel examples repo.
+- *"What about multi-turn / memory / human-in-the-loop / RAG?"* — deliberately out of today's
+  scope, but name the shape rather than deflecting. Two *distinct* horizons, and the "Where this is
+  going" slide now carries both:
+  - **RAG** shrinks the *within-a-call* window — the M6 reframe ("the window is the budget")
+    cashed in: 500 sessions → the relevant handful. First step is the stretch worksheet
+    `labs/lab7-rag.md` (runtime-verified against 0.5.0).
+  - **Cross-turn memory** extends the agent *across* calls — a different window problem
+    (state between turns, not budget within one). Embabel ships `embabel-chat-store` (0.3.4) to
+    persist a session, and `@State` machines carry world-state across turns. ConfPlanner is
+    single-turn *by design* — memory is the next agent shape, not a missing feature. HITL rides the
+    same `@State` machinery.
+  Point at the gaps-and-extensions doc (Gap 5 RAG, Gap 9 context/memory) and the Embabel examples
+  repo for both.
 - *"How do I sell the harness to my team?"* — start with Track B's foil on a real ticket: run the
   same change governed and ungoverned, diff the outcomes in review. Evidence over advocacy —
   which is, one last time, the day's habit.

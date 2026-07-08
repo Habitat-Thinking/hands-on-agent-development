@@ -79,6 +79,20 @@ git checkout main
 x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule" -p
 ```
 
+No key (offline / flaky-network venue)? Run the deterministic mock and invoke with `plan`, not `x`:
+
+```bash
+SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
+# in the shell — plan invokes the goal directly and prints the planning log (no flags):
+plan "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
+```
+
+Why `plan` and not `x` here: `x`/`execute` first ask the model to *rank* the request against the
+registered goals — an LLM call the deterministic mock can't answer, so `x` fails under the mock
+profile with `Text content cannot be empty`. `plan` skips ranking (it invokes `PersonalSchedule`
+directly) and already prints the plan, which is why it's the key-free path. The `-p`/`-r` flags
+exist only on `x`. Full detail: `docs/how-to/use-mock-mode.md`.
+
 Point at, in order: (1) the **inferred plan** printed before execution — "nobody wrote this
 sequence"; (2) the world-state lines flipping conditions to TRUE; (3) the final schedule with its
 rationale. Don't explain the mechanics — that's the day. The demo's only job is to make the
@@ -130,7 +144,10 @@ planning log an object of curiosity.
   "habitat thinking" is the umbrella/org name (Habitat-Thinking) — both are the speaker's own
   vocabulary, use whichever fits the sentence. The three disciplines on the dual-harness slide
   (context engineering, architectural constraints, guardrail design) are the book's — the
-  `ai-literacy-superpowers` harness in Track C is the framework made runnable. The
+  `ai-literacy-superpowers` harness in Track C is the framework made runnable. Plant one seed here
+  you'll pay off at M6: **context engineering is, concretely, managing the context window as a finite
+  budget** — DICE, budgets, routing, and RAG are all levers on that one resource. Name it now in a
+  sentence; the M6 reframe slide ("the window is the budget") is where it lands. The
   two-crafts framing (agentic building vs building agents) is the speaker's conference
   vocabulary rather than a book chapter title — it operationalises the book's distinction
   between designing the collaboration and being its product.

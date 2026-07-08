@@ -121,9 +121,38 @@ montypython | colossus`. The repo's `application.yml` already winks at `starwars
 **Extension:** run the post-lunch M4 broken-agent demo with `personality: severance` or
 `starwars` — a stuck plan narrated by Vader is exactly the right 13:50 energy. One yml line.
 
+### Gap 9 — Context window & memory: name the resource, name the horizon (high value, near-zero cost) → M6 + M7
+
+Two related things hide under "context and memory," and they want opposite treatment.
+
+**(a) The context window as an engineered budget — reframe, not new content.** "Context engineering"
+is one of the day's three named disciplines (M0), and the *techniques* are taught all day — DICE says
+the domain rule once instead of per prompt (Lab 1), the Budget guardrail caps the spend (Lab 3),
+routing prices each step (Lab 6), RAG shrinks the menu (Lab 7) — but the **window is never named as
+the single finite resource all four levers act on.** Each lab manages the window without telling the
+learner that's what they're doing. The fix is one synthesis slide, best placed as an M6 lead-in
+(the module is already about tokens/cost/budget, and by M6 the room has *lived* three of the four
+levers): "the window is the budget, not a container — DICE fills it, guardrails cap it, routing
+prices it, RAG shrinks it." It retroactively ties four labs together for near-zero cost.
+
+**(b) Cross-turn memory / statefulness — keep out of core, promote from deflection to a named
+horizon.** Multi-turn memory is a genuinely *different* agent shape (ConfPlanner is single-turn goal
+planning by design), and adding it would break the fixed branch contract. But Embabel ships
+`embabel-chat-store` (0.3.4, persists a session) and `@State` machines (0.5.0, carry world-state and
+HITL across turns), so it deserves to sit **next to RAG as a real "where next" beat in M7**, not be
+lumped into a one-line Q&A deflection. Distinguish the two horizons explicitly: RAG shrinks the
+*within-a-call* window; memory extends the agent *across* calls.
+
+**Extension:** ✅ **adopted** — new M6 reframe slide ("the window is the budget", now M6.2, decks
+renumbered to 11 slides) in `deck-m6.md` + `MASTER-DECK-SPEC.md` + a lead-in beat in
+`notes/m6-model-routing.md`; an M0-notes seed sentence connecting context-engineering-the-discipline
+to window-as-budget; and a cross-turn-memory horizon bullet on the M7 "Where this is going" slide
+(`deck-m7.md` slide 8 / `M7.8`) with the Q&A upgraded from deflection to a named two-horizon answer
+in `notes/m7-wrap.md`. No lab or branch change — the branch contract is untouched.
+
 ---
 
-## Proposed upgraded day plan (deltas only) — adoption status as of 2026-07-07
+## Proposed upgraded day plan (deltas only) — adoption status as of 2026-07-08
 
 | Where | Change | Status |
 |---|---|---|
@@ -137,11 +166,25 @@ montypython | colossus`. The repo's `application.yml` already winks at `starwars
 | New | "Where this is going" wrap slide | ✅ `deck-m7.md` slide 8 |
 | New | Risk register | ✅ docs site: `docs/reference/risk-register.md` |
 | M4 | `AgenticEventListener` exercise — observability you build | ✅ **implemented on `main`**: `PlanFlightRecorder` (+ test, fires in mocked integration tests); Lab 4 going-further; `deck-m4.md` slide 9 |
+| M6 | Gap 9(a): "the window is the budget" reframe slide | ✅ new `deck-m6.md`/`M6.2` (decks now 11 slides) + `notes/m6-model-routing.md` lead-in beat + M0-notes seed |
+| M7 | Gap 9(b): cross-turn memory horizon bullet | ✅ `deck-m7.md` slide 8 / `M7.8` + `notes/m7-wrap.md` Q&A upgraded from deflection to named two-horizon answer |
+| All | Slide↔exercise reconciliation for audits v2–v4 (keyless run path) | ✅ every demo/lab run block in `slides/` now carries the keyless `plan`-not-`x` path (mock profile) alongside the real-key `x … -p -r`; M4 STUCK-signature wording aligned to `MaxActionsEarlyTerminationPolicy`; M6 demo flagged as needing a real key (no cost lines under the mock) |
 
 Remaining deliberate non-adoptions: the M4 retry *demo code* (a throwing `researchSessions`
 variant) stays a worksheet exercise rather than landed code — landing it would mean rippling the
 lab4 branch progression; the Lab 7 implementation likewise stays a sketch until it earns branch
 surgery.
+
+**Residual found during the slide-reconciliation pass (2026-07-08) — worksheet, now FIXED:**
+`labs/lab4-explainability.md` Step 2 paired the `mock` profile with `x "…" -p -r`, which contradicts
+audit v4's own finding (documented in `docs/how-to/use-mock-mode.md`): `x` fails under the mock
+profile (`Text content cannot be empty`, the goal-ranker LLM call goes unanswered), and `-p -r` are
+`x`-only. The keyless path is `plan "…"` (which prints the plan with no flags). v4 fixed this
+everywhere *except* Lab 4. ✅ **Resolved**: the worksheet existed byte-identically on 8 branches
+(`main`/feature branch + `lab3-after`, `lab4-broken`, `lab4-after`, `lab5-{before,after}`,
+`lab6-{before,after}`); the fix was applied on the feature branch and cherry-picked (`-x`) onto each
+lab branch — one `docs(lab4)` commit per branch, worksheet-only, no code touched. The M4 speaker
+notes and deck already show the correct `plan` path.
 
 ---
 

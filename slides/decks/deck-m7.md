@@ -88,7 +88,12 @@
   - "And beyond GOAP: Utility, Supervisor, `@State` planners · agentic RAG (`ToolishRag`) ·
     content guardrails · per-call cost tracking — the stretch worksheet `labs/lab7-rag.md` is
     your first step"
-- **Notes:** the repo's risk register tracks this — point at the docs site.
+  - "And beyond one turn: **cross-turn memory** — `embabel-chat-store` persists a session, `@State`
+    machines carry world-state across turns. ConfPlanner is deliberately single-turn; memory is the
+    next shape, not a missing feature"
+- **Notes:** the repo's risk register tracks this — point at the docs site. Two horizons on this
+  slide, deliberately distinct: RAG shrinks the *within-a-call* window (the M6 reframe); memory
+  extends the agent *across* calls. Both are named "where next," neither is in today's scope.
 
 ## Slide 9 — Where to go next
 - **Layout:** resource grid.

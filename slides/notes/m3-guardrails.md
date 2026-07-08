@@ -48,6 +48,7 @@ git checkout lab3-after
 ./mvnw -q test -Dtest=GuardrailEnforcementTest   # the clash is refused: invoke throws, budget hit
 ./mvnw spring-boot:run
 x "…" -p -r
+# keyless: SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run  →  plan "…"   (x fails under the mock; plan prints the plan)
 ```
 
 Point at: `hasCandidates` flipping TRUE after shortlist; the draft appearing; `noDoubleBooking`

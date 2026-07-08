@@ -21,7 +21,7 @@ house style.
 | M3 | Guardrails: make the contract explicit | 11 | before Lab 3 |
 | M4 | Explainability: debug by reading state | 11 | after lunch, before Lab 4 |
 | M5 | Extend without breaking | 10 | before Lab 5 |
-| M6 | Model routing | 10 | before Lab 6 |
+| M6 | Model routing | 11 | before Lab 6 |
 | M7 | Wrap: govern the loop | 10 | 17:10 close |
 
 ---
@@ -276,7 +276,10 @@ Citations render as one muted caption line at the slide's foot, monospace-free.
   - "`x \"I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a
     schedule\" -p`"
   - "Nobody wrote the sequence you're about to see."
-- **Cue:** make the planning log an object of curiosity.
+- **Cue:** make the planning log an object of curiosity. Keyless venue: run
+  `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run` and invoke with `plan "…"` — `x` needs a live
+  model (it ranks the request against goals via the LLM) and fails under the mock profile; `plan`
+  invokes the goal directly and prints the plan with no flags (`docs/how-to/use-mock-mode.md`).
 
 ### M0.14 — Transition
 - **Layout:** single line.
@@ -669,9 +672,12 @@ theatrical, whodunit-flavoured.*
 - **Layout:** near-empty demo slide.
 - **Graphic:** live log panel placeholder + magnifying glass.
 - **Copy:**
-  - "`git checkout lab4-broken` · `x \"…\" -p -r`"
+  - "`git checkout lab4-broken` · `x \"…\" -p -r`  (keyless: `SPRING_PROFILES_ACTIVE=mock … ` → `plan \"…\"`)"
   - "Find the condition that never flips TRUE. Call it out."
-- **Cue:** scroll WITH the room; consider `personality: severance` for this run.
+- **Cue:** scroll WITH the room; consider `personality: severance` for this run. Keyless attendees
+  run under the mock profile with `plan "…"` (the mock reproduces the stall via
+  `MockModeIntegrationTest`; `x` fails keyless and `-p -r` are `x`-only, but `plan` prints the same
+  stuck plan). No shell? `./mvnw test` already prints the world-state.
 
 ### M4.7 — The reveal
 - **Layout:** one-line diff card.
@@ -839,7 +845,7 @@ theatrical, whodunit-flavoured.*
 
 ---
 
-## Deck M6 — Model routing: the cheapest model that passes (10 slides)
+## Deck M6 — Model routing: the cheapest model that passes (11 slides)
 *Habit badge: "Habit 5 · Right-size the model".*
 
 ### M6.1 — Module title
@@ -850,7 +856,22 @@ theatrical, whodunit-flavoured.*
   - "M6 — Model routing: the cheapest model that passes"
   - "Cost is a design parameter, not an afterthought."
 
-### M6.2 — The uneven-spend picture
+### M6.2 — The window is the budget (reframe — ties four labs together)
+- **Layout:** reframe slide; a central "window" frame with four inward-pressing levers.
+- **Graphic:** one rectangle labelled "the context window — one finite budget every call spends
+  against". Four inward arrows, each tagged with the lab that taught it: DICE (Lab 1) "say the rule
+  ONCE" · Budget guardrail (Lab 3) "cap the spend" · Routing (Lab 6, lit) "price each step" · RAG
+  (Lab 7, dashed = take-home) "shrink the menu: 500 sessions → the relevant handful".
+- **Copy:**
+  - "Everything you've done all day was managing ONE resource: the context window."
+  - "The window is a budget, not a container. Tokens in + tokens out + the model's ceiling all
+    compete for it."
+  - "DICE fills it efficiently · guardrails cap it · routing prices it · RAG shrinks it."
+- **Cue:** the synthesis beat — the room has lived three of the four levers, so name the through-line
+  before teaching the fourth. "Context engineering" (M0) IS context-window management. Cross-turn
+  *memory* is a different window problem — flag it as the M7 horizon, don't open it here.
+
+### M6.3 — The uneven-spend picture
 - **Layout:** one annotated stacked bar.
 - **Graphic:** a single horizontal 100% bar segmented: extract+shortlist ~15% · research ~35% ·
   assemble ~45% · confirm ~0% (drawn as a hairline sliver, callout "plain code"). Segment labels
@@ -860,7 +881,7 @@ theatrical, whodunit-flavoured.*
   - "If everything uses your best model, you're paying premium rates to pull five fields out of
     a sentence."
 
-### M6.3 — The opposite of right-sizing isn't 'cheap'
+### M6.4 — The opposite of right-sizing isn't 'cheap'
 - **Layout:** statement slide.
 - **Graphic:** one large greyed default-model chip with all five action tiles funnelling into it
   indiscriminately — a visual of *no decision being made* (uniform grey, no routing).
@@ -869,7 +890,7 @@ theatrical, whodunit-flavoured.*
   - "One default absorbing work it's over-qualified for. Right-sizing makes each step's cost a
     decision you can defend — or reduce."
 
-### M6.4 — The heuristic (poster)
+### M6.5 — The heuristic (poster)
 - **Layout:** rule poster + application table.
 - **Graphic:** the rule set large as a two-branch decision: return-type card "flat list of
   strings" → small `cheapest` chip; return-type card "scores · rationale · conflict-free
@@ -881,7 +902,7 @@ theatrical, whodunit-flavoured.*
   - "The return type is an honest proxy for how much judgement the step demands."
 - **Cue:** the id-only idiom (M1) keeps cheap steps cheap.
 
-### M6.5 — Config, not code
+### M6.6 — Config, not code
 - **Layout:** code + config twins.
 - **Graphic:** left card: Java with exactly ONE highlighted token — `withLlmByRole("cheapest")`;
   right card: the yml role map. A rotating-plug icon between them: the binding is the moving
@@ -892,7 +913,7 @@ theatrical, whodunit-flavoured.*
   - "Model names churn quarterly; roles don't. Re-routing the estate is a config edit — and the
     tests mock the LLM, so it builds green with no keys."
 
-### M6.6 — The industry built this layer too
+### M6.7 — The industry built this layer too
 - **Layout:** evidence row + contrast.
 - **Graphic:** three small evidence cards (FrugalGPT · RouteLLM · provider auto-routers) above;
   below, Embabel's role-map table rendered as a clean, readable, human-signed document —
@@ -904,7 +925,7 @@ theatrical, whodunit-flavoured.*
   - "Embabel's version is a human-reviewable table, not a learned black box — in a regulated
     shop, that's a feature."
 
-### M6.7 — The residency lever
+### M6.8 — The residency lever
 - **Layout:** split territory diagram.
 - **Graphic:** left territory: a building outline (amber border) containing a local-model chip
   with the `extract` node routed into it; right territory: a cloud outline containing the strong
@@ -916,7 +937,7 @@ theatrical, whodunit-flavoured.*
   - "Bind `cheapest` to an Ollama tag under a Spring profile. Code unchanged. Trade named — and
     RECORDED in `MODEL_ROUTING.md`."
 
-### M6.8 — Measure before optimising
+### M6.9 — Measure before optimising
 - **Layout:** comparison twins + third-lever chip.
 - **Graphic:** two log panels, identical geometry: "all-`best` run" vs "routed run", per-call
   COST lines highlighted; a delta callout between them showing the saving. Beneath, a small
@@ -928,7 +949,7 @@ theatrical, whodunit-flavoured.*
   - "Routing picks the model · the budget caps the run · prompt caching (0.4.0+) cheapens the
     repeats."
 
-### M6.9 — Foil + lab
+### M6.10 — Foil + lab
 - **Layout:** forecast checklist + task card.
 - **Copy:**
   - "☐ Hard-codes a cheaper model name in Java — wrong by next quarter ☐ Downgrades
@@ -939,7 +960,7 @@ theatrical, whodunit-flavoured.*
     and you can defend each row"
   - "Worksheet: `labs/lab6-model-routing.md` · 30 min · Track C"
 
-### M6.10 — Keystone + transition
+### M6.11 — Keystone + transition
 - **Layout:** keystone table, row 6 highlighted — table now FULLY lit for the first time;
   ritual footer.
 - **Copy:**
@@ -1045,7 +1066,10 @@ send-them-home-tall.*
   - "2.0 line: Spring Boot 4 · Spring AI 2.0 · Jackson 3"
   - "Beyond GOAP: Utility, Supervisor, `@State` planners · agentic RAG (`ToolishRag`) · content
     guardrails · per-call cost tracking — start with `labs/lab7-rag.md`"
-- **Cue:** the repo's risk register tracks this.
+  - "Beyond one turn: cross-turn memory — `embabel-chat-store` persists a session, `@State` carries
+    world-state across turns. ConfPlanner is deliberately single-turn; memory is the next shape"
+- **Cue:** the repo's risk register tracks this. Two distinct horizons: RAG shrinks the within-a-call
+  window (M6 reframe); memory extends the agent across calls. Both "where next," neither in scope today.
 
 ### M7.9 — Where to go next
 - **Layout:** resource grid, six cards.

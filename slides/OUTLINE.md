@@ -36,7 +36,9 @@ referenced back at every module.
   | 5 | Extend without breaking | new agent/action, flow unchanged | Extend by adding, not rewiring |
   | 6 | Right-size the model | `withLlmByRole` cheap-vs-strong | Right-size the model |
 
-- Demo: `main` — run `x "..." -p` and read the inferred plan.
+- Demo: `main` — run `x "..." -p` and read the inferred plan. (Keyless venue: run under
+  `SPRING_PROFILES_ACTIVE=mock` and invoke with `plan "..."` — `x` ranks via the LLM and fails under
+  the mock; `plan` invokes the goal directly and prints the plan. See `docs/how-to/use-mock-mode.md`.)
 
 ## M1 — DICE: behaviour on domain objects (Lab 1)
 
@@ -61,7 +63,8 @@ referenced back at every module.
 ## M4 — Explainability: debug by reading state (Lab 4)
 
 - A stuck agent is a legible failure. Read the world-state; find the condition that stayed false.
-- Demo: `lab4-broken` — run it, watch `STUCK`; read the planning log (and Zipkin if Docker is up);
+- Demo: `lab4-broken` — run it, watch the plan stall (`MaxActionsEarlyTerminationPolicy`; the word
+  `STUCK` itself shows only in the `[flight-recorder]` summary line); read the planning log (and Zipkin if Docker is up);
   state the root cause; `lab4-after` fixes one line + a regression test.
 
 ## M5 — Extend without breaking (Lab 5)
@@ -73,12 +76,19 @@ referenced back at every module.
 
 ## M6 — Model routing: the cheapest model that passes (Lab 6)
 
+- Reframe (lead-in slide): the context window is one finite budget, and the day's habits are its
+  levers — DICE fills it, guardrails cap it, routing prices it, RAG shrinks it. Names the resource
+  "context engineering" (M0) was managing all along.
 - Cost is a design parameter. Route per action by return-type complexity; config, not code.
 - The regulated-environment lever: a local model where data can't leave the building.
-- Demo: `lab6-before` → `withLlmByRole` cheap/strong + `MODEL_ROUTING.md` → `lab6-after`.
+- Demo: `lab6-before` → `withLlmByRole` cheap/strong + `MODEL_ROUTING.md` → `lab6-after`. (Needs a
+  real key — the mock spends no tokens, so there are no cost lines to compare.)
 
 ## Wrap — Govern the loop
 
 - The eight-habit stack (`HABITS.md`); habits 7–8 (test the seams, govern the loop) run throughout.
 - Track C recap: you built the agent using the disciplines the agent embodies.
+- Where next, two distinct horizons: agentic RAG (`ToolishRag`) shrinks the within-a-call window;
+  cross-turn memory (`embabel-chat-store`, `@State`) extends the agent across turns — ConfPlanner is
+  single-turn by design.
 - The ritual to take home: read the plan, read the trace, confirm the acceptance check.

@@ -34,16 +34,23 @@ instead of the session's real slot. With more than one session that is always a 
    Note: the literal word `STUCK` shows up only in the `[flight-recorder]` summary line
    (`PlanFlightRecorder`), not in the failing test's own output, so grep for
    `MaxActionsEarlyTerminationPolicy` — that is the real signature of a stalled plan.
-2. **Read the planning log.** The `x` command needs a model, so use a key **or** the keyless mock
-   profile:
+2. **Read the planning log.** With a real key, `x` prints it with `-p -r`. Keyless, use the mock
+   profile and the `plan` command — **not** `x`: `x`/`execute` first ask the model to *rank* your
+   request against the registered goals, an LLM call the deterministic mock can't answer (so `x`
+   fails under the mock with `Text content cannot be empty`), and the `-p`/`-r` flags exist only on
+   `x`. `plan` invokes `PersonalSchedule` directly and already prints the plan, with no flags:
    ```
-   SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
+   # with a key:
+   ./mvnw spring-boot:run
    x "I'm a senior platform engineer into Kubernetes, resilience and DevEx" -p -r
+   # keyless (deterministic mock — reproduces the same stall):
+   SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run
+   plan "I'm a senior platform engineer into Kubernetes, resilience and DevEx"
    ```
-   (No key and don't want the shell? The same world-state is already printed by the `./mvnw test`
-   run in Step 1.) In the world-state lines, find the condition that never flips to `TRUE`. You are
-   looking for `noDoubleBooking` staying `FALSE` after `assembleSchedule` runs, so `confirmSchedule`
-   never fires.
+   (No key and don't want the shell at all? The same world-state is already printed by the
+   `./mvnw test` run in Step 1.) In the world-state lines, find the condition that never flips to
+   `TRUE`. You are looking for `noDoubleBooking` staying `FALSE` after `assembleSchedule` runs, so
+   `confirmSchedule` never fires.
 3. **(Optional) Read the trace in Zipkin:**
    ```
    docker compose up -d            # starts Zipkin on 9411

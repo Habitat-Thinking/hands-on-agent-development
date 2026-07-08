@@ -94,6 +94,12 @@ x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build m
 
 The `x` command hands your sentence to the agent and lets it match the request to its goal: a conflict-free personal conference schedule. You will see the agent work through a series of steps and then print a schedule.
 
+!!! tip "Two goals, one shell"
+    On `main` the app registers a second goal as well (the networking plan you build in Lab 5), so `x`
+    chooses a goal by matching your words — the phrase *"build me a schedule"* steers it to the
+    scheduler. If you ever want to invoke the schedule goal explicitly rather than rely on the match,
+    use the bundled `plan "…"` command (see the [CLI reference](../reference/cli.md)).
+
 The output should look something like this (the exact sessions and wording will vary — the model writes the rationale fresh each time):
 
 ```

@@ -40,6 +40,10 @@ own — because the new action produces what a downstream action now needs.
    Have the model return, per shortlisted session, *why it is relevant* and a 0–1 match score. The
    id-only `ResearchOutput`/`Insight` is the LLM's contract; `ResearchedSessions`/`SessionInsight`
    (step 1) is the resolved domain type the rest of the plan consumes.
+   > **Keep the literal phrase `why it is relevant` in your prompt.** Both mocked surfaces in Step 4
+   > (the `whenCreateObject` matcher and `MockLlmService`) match on that exact substring, so a
+   > reworded prompt like *"explain each session's relevance"* compiles but silently misses the stub
+   > and NPEs at runtime.
 3. **Re-point the goal:** change `assembleSchedule` to consume `ResearchedSessions` instead of
    `CandidateSessions`. Do **not** reorder anything by hand.
 4. **Stub the research step in both mocked surfaces, then build** (`./mvnw -q verify`) — the

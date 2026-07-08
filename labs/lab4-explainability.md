@@ -28,8 +28,9 @@ instead of the session's real slot. With more than one session that is always a 
 
 1. **Reproduce.** Run `./mvnw test` (no key needed — the LLM is mocked) and read the failure. You'll
    see `assembleSchedule` execute over and over, then
-   `early termination by MaxActionsEarlyTerminationPolicy(maxActions=50) … error=true`, and the
-   integration test fail with a `NullPointerException` out of `invoke` — the goal was never produced.
+   `early termination by MaxActionsEarlyTerminationPolicy(maxActions=50) … error=true`, and **both**
+   integration tests (`ConfPlannerAgentIntegrationTest` and `MockModeIntegrationTest`, so `Errors: 2`)
+   fail with a `NullPointerException` out of `invoke` — the goal was never produced.
    Note: the literal word `STUCK` shows up only in the `[flight-recorder]` summary line
    (`PlanFlightRecorder`), not in the failing test's own output, so grep for
    `MaxActionsEarlyTerminationPolicy` — that is the real signature of a stalled plan.

@@ -39,8 +39,12 @@ avoid-list to the prompt.
 3. **Populate it.** Update the `extractAttendeeProfile` prompt to also extract `avoidTopics`.
 4. **Honour it — with a domain method, not an inline filter.** Add
    `boolean shouldAvoid(Session session)` to `AttendeeProfile` (behaviour on the domain object is the
-   whole DICE point), then in `shortlistSessions` attach the profile so its contribution reaches the
-   model (`ai.withDefaultLlm().withPromptContributor(profile).creating(...)`) **and**, belt-and-braces,
+   whole DICE point) — match the session's tags against `avoidTopics` **case-insensitively**, so an
+   avoid of `Kubernetes` still drops a session tagged `kubernetes` (the `lab1-after` test
+   `shouldAvoidIsCaseInsensitiveOnTags` pins exactly this — a case-sensitive `contains` passes
+   `verify` today but is the subtle bug it guards against). Then in `shortlistSessions` attach the
+   profile so its contribution reaches the model
+   (`ai.withDefaultLlm().withPromptContributor(profile).creating(...)`) **and**, belt-and-braces,
    drop any session where `profile.shouldAvoid(session)`.
 5. **Update the tests broken by the new field** (see the note below), then build: `./mvnw -q verify`.
 

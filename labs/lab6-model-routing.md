@@ -39,7 +39,10 @@ step to a **local** model when its data cannot leave the building.
          best: gpt-4.1
    ```
    Swap these for whatever you actually have — including a local Ollama tag for `cheapest`.
-4. **Update `MODEL_ROUTING.md`** so its routing table matches the code.
+4. **Record the decision in `MODEL_ROUTING.md`.** On the reference branch the table already lists the
+   final routing, so following along you are *confirming* it matches the code you just wrote. In real
+   work this is where you add or edit a row and justify each role by return-type complexity — don't
+   skip the habit just because the table happens to be pre-filled here.
 5. Build: `./mvnw -q verify`. (Tests mock the LLM, so routing changes don't need keys to stay green.)
 
 ## Acceptance check

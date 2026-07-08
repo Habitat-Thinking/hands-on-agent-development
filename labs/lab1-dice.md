@@ -57,8 +57,8 @@ avoid-list to the prompt.
 >   required: List<String>,String,String,List<String>,List<String>
 > ```
 >
-> Add `List.of()` (an empty avoid-list) as the fifth argument in `ConfPlannerAgentTest` and
-> `ConfPlannerAgentIntegrationTest`. The `lab1-after` reference also adds two new unit tests —
+> Add `List.of()` (an empty avoid-list) as the fifth argument in `ConfPlannerAgentTest` (**two**
+> `new AttendeeProfile(...)` call sites) and `ConfPlannerAgentIntegrationTest`. The `lab1-after` reference also adds two new unit tests —
 > `avoidedTopicsAreExcludedFromTheShortlistMenu` and `shouldAvoidIsCaseInsensitiveOnTags` — that
 > prove the filter and the domain method. Writing them is optional but they are the key-free
 > acceptance proof (see below).

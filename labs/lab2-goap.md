@@ -42,8 +42,9 @@ own — because the new action produces what a downstream action now needs.
    (step 1) is the resolved domain type the rest of the plan consumes.
 3. **Re-point the goal:** change `assembleSchedule` to consume `ResearchedSessions` instead of
    `CandidateSessions`. Do **not** reorder anything by hand.
-4. **Add the research stub to the integration test, then build** (`./mvnw -q verify`) — see the note
-   below.
+4. **Stub the research step in both mocked surfaces, then build** (`./mvnw -q verify`) — the
+   `whenCreateObject` integration test *and* `MockLlmService` (the keyless mock model). See the note
+   below for exactly what each needs.
 5. **(Live model — needs a key)** Run with `x "..." -p -r` and read the planning log.
 6. **(Live model — needs a key) Replanning exercise:** temporarily `return null;` from
    `researchSessions` and re-run. Watch the planner mark the produces/consumes link unsatisfied and
@@ -58,20 +59,36 @@ own — because the new action produces what a downstream action now needs.
 > ```
 >
 > Add a `whenCreateObject` matcher for the research step in `ConfPlannerAgentIntegrationTest`,
-> alongside the existing shortlist and schedule stubs:
+> alongside the existing shortlist and schedule stubs. **Return an insight for every id the existing
+> schedule-draft stub places** (`PC-01`, `PC-02`, `PC-03`) — `assembleSchedule` now consumes the
+> *researched* sessions, so any drafted id without an insight silently drops out and the test's
+> "all three drafted sessions should be placed" assertion fails with `expected: <3> but was: <2>`:
 >
 > ```java
 > whenCreateObject(prompt -> prompt.contains("why it is relevant"),
 >         ConfPlannerAgent.ResearchOutput.class)
 >     .thenReturn(new ConfPlannerAgent.ResearchOutput(List.of(
 >         new ConfPlannerAgent.Insight("PC-01", "core platform topic", 0.9),
->         new ConfPlannerAgent.Insight("PC-02", "golden paths", 0.8))));
+>         new ConfPlannerAgent.Insight("PC-02", "golden paths", 0.8),
+>         new ConfPlannerAgent.Insight("PC-03", "cost awareness", 0.7),
+>         new ConfPlannerAgent.Insight("SR-09", "resilience patterns", 0.85))));
 > ```
 >
-> **Keyless acceptance:** this mocked integration test *is* the key-free proof — its console output
-> prints the full planning log (`… → shortlistSessions → researchSessions → assembleSchedule → …`)
-> during `./mvnw verify`, so you can confirm the new action landed in the plan without a live model.
-> Steps 5–6 above only add the live view.
+> **The mock-mode test needs the same stub, in a different place.** `MockModeIntegrationTest` drives
+> the whole pipeline through `MockLlmService` (the keyless demo model), which returns `{}` for any
+> prompt it doesn't recognise — so the new research call yields a `ResearchOutput` whose `insights()`
+> is `null` and the mock test NPEs (`Cannot invoke "java.util.List.stream()" … insights() is null`).
+> Add a matching branch to `MockLlmService.cannedJsonFor(...)`, keyed on the same
+> `"why it is relevant"` substring, returning a canned `ResearchOutput`. (The reference also null-guards
+> `researchSessions` — `output.insights() == null ? List.of() : …` — so a missing insight degrades
+> instead of throwing.)
+>
+> **Keyless acceptance:** these two mocked tests *are* the key-free proof — during `./mvnw verify`
+> the planning log is printed as a `formulated plan:` line listing the fully-qualified action names
+> joined by ASCII ` -> `, e.g.
+> `…ConfPlannerAgent.shortlistSessions -> …ConfPlannerAgent.researchSessions -> …ConfPlannerAgent.assembleSchedule`
+> (grep the console for `researchSessions`, not the short-name `→` arrows). That confirms the new
+> action landed in the plan without a live model. Steps 5–6 above only add the live view.
 
 ## Acceptance check (framework-enforced)
 

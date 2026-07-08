@@ -54,6 +54,13 @@ You now have a working build, green without any API key. Next we add one key so 
 
 ## Step 4 — Add one provider key
 
+!!! tip "No API key? Take the key-free path"
+    You can finish this tutorial with **no key at all** using mock mode. In a terminal run
+    `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run`, then invoke the goal with
+    `plan "..."` (not `x` — see [mock mode](../how-to/use-mock-mode.md) for why). The schedule is a
+    fixed, canned one rather than tailored to your words, but every step runs offline. Skip to
+    [Step 8](#step-8-leave-the-shell) when you have seen it.
+
 To run the agent for real, create your `.env` file from the example.
 
 ```bash
@@ -79,14 +86,14 @@ Now start the agent's interactive shell.
 Wait for the startup logs to settle. The output should end with an interactive prompt, something like:
 
 ```
-shell:>
+embabel>
 ```
 
 You are now inside the Embabel shell, with the ConfPlanner agent loaded and waiting.
 
 ## Step 6 — Ask for a schedule
 
-Now type this command at the `shell:>` prompt exactly as written, then press Enter:
+Now type this command at the `embabel>` prompt exactly as written, then press Enter:
 
 ```
 x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
@@ -128,7 +135,7 @@ The no-double-booking is guaranteed, not lucky — but you do not need to know h
 
 ## Step 7 — Read the plan, not the vibes
 
-A schedule is the *what*. Now let us see the *how*. At the `shell:>` prompt, run the same request again, this time with two extra flags:
+A schedule is the *what*. Now let us see the *how*. At the `embabel>` prompt, run the same request again, this time with two extra flags:
 
 ```
 x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule" -p -r

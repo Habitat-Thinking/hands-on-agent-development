@@ -64,10 +64,14 @@ broken schedule.
    > `MaxActionsEarlyTerminationPolicy(maxActions = 50)` — that is the policy name you'll see in the
    > log — with this `Budget` acting as the cost/token backstop. Drop the `Budget`'s action count
    > below 50 and *it* becomes the stop; leave it high and the default 50-action policy halts the loop.
-   > Either way the run ends with `error=true` and `invoke` throws rather than returning a clash.
-6. **Access control:** add `@SecureAgentTool("hasAuthority('conf:premium')")` (package
-   `com.embabel.agent.mcpserver.security`) on a premium action producing a side type
-   (`PremiumBriefing`) the goal never consumes, so the free flow is untouched.
+   > Either way the run ends with `error=true` and `invoke` throws rather than returning a clash. (This
+   > `Budget` is set on the shell `plan` command, so it governs that command only; the key-free proof
+   > of the stop is `GuardrailEnforcementTest`, not `x "..."`.)
+6. **Access control:** first create the side type — a `PremiumBriefing` record (e.g. one
+   `String summary` field) in `domain/`, the same way you added `DraftSchedule` in Step 1. Then add
+   `@SecureAgentTool("hasAuthority('conf:premium')")` (package `com.embabel.agent.mcpserver.security`)
+   on a premium action producing that `PremiumBriefing` — the goal never consumes it, so the free
+   flow is untouched.
 7. Build: `./mvnw -q verify`.
 
 > **Your diff will also show…** the `lab3-after` reference adds test content the steps above don't

@@ -8,7 +8,9 @@
 > `lab7-before/after` branches — the workshop branch contract stays `lab1..lab6`).
 > **Status:** stretch lab. There is no `-before`/`-after` branch; you build on `main`. The concrete
 > recipe below — the dependency, a **keyless** store, the `ToolishRag` construction, and how to
-> attach it — was **compile-verified against Embabel 0.5.0**. What stays a *sketch* is the tuning
+> attach it — was **compile- and runtime-verified against Embabel 0.5.0**: a keyless
+> ingest → store → retrieve round-trip returns the right session id (only the model *deciding* to
+> call the search tool needs a key). What stays a *sketch* is the tuning
 > (chunking, which `Retrievable` types you search, filters, reranking), which you adapt against the
 > RAG section of the [0.5.0 user guide](https://docs.embabel.com/embabel-agent/guide/0.5.0/). It is
 > not a drop-in like Labs 1–6.
@@ -46,9 +48,9 @@ off Lab 6: the cheap model's job gets smaller again.
 2. **Ingest the catalog into the search directory.** At startup, write each `Session` as a small
    text file **named by its id** (`PC-01.txt`, contents = title + abstract + tags) into a directory,
    then point the store at it with `new DirectoryTextSearch(dir)`. Naming the file by the session id
-   is what keeps the id-only idiom alive: retrieval hands you back ids, and code resolves them to
-   `Session` via `CatalogService`, exactly as `resolve(...)` does today. (For real hits, also list the
-   `Retrievable` chunk type you ingest in `ToolishRag`'s `textSearchFor` argument — see step 3.)
+   is what keeps the id-only idiom alive: retrieval hands back the chunk id, which is the **file name**
+   (`PC-01.txt`) — strip the extension to get the session id, then resolve to `Session` via
+   `CatalogService`, exactly as `resolve(...)` does today.
 3. **Give shortlisting search instead of a menu.** Attach the tool with **`.withReference(...)`** — a
    `ToolishRag` is an `LlmReference`, *not* a tool group, so do **not** reach for `withToolGroup`. The
    0.5.0 Java constructor is wide (no builder yet); this minimal shape compiles:
@@ -57,12 +59,12 @@ off Lab 6: the cheap model's job gets smaller again.
        "catalogSearch", "Search the conference catalog",
        new DirectoryTextSearch(dir), ToolishRag.Companion.getDEFAULT_GOAL(),
        SimpleRetrievableResultsFormatter.INSTANCE,
-       List.of(),        // vectorSearchFor — none, this is a text store
-       List.of(),        // textSearchFor — add your ingested Retrievable type here for real hits
-       List.of(),        // hints
-       event -> { },     // ResultsListener
-       null, null,       // metadata / entity filters — none
-       5000, "");        // maxZoomOutChars, childToolUsageNotes
+       List.of(),                // vectorSearchFor — none, this is a text store
+       List.of(Chunk.class),     // textSearchFor — the Retrievable type it returns (empty list = no hits)
+       List.of(),                // hints
+       event -> { },             // ResultsListener
+       null, null,               // metadata / entity filters — none is fine at runtime
+       5000, "");                // maxZoomOutChars, childToolUsageNotes
 
    // in ConfPlanningCapabilities.shortlist, replace the rendered menu:
    ai.withLlmByRole("cheapest").withReference(rag)
@@ -70,6 +72,13 @@ off Lab 6: the cheap model's job gets smaller again.
        .creating(Shortlisting.class)
        .fromPrompt("Search the catalog for sessions matching the attendee's interests; return the ids you chose.");
    ```
+   Runtime notes (all confirmed keyless): `DirectoryTextSearch` does **BM25 text search** — no
+   embeddings — and `ToolishRag` exposes two tools the model calls, `<name>_textSearch` and
+   `<name>_regexSearch` (parameters `query`, `topK`, `threshold`); a `textSearch` returns lines like
+   `chunkId: PC-01.txt 1.00 - …`. Do **not** call `ToolishRag.withEagerSearchAbout(...)` with the text
+   store — it throws *"Eager search requires VectorSearch"* (that convenience path needs embeddings);
+   here retrieval happens when the model invokes the tool. (`Chunk` is
+   `com.embabel.agent.rag.model.Chunk`.)
 4. **Keep the belt.** The avoid-topics filter from Lab 1 must still hold: filter retrieved ids
    through `profile.shouldAvoid(...)` in code before building `CandidateSessions`. Retrieval
    changes where candidates come from, never what the guardrails allow.

@@ -175,15 +175,16 @@ variant) stays a worksheet exercise rather than landed code — landing it would
 lab4 branch progression; the Lab 7 implementation likewise stays a sketch until it earns branch
 surgery.
 
-**Residual found during the slide-reconciliation pass (2026-07-08) — worksheet, not slides:**
-`labs/lab4-explainability.md` Step 2 still pairs the `mock` profile with `x "…" -p -r`, which
-contradicts audit v4's own finding (documented in `docs/how-to/use-mock-mode.md`): `x` fails under
-the mock profile (`Text content cannot be empty`, the goal-ranker LLM call goes unanswered), and
-`-p -r` are `x`-only. The keyless path there should be `plan "…"` (which prints the plan with no
-flags). v4 fixed this everywhere *except* Lab 4. Fixing it properly is lab-branch surgery
-(`labs/lab4-explainability.md` also lives on `lab4-broken`/`lab4-after`), so it's flagged here rather
-than patched in the slides-only pass. The M4 speaker notes and deck now show the correct `plan`
-path and point at this note.
+**Residual found during the slide-reconciliation pass (2026-07-08) — worksheet, now FIXED:**
+`labs/lab4-explainability.md` Step 2 paired the `mock` profile with `x "…" -p -r`, which contradicts
+audit v4's own finding (documented in `docs/how-to/use-mock-mode.md`): `x` fails under the mock
+profile (`Text content cannot be empty`, the goal-ranker LLM call goes unanswered), and `-p -r` are
+`x`-only. The keyless path is `plan "…"` (which prints the plan with no flags). v4 fixed this
+everywhere *except* Lab 4. ✅ **Resolved**: the worksheet existed byte-identically on 8 branches
+(`main`/feature branch + `lab3-after`, `lab4-broken`, `lab4-after`, `lab5-{before,after}`,
+`lab6-{before,after}`); the fix was applied on the feature branch and cherry-picked (`-x`) onto each
+lab branch — one `docs(lab4)` commit per branch, worksheet-only, no code touched. The M4 speaker
+notes and deck already show the correct `plan` path.
 
 ---
 

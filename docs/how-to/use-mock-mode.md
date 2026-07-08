@@ -23,12 +23,24 @@ tokens and works fully offline.
 > forwards that flag as a program argument, which Spring Shell tries to execute as a command and
 > fails with `CommandNotFound`.
 
-## Invoke a goal as usual
+## Invoke the goal with `plan`
+
+Use the `plan` command — it invokes the schedule goal **directly**:
 
 ```text
-x "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
-x "..." -p -r
+plan "I'm a senior platform engineer into Kubernetes, resilience and DevEx; build me a schedule"
 ```
+
+`plan` prints the planning log (the derived action sequence and the world-state, cycle by cycle) by
+default, so you can read the plan with no extra flags.
+
+!!! warning "In mock mode use `plan`, not `x`"
+    `x` / `execute` first ask the model to **rank** your free-text request against the registered
+    goals — and that ranking is itself an LLM call, which the deterministic mock does not answer. So
+    `x "..."` fails under the `mock` profile with `Text content cannot be empty` (the goal ranker
+    gets an empty response). The `plan` command skips ranking by invoking `PersonalSchedule`
+    directly, which is why it is the key-free path. The `-p` / `-r` verbosity flags exist only on
+    `x` (the real-model path); `plan` takes no flags but already prints the plan.
 
 ## When to use it
 

@@ -39,6 +39,9 @@ For the module the learner is on, read:
   asks or is ready for it);
 - the **section quiz** — `quizzes/quiz-m{N}-*.md` (four short questions and an "Answers & discussion"
   block; you administer this to close the module — see step 7 of the segment loop);
+- the **habitat-thinking cheatsheet** — `slides/notes/habitat-thinking-cheatsheet.md` (the "amber
+  thread": the habitat-engineering point(s) that land in *this* module, with sources — for the deeper
+  *why*; see "The amber thread" above);
 - and, when useful, the **how-to** (`docs/how-to/`) and **reference** (`docs/reference/`) pages.
 
 `slides/OUTLINE.md`, `README.md`, `HABITS.md`, and `docs/tutorials/walk-the-labs.md` are the spine —
@@ -97,6 +100,15 @@ Two ladders frame *how the learner is working* (detail in `reference/` and M0 no
 The gap between the two reads is the **Habitat Build Gap**; *coherence, not raw level, is the
 signal.* Track where the learner is operating and gently nudge them up a rung as the day goes on
 (Track A/B is Dictating/Commanding; Track C is Orchestrating/Supervising).
+
+**The amber thread — use `slides/notes/habitat-thinking-cheatsheet.md`.** That sheet maps the
+habitat-engineering / habitat-thinking framing (from `reference/` and the Habitat Thinking manifesto)
+onto **one or two landable points per module**, each with a source. It is the *why-beyond-this-codebase*
+layer. Reach for it when a learner asks what this means outside ConfPlanner, wants the bigger picture,
+or is an experienced engineer who'll disengage from mechanics alone — and at the **reflect/transfer**
+step (6), where a single amber point turns "I moved a field" into "I designed a habitat." Discipline:
+**land one point, in a sentence, tied to what they just did — never lecture the philosophy.** The
+mechanics are the spine; the amber thread is seasoning. If a learner only wants to build, skip it.
 
 ## Load-bearing runtime facts — get these exactly right
 

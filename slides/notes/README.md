@@ -21,6 +21,13 @@ with the argument each slide makes), **live demo script** (branch + commands + w
 | [m6-model-routing.md](m6-model-routing.md) | Model routing / Lab 6 | 16:20–17:10 | `lab6-before/after` |
 | [m7-wrap.md](m7-wrap.md) | Wrap: govern the loop | 17:10–17:40 | `main` |
 | [gaps-and-extensions.md](gaps-and-extensions.md) | Workshop vs. Embabel state of play (July 2026) | — | — |
+| [habitat-thinking-cheatsheet.md](habitat-thinking-cheatsheet.md) | The amber thread — habitat-engineering messages mapped module by module | all | — |
+
+**[habitat-thinking-cheatsheet.md](habitat-thinking-cheatsheet.md)** is the cross-cutting companion:
+the *habitat engineering / habitat thinking* framing (from `reference/` and the
+[manifesto](https://github.com/Habitat-Thinking/manifesto)) distilled into one or two landable
+points per module — the amber thread to weave alongside the blue (Embabel) content. Keep it open
+next to the per-module notes while presenting.
 
 Recurring devices the decks should keep consistent:
 

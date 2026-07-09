@@ -14,12 +14,23 @@ import java.util.Locale;
  *
  * <p>The four shapes in Lab 3 — invariant, precondition, budget, secured tool — all guard the
  * <em>plan</em>. This one guards the <em>content</em>: it screens the raw attendee request before
- * any model sees it, and rejects prompt-injection attempts deterministically, with no LLM spend.
- * It is attached with {@code withGuardRails(...)} on the prompt runner in
- * {@link ConfPlanningCapabilities#extractProfile}, the one place raw user input first meets a model.
+ * any model sees it, matching a small enumerated set of injection <em>markers</em> so the laziest
+ * override attempts are dropped deterministically, with no LLM spend.
  *
- * <p>Belt-and-braces, one altitude up from Lab 1: the DICE filter protects the schedule from a
- * model that slips; this guard protects the model from input that lies.
+ * <p><strong>This is a cheap pre-filter, not a security boundary.</strong> A deny-list of fixed
+ * phrases is trivially bypassed — rephrasing, another language, or obfuscation walks straight
+ * through it — so nothing here should be deployed as a defence against a determined attacker. Its
+ * honest value is dropping high-volume, low-effort garbage before you pay for a model call. The
+ * real guarantee against a <em>successful</em> injection is structural and lives elsewhere:
+ * {@code noDoubleBooking} is deterministic code the model cannot author, so even a fully poisoned
+ * {@code assembleSchedule} cannot produce a schedule that reaches the goal — and that holds whether
+ * or not this filter caught anything.
+ *
+ * <p>It is attached with {@code withGuardRails(...)} on the prompt runner in
+ * {@link ConfPlanningCapabilities#extractProfile}, the one place raw user input first meets a model.
+ * Belt-and-braces, one altitude up from Lab 1: the DICE filter protects the schedule from a model
+ * that slips; this guard cheaply screens input that lies, and the structural invariant catches what
+ * it misses.
  */
 public class RequestContentGuardRail implements UserInputGuardRail {
 

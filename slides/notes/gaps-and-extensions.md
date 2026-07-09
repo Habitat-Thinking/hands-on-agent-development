@@ -150,6 +150,28 @@ to window-as-budget; and a cross-turn-memory horizon bullet on the M7 "Where thi
 (`deck-m7.md` slide 8 / `M7.8`) with the Q&A upgraded from deflection to a named two-horizon answer
 in `notes/m7-wrap.md`. No lab or branch change — the branch contract is untouched.
 
+### Gap 10 — Output-quality evaluation: the tests prove structure, not judgement (high value, medium cost) → M4/M7
+
+The suite is deterministic because it mocks the model — the right call for gating the *scaffolding*
+(plan derivation, guardrail gates, budget, world-state), and it even injects the model's worst
+output on demand (`GuardrailEnforcementTest` forces a clash and asserts the goal is unreachable).
+But nothing evaluates whether a schedule is *good* — relevant, balanced, the picks a human expert
+would make. `./mvnw verify` green means "conflict-free and the plan completes," never "the judgement
+was sound"; the docs are careful to say *conflict-free*, never *best*. Name this out loud — it's the
+one gap this list previously missed, and a skeptic will find it fast.
+
+That silence is fine *while a human reads each plan*: run-time trust here is legibility plus bounded
+invariants, so a bad pick is visible and still cannot breach a structural rule. It stops being fine
+at this workshop's own horizon — habit 8 *govern the loop* and Lab 7's agentic RAG: once no human
+reads every run, "you could inspect it" is not trust, because nobody is inspecting. That is exactly
+where output-quality evaluation becomes load-bearing, and why the run-time "trust" claim is scoped
+to the human-in-the-loop altitude the six labs teach (the `docs/index.md` lede now says so).
+
+The honest complement (not shipped; a going-further): an eval lane tagged `@Tag("eval")`, excluded
+from the keyless `verify` gate and run on demand with a key against a small golden set, scored by an
+LLM-as-judge (relevance, balance, no-clash). Deterministic gates for the seams; sampled evals for
+the judgement — the two halves of a real agent test strategy.
+
 ---
 
 ## Proposed upgraded day plan (deltas only) — adoption status as of 2026-07-08

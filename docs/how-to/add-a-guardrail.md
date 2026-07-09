@@ -94,7 +94,12 @@ shell app excludes `AgentMcpServerAutoConfiguration` to boot without a web serve
 
 The shapes above guard the **plan**. A content guardrail guards the **content**: it validates the
 raw user request (or a model's response) on every LLM exchange, deterministically, before any
-spend. Implement `UserInputGuardRail` (package `com.embabel.agent.api.validation.guardrails`):
+spend. Treat it as a **cheap pre-filter, not a security boundary** — a deny-list of fixed phrases is
+trivially rephrased around, so its honest job is dropping low-effort garbage before you pay for a
+model call, not stopping a determined attacker. The real guarantee against a *successful* injection
+is the structural invariant downstream (a poisoned `assembleSchedule` still can't satisfy
+`noDoubleBooking`). Implement `UserInputGuardRail` (package
+`com.embabel.agent.api.validation.guardrails`):
 
 ```java
 public class RequestContentGuardRail implements UserInputGuardRail {
@@ -104,7 +109,7 @@ public class RequestContentGuardRail implements UserInputGuardRail {
 
     @Override
     public String getDescription() {
-        return "Rejects attendee requests that attempt to override the agent's instructions";
+        return "Screens attendee requests for a few known override markers (a cheap pre-filter)";
     }
 
     @Override

@@ -1,7 +1,11 @@
 # Hands-On AI Agent Engineering
 
 Welcome to the **ConfPlanner** workshop — a hands-on course in engineering AI
-agents you can actually trust in production. ConfPlanner is a conference-planning
+agents whose behaviour you can *read, bound, and therefore* trust in production.
+Trust here is a concrete, narrow thing: you can inspect what the agent planned,
+and there are hard invariants it cannot violate — **not** a claim that its
+model's judgement is always right (evaluating output *quality* is a separate
+discipline this workshop deliberately scopes out). ConfPlanner is a conference-planning
 agent built around a Goal-Oriented Action Planning (GOAP) core, and the workshop
 walks you through building, testing, and operating it. The central idea is the
 **dual harness**: a *build-time harness* that constrains how the agent's code is

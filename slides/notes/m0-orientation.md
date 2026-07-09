@@ -176,6 +176,21 @@ planning log an object of curiosity.
   and testable. (Cross-ref M2 and M4.)
 - *"Do we need Docker / keys?"* — no key to build and test; one key to run against a real model;
   Docker only for Zipkin in Lab 4 (optional path).
+- *"You mock the LLM — so the tests delete the thing that actually fails. Where are the evals?"* —
+  concede the half that's true: nothing here evaluates schedule *quality*; `verify` green means
+  *conflict-free and the plan completes*, never *good*. But the tests aren't testing the model's
+  judgement — they test the **scaffolding around** it (plan derivation, the guardrail gates, the
+  budget), with the model as a stubbed dependency; `GuardrailEnforcementTest` even *injects* the
+  model's worst output (a forced clash) and asserts the wall holds — a test you can't write against
+  a real model without flakiness. Output-quality evaluation is a real, separate discipline
+  (golden set + LLM-as-judge, a `@Tag("eval")` lane) the day scopes out — named in
+  `gaps-and-extensions.md` Gap 10.
+- *"Isn't 'trust' overclaimed?"* — trust here is defined narrowly and out loud: *legibility plus
+  bounded invariants* — you can read what the agent planned, and it cannot breach a hard rule
+  (`explainability.md`: "a trustworthy agent is one whose reasoning you can inspect"). It is **not**
+  a claim the model's judgement is always right. That's sufficient while a human reads each plan; at
+  the *govern-the-loop* horizon it needs the eval lane above. The `docs/index.md` lede states the
+  narrow meaning.
 
 ## Transition out
 

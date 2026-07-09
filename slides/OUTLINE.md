@@ -24,7 +24,8 @@ referenced back at every module.
   → Orchestrating → Supervising; the Agentic Experience maturity model's agent-behaviour
   dimension) and cognitive (what you can think and do — Aware → Prompter → Verifier → Habitat
   Engineer → Specification Architect → Sovereign Engineer; *The Sovereign Engineer*). The gap
-  between them is the Habitat Build Gap; coherence is the signal. Sources in `reference/`.
+  between them is the Habitat Build Gap; coherence is the signal. Sources in the presenter's
+  `reference/` materials (not shipped in the repo); essentials in `docs/explanation/the-dual-harness.md`.
 - **Keystone slide** — the table:
 
   | # | Objective | Embabel mechanism | Habit |

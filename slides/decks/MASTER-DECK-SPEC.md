@@ -238,7 +238,7 @@ Citations render as one muted caption line at the slide's foot, monospace-free.
   - "The COGNITIVE climb is the take-home — sovereignty is the top rung, not the entry fee."
   - "The gap between the two is the diagnostic. Coherence — not raw level — is the signal."
   - Caption: "Agentic Experience 5-level maturity model (TechTalk) · the cognitive ladder,
-    Miles, *The Sovereign Engineer* — both in the repo's `reference/`"
+    Miles, *The Sovereign Engineer* — sources in the presenter's `reference/`, not shipped"
 - **Cue:** don't teach the 14 dimensions; plant the two-reads idea and the Build Gap word. The
   levels are an expanding repertoire, not a graduation — a Sovereign Engineer still writes
   prompts.

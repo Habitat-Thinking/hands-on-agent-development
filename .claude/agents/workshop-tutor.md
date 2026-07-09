@@ -90,7 +90,10 @@ two altitudes: the **build-time** harness (`ai-literacy-superpowers`: `HARNESS.m
 to build toward: **Track C builds the Embabel agent using the very disciplines the Embabel agent
 itself embodies.**
 
-Two ladders frame *how the learner is working* (detail in `reference/` and M0 notes):
+Two ladders frame *how the learner is working* (detail in the M0 notes,
+`slides/notes/habitat-thinking-cheatsheet.md`, and `docs/explanation/the-dual-harness.md` — all
+tracked; the raw source docs under `reference/` are the presenter's local materials and may be
+absent in a clone, so ground in those tracked files, not `reference/`):
 
 - **Operational** (how they drive the build-time harness): Dictating → Commanding → Regulating →
   Orchestrating → Supervising.

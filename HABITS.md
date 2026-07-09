@@ -31,10 +31,12 @@ day goes on:
 **Dictating → Commanding → Regulating → Orchestrating → Supervising.**
 
 > Provenance: these five verbs are the *agent behaviour* dimension of the Agentic Experience
-> 5-level habitat maturity model (see `reference/agentic-maturity-model.md`). Its cognitive
-> twin — what a team can *think and do*, L0–L5, ending at the Sovereign Engineer — and the
-> Habitat Build Gap between the two reads are in `reference/cognitive-ladder.md` and *The
-> Sovereign Engineer* (`reference/thesovereignengineer.pdf`).
+> 5-level habitat maturity model. Its cognitive twin — what a team can *think and do*, L0–L5, ending
+> at the Sovereign Engineer — and the Habitat Build Gap between the two reads are from *The Sovereign
+> Engineer* (Russ Miles, [Leanpub](https://leanpub.com/thesovereignengineer)). The distilled source
+> docs (`agentic-maturity-model.md`, `cognitive-ladder.md`, and the book PDF) live in the presenter's
+> `reference/` folder, **not shipped in this repo**; the essentials are in
+> `docs/explanation/the-dual-harness.md`.
 
 - *Dictating / Commanding* — you type or prompt each change (Tracks A/B).
 - *Regulating* — you set the constraints and let the agent work inside them.

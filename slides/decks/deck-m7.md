@@ -51,8 +51,8 @@
   - "The take-home: score your three disciplines — context engineering, architectural
     constraints, guardrail design. The weakest one is your ceiling."
   - Sub: "The top rungs aren't more automation. They're more judgement per keystroke."
-- **Notes:** the three-discipline scoring heuristic is from the cognitive ladder (repo
-  `reference/cognitive-ladder.md`): the assessed level is the highest with substantial evidence
+- **Notes:** the three-discipline scoring heuristic is from the cognitive ladder (presenter
+  source materials, not shipped): the assessed level is the highest with substantial evidence
   across ALL three — strong specs with weak verification is L2, not L4.
 
 ## Slide 6 — The punchline

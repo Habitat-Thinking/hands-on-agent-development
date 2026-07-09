@@ -44,6 +44,12 @@ Recurring devices the decks should keep consistent:
 re-check it before each delivery of the workshop.
 
 Source materials for the M0/M7 framing (habitat engineering, the two ladders, the Habitat
-Build Gap, the amplifier thesis) live in the repo's [`reference/`](../../reference/) folder:
-`thesovereignengineer.pdf`, `agentic-maturity-model.md`, `cognitive-ladder.md`. Slide copy
-quotes these verbatim — check wording against them before editing those slides.
+Build Gap, the amplifier thesis) sit in the presenter's `reference/` folder —
+`thesovereignengineer.pdf`, `agentic-maturity-model.md`, `cognitive-ladder.md` — which is **not
+shipped in the repo** (the book is copyrighted; get it on
+[Leanpub](https://leanpub.com/thesovereignengineer), the
+[manifesto](https://github.com/Habitat-Thinking/manifesto) is public). The distilled essentials are
+tracked in [m0-orientation.md](m0-orientation.md),
+[habitat-thinking-cheatsheet.md](habitat-thinking-cheatsheet.md), and
+`docs/explanation/the-dual-harness.md`. Slide copy quotes the sources verbatim — check wording
+against your `reference/` copies before editing those slides.

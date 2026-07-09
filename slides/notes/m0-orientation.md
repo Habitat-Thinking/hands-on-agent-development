@@ -60,7 +60,8 @@ and guardrail design — twice"*, the module worked.
    Aware → Prompter → Verifier → Habitat Engineer → Specification Architect → Sovereign
    Engineer) — what the team can think and do. The signed difference is the **Habitat Build
    Gap**, and *coherence, not raw level, is the signal*: a coherent L2/L2 team is healthier
-   than an L4-cognitive/L1-operational one. Both source docs live in the repo's `reference/`.
+   than an L4-cognitive/L1-operational one. Both source docs are in the presenter's `reference/`
+   materials (not shipped in the repo); the essentials are in `docs/explanation/the-dual-harness.md`.
    For M0, plant only: today's labs climb the operational verbs (by Lab 6 you supervise); the
    cognitive climb is the take-home. One more nuance worth saying aloud: the levels are an
    expanding repertoire, not a graduation — a Sovereign Engineer still writes prompts.
@@ -128,7 +129,8 @@ planning log an object of curiosity.
   injection. Java-shop audiences feel this immediately; it's the "why JVM, why not LangChain"
   answer.
 - **Habitat engineering / *The Sovereign Engineer*** (Russ Miles, Habitat-Thinking; Leanpub,
-  2026 edition — the PDF and two distilled reference docs live in the repo's `reference/`).
+  2026 edition — the PDF and two distilled reference docs are in the presenter's `reference/`
+  materials, not shipped in the repo).
   What the slides quote verbatim: the habitat definition and its four components (conventions /
   architectural constraints / test suites-as-metacognition / feedback loops); *"an AI agent
   without a well-designed habitat is just model cognition with a toolbox"*; the
@@ -151,7 +153,7 @@ planning log an object of curiosity.
   two-crafts framing (agentic building vs building agents) is the speaker's conference
   vocabulary rather than a book chapter title — it operationalises the book's distinction
   between designing the collaboration and being its product.
-- **The two ladders' provenance** (both files in `reference/`): the operational read is the
+- **The two ladders' provenance** (both source docs in the presenter's `reference/`, not shipped): the operational read is the
   **Agentic Experience 5-level habitat maturity model** (TechTalk) — 14 dimensions, L1–L5; the
   workshop's five verbs are its agent-behaviour dimension, and its testing dimension
   (Manual → Asserting → Verifying → Validating → Assuring) is a nice Q&A depth card for habit

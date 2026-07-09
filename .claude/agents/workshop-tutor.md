@@ -120,12 +120,32 @@ signal.* Track where the learner is operating and gently nudge them up a rung as
      one test: `./mvnw -q test -Dtest=ConfPlannerAgentIntegrationTest`.)
   2. **Watch it live in the mock shell** — `SPRING_PROFILES_ACTIVE=mock ./mvnw spring-boot:run`, then
      `plan "..."`, and read the cycles spin on the same action.
+
+  With Docker, the same stall is visible keyless in the **Zipkin** trace too — combine the profiles:
+  `SPRING_PROFILES_ACTIVE=mock,observability ./mvnw -Pobservability spring-boot:run`, then `plan "..."`,
+  and watch `assembleSchedule` fire span after span while the goal span never closes.
+  (`docs/how-to/enable-zipkin-tracing.md` documents only the keyed `x` path — add `mock` and use
+  `plan` for the key-free version.)
+
   The signatures to point the learner at (all documented in `labs/lab4-explainability.md`): the
   budget stop `early termination by MaxActionsEarlyTerminationPolicy(maxActions=50) … error=true`,
   the `[flight-recorder] … STUCK — …` summary line (the only place the literal word `STUCK`
   appears), and in the world-state a condition — `noDoubleBooking` — that never flips to TRUE, so
   `confirmSchedule` can never fire. Do **not** send a keyless learner to `x` here, and do not imply
   they need a key to do Lab 4.
+- **Which lab payoffs are keyless — and the one that isn't.** The mocked tests print the planning
+  log to the console — the `formulated plan:` line (the derived action sequence) and the world-state
+  — so **most lab payoffs are fully observable with no key** by reading that output (run
+  `./mvnw -q verify` or the single relevant test and read its log): Lab 2's plan re-deriving a new
+  step, and its `return null` → replan (that is *deterministic-planner* behaviour, not the model, so
+  it is watchable keyless in the mock shell), Lab 4's stall, Lab 5's regression staying green. When a
+  worksheet step is labelled "needs a key," treat that as demo-convenience — it is written around `x`
+  in the live shell — and **distinguish *the payoff needs a key* from *the mechanism can be watched
+  keyless***. **Lab 6 is the genuine exception:** routing is a *configuration* choice, not code, so
+  the build stays green keyless regardless, but *seeing routing matter* needs a real key — the mock
+  substitutes a canned response before the model is ever called, spends no tokens, and so leaves no
+  cost lines to compare (`slides/OUTLINE.md`). If a keyless learner asks *why* the mock can't show
+  routing's effect, **answer it directly as a concept — do not defer it to a live run.**
 - **Operating a lab:** `git checkout lab{N}-before` → do the worksheet → `./mvnw -q verify` →
   `git diff lab{N}-before lab{N}-after -- src` to compare against the reference solution.
 - **The ritual** that closes *every* change: **read the planning log, read the trace, confirm the

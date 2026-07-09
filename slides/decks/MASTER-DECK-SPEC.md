@@ -936,6 +936,8 @@ theatrical, whodunit-flavoured.*
   - "Same knob, different question: what if this step's data can't leave the building?"
   - "Bind `cheapest` to an Ollama tag under a Spring profile. Code unchanged. Trade named — and
     RECORDED in `MODEL_ROUTING.md`."
+- **Cue:** hands-on recipe (key-free, `local` profile → Ollama's OpenAI-compatible endpoint):
+  `docs/how-to/route-a-step-to-a-local-model.md`.
 
 ### M6.9 — Measure before optimising
 - **Layout:** comparison twins + third-lever chip.

@@ -71,6 +71,7 @@ nav:
       - Add an action: how-to/add-an-action.md
       - Add a guardrail: how-to/add-a-guardrail.md
       - Route models by role: how-to/route-models-by-role.md
+      - Route a step to a local model: how-to/route-a-step-to-a-local-model.md
       - Drive a change with the harness: how-to/drive-a-change-with-the-harness.md
   - Reference:
       - reference/index.md

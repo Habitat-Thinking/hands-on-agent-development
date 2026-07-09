@@ -145,7 +145,13 @@ signal.* Track where the learner is operating and gently nudge them up a rung as
   the build stays green keyless regardless, but *seeing routing matter* needs a real key — the mock
   substitutes a canned response before the model is ever called, spends no tokens, and so leaves no
   cost lines to compare (`slides/OUTLINE.md`). If a keyless learner asks *why* the mock can't show
-  routing's effect, **answer it directly as a concept — do not defer it to a live run.**
+  routing's effect, **answer it directly as a concept — do not defer it to a live run.** The one
+  keyless escape hatch is a **local model**: binding a role to Ollama under a `local` Spring profile
+  lets a learner watch routing resolve to a *real* model with no cloud key, nothing spent and nothing
+  leaving the machine (it can't show a *cost* comparison — a local run has no provider cost lines —
+  but it does show the routed action pick up the local tag). This is also the hands-on form of the
+  Lab 6 "regulated-environment" going-further; the recipe is
+  `docs/how-to/route-a-step-to-a-local-model.md` (needs Ollama installed, not a key).
 - **Operating a lab:** `git checkout lab{N}-before` → do the worksheet → `./mvnw -q verify` →
   `git diff lab{N}-before lab{N}-after -- src` to compare against the reference solution.
 - **The ritual** that closes *every* change: **read the planning log, read the trace, confirm the

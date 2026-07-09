@@ -39,7 +39,13 @@ question — route a step to a *local* model when its data can't leave the build
 5. **The regulated-environment lever.** Point any role at a local model (Ollama tag under a Spring
    profile). The extraction step reads the attendee's raw words — in a regulated setting, route
    exactly that step on-prem, keep the rest in the cloud. Name the trade honestly: latency and
-   some quality, in exchange for residency — and *record it* in `MODEL_ROUTING.md`.
+   some quality, in exchange for residency — and *record it* in `MODEL_ROUTING.md`. Hands-on recipe
+   for anyone who wants to actually run it (a `local` Spring profile pointing the OpenAI provider at
+   Ollama's OpenAI-compatible endpoint, key-free): **`docs/how-to/route-a-step-to-a-local-model.md`**.
+   Worth flagging live: because Ollama ignores the key and the OpenAI provider is already on the
+   classpath, this is the *one* way to watch routing bind to a **real** model with no cloud key —
+   the honest caveat being that `base-url` is provider-wide, so a true one-step-local/rest-cloud
+   split puts the cloud roles on the Anthropic provider.
 6. **Measure before optimising.** Same request, all-`best` vs routed; since 0.4.0 the log prices
    each LLM call, so read the comparison in **dollars per action**, not just tokens, and record
    it in `MODEL_ROUTING.md`'s observed-cost table. "A routing decision you can't see in the log
@@ -62,7 +68,11 @@ makes no provider call, so there are no per-call cost lines to compare — and t
 module is reading the routed-vs-all-`best` comparison in dollars. (Keyless attendees still get the
 *routing* lesson from the diff and `MODEL_ROUTING.md`; they just can't run the measurement beat. If
 you must demo keyless, use `plan "…"` under the mock to show which role each action carries, then
-show the cost table in `MODEL_ROUTING.md` rather than live numbers.)
+show the cost table in `MODEL_ROUTING.md` rather than live numbers.) A third keyless option if you
+have Ollama on the machine: run the `local` profile (see
+`docs/how-to/route-a-step-to-a-local-model.md`) and show a *real* routed run with no key — you still
+can't compare dollars (a local run has no provider cost lines), but you can show the routed action
+resolving to a local tag in the plan.
 
 If time allows, the measurement beat: flip `cheapest: gpt-4.1-nano` to the same model as `best`,
 re-run, compare the budget lines live. Close on `MODEL_ROUTING.md`: the table is the *reviewable*

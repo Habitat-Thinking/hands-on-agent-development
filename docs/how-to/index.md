@@ -23,6 +23,9 @@ know what you want and shows the steps to achieve it. If you are starting from z
   a budget (the Lab 3 shape).
 - **[Route models by role](route-models-by-role.md)** — `withLlmByRole` plus `application.yml`, and
   keep `MODEL_ROUTING.md` in step.
+- **[Route a step to a local model](route-a-step-to-a-local-model.md)** — keep a step's data in the
+  building: bind a role to a local (Ollama) model under a Spring profile, key-free (the Lab 6
+  regulated-environment lever).
 
 ## Drive it through the harness
 

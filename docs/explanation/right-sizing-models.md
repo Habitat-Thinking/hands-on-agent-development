@@ -95,6 +95,9 @@ silently — the same instinct as everywhere else in the workshop, that a decisi
 defend* beats a default you never examined. Routing is where cost, capability, and data sovereignty
 all meet a single configurable knob.
 
+For the hands-on recipe — a `local` Spring profile, the OpenAI-compatible endpoint, and a key-free
+run against Ollama — see [Route a step to a local model](../how-to/route-a-step-to-a-local-model.md).
+
 To *do* the routing yourself, work Lab 6 in the [tutorials](../tutorials/index.md). For the exact
 `withLlmByRole` idiom, the role names, and the budget constructor as lookup, see the
 [reference](../reference/index.md); for the routing table you maintain, `MODEL_ROUTING.md`.

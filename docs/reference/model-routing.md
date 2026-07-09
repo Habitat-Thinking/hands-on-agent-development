@@ -33,6 +33,8 @@ role whose data must not leave the building.
 
 - Set a provider/credentials: [how to run with a real model](../how-to/run-with-a-real-model.md).
 - Assign models per role, hands-on: [how to route models by role](../how-to/route-models-by-role.md).
+- Route a step to an on-prem model, hands-on:
+  [how to route a step to a local model](../how-to/route-a-step-to-a-local-model.md).
 - *Why* route by return-type complexity, and the data-residency trade-off:
   [right-sizing models](../explanation/right-sizing-models.md).
 - The per-action rationale table also lives in the repo's `MODEL_ROUTING.md`.

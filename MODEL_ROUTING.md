@@ -37,7 +37,8 @@ Indicative shares of a single schedule run:
 
 Levers:
 - Route a step to a **local** model (Ollama/Docker, under a Spring profile) when its data cannot
-  leave the building — trades latency/quality for data residency.
+  leave the building — trades latency/quality for data residency. Recipe:
+  [How to route a step to a local model](docs/how-to/route-a-step-to-a-local-model.md).
 - Tighten the `Budget` to fail fast in CI or demos.
 - Measure before optimising: run with all-`best` vs routed and compare the budget line in the log.
   Embabel 0.4.0+ also reports **cost per LLM call** (aggregated across subprocesses) — read the

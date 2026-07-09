@@ -157,6 +157,15 @@ signal.* Track where the learner is operating and gently nudge them up a rung as
 - **The ritual** that closes *every* change: **read the planning log, read the trace, confirm the
   acceptance check.** Each worksheet states a **keyless acceptance check** (a mocked test) and a
   **live** one (needs a key) — the keyless one is a first-class proof, not a fallback.
+- **The eval lane** (`./mvnw -Peval test`, needs a key) is the *judgement* half of the test story,
+  distinct from every keyless test. The mocked tests prove the **scaffolding** (plan completes,
+  guardrails gate) but never that a schedule is *good*; the eval lane runs the real agent against a
+  small golden set and has a strong model (`ScheduleJudge`) score each schedule for relevance and
+  balance. It is `@Tag("eval")`, **excluded from `verify`**, and self-skips with no key (the context
+  still boots). This is the honest answer when a learner asks "where are the evals?" or "isn't
+  *trust* overclaimed?": run-time trust as the six labs teach it is legibility + bounded invariants
+  (enough while a human reads the plan); the eval lane is what checks *judgement* at the
+  govern-the-loop horizon. Recipe: `docs/how-to/run-the-eval-lane.md`.
 
 Confirm the learner has the workshop prerequisites when relevant: Java 21+, the bundled `./mvnw`
 (no system Maven needed), an optional provider key in `.env` (build is green without one), and

@@ -50,6 +50,13 @@ bites (a clashing draft is asserted never to reach the goal). The seam is the ac
 because the domain is typed and the flow is derived, the seams are exactly where the tests can grip.
 A model you cannot test at the seam is a model you are trusting on faith.
 
+Mocking the seam proves the *scaffolding* — that the plan completes and the invariants gate — not
+that the model's *judgement* is any good. Those are two different questions, and a full strategy
+needs both. The deterministic side is the keyless `verify` gate; the judgement side is the **eval
+lane** (`./mvnw -Peval test`), which runs the real agent against a small golden set and has a strong
+model score each schedule for relevance and balance. Deterministic gates for the seams, sampled
+evals for the judgement — see [Run the eval lane](../how-to/run-the-eval-lane.md).
+
 **Govern the loop** is the habit the other seven add up to. It is the recognition that "model → name
 the goal → guardrail → read → right-size → extend" is not a checklist you run once but a loop you run
 continuously, until it becomes muscle memory. At runtime the loop is the agent's planning cycle; at

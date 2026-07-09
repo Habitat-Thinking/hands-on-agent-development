@@ -167,10 +167,13 @@ reads every run, "you could inspect it" is not trust, because nobody is inspecti
 where output-quality evaluation becomes load-bearing, and why the run-time "trust" claim is scoped
 to the human-in-the-loop altitude the six labs teach (the `docs/index.md` lede now says so).
 
-The honest complement (not shipped; a going-further): an eval lane tagged `@Tag("eval")`, excluded
-from the keyless `verify` gate and run on demand with a key against a small golden set, scored by an
-LLM-as-judge (relevance, balance, no-clash). Deterministic gates for the seams; sampled evals for
-the judgement — the two halves of a real agent test strategy.
+The honest complement (**now shipped**): an eval lane tagged `@Tag("eval")`, excluded from the
+keyless `verify` gate and run on demand with a key (`./mvnw -Peval test`) against a small golden set,
+scored by an LLM-as-judge (`ScheduleJudge` → `ScheduleVerdict`: relevance, balance, on-profile) with
+deterministic gates (no-clash, catalog membership, avoided-topics absent) as a belt. Deterministic
+gates for the seams; sampled evals for the judgement — the two halves of a real agent test strategy.
+See `docs/how-to/run-the-eval-lane.md`. This is the one gap on this list that has moved from *named*
+to *closed*.
 
 ---
 

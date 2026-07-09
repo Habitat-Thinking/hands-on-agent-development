@@ -92,10 +92,40 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- The eval lane (@Tag("eval")) makes real, non-deterministic model calls and needs a
+                 provider key, so it is excluded from the default keyless `verify` gate. Run it on
+                 demand with `./mvnw -Peval test`. See docs/how-to/run-the-eval-lane.md. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludedGroups>eval</excludedGroups>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <profiles>
+        <!-- Wrap: the eval lane. `./mvnw -Peval test` runs ONLY @Tag("eval") tests — the sampled
+             LLM-as-judge evaluation of schedule quality. Needs a provider key; without one the
+             tests self-skip (their live assertions are guarded by a JUnit assumption), so this
+             profile stays green key-free while still compiling and booting the context. -->
+        <profile>
+            <id>eval</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludedGroups combine.self="override"></excludedGroups>
+                            <groups>eval</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- Lab 4: opt-in tracing. Build/run with -Pobservability to add the OpenTelemetry +
              Zipkin exporter, then activate the `observability` Spring profile. Kept out of the
              default build so the no-Docker lab path stays lean. -->

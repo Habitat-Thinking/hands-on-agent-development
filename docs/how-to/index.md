@@ -14,6 +14,8 @@ know what you want and shows the steps to achieve it. If you are starting from z
   key-free, token-free, repeatable runs.
 - **[Enable Zipkin tracing](enable-zipkin-tracing.md)** — bring up the collector, run with the
   observability profiles, and read the trace at port 9411 (plus the no-Docker fallback).
+- **[Run the eval lane](run-the-eval-lane.md)** — the `@Tag("eval")` lane: sample schedule *quality*
+  with an LLM-as-judge (`./mvnw -Peval test`), separate from the deterministic keyless gate.
 
 ## Change the agent
 

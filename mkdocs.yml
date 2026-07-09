@@ -68,6 +68,7 @@ nav:
       - Run with a real model: how-to/run-with-a-real-model.md
       - Use mock mode: how-to/use-mock-mode.md
       - Enable Zipkin tracing: how-to/enable-zipkin-tracing.md
+      - Run the eval lane: how-to/run-the-eval-lane.md
       - Add an action: how-to/add-an-action.md
       - Add a guardrail: how-to/add-a-guardrail.md
       - Route models by role: how-to/route-models-by-role.md

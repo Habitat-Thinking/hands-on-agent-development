@@ -182,9 +182,10 @@ planning log an object of curiosity.
   judgement — they test the **scaffolding around** it (plan derivation, the guardrail gates, the
   budget), with the model as a stubbed dependency; `GuardrailEnforcementTest` even *injects* the
   model's worst output (a forced clash) and asserts the wall holds — a test you can't write against
-  a real model without flakiness. Output-quality evaluation is a real, separate discipline
-  (golden set + LLM-as-judge, a `@Tag("eval")` lane) the day scopes out — named in
-  `gaps-and-extensions.md` Gap 10.
+  a real model without flakiness. Output-quality evaluation is the separate, complementary
+  discipline: it now ships as the **eval lane** (`./mvnw -Peval test`) — a golden set scored by an
+  LLM-as-judge, held out of the keyless gate because it needs a key. Deterministic gates for the
+  seams, sampled evals for the judgement (`docs/how-to/run-the-eval-lane.md`; `gaps` Gap 10).
 - *"Isn't 'trust' overclaimed?"* — trust here is defined narrowly and out loud: *legibility plus
   bounded invariants* — you can read what the agent planned, and it cannot breach a hard rule
   (`explainability.md`: "a trustworthy agent is one whose reasoning you can inspect"). It is **not**

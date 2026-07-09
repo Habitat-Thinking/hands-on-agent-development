@@ -47,11 +47,12 @@ placeholder never makes a live call succeed — for a no-key run use the `mock` 
 
 ## Maven profiles
 
-In `pom.xml`. Only one profile remains:
+In `pom.xml`:
 
-| Profile | Activation | Adds dependency |
+| Profile | Activation | Effect |
 |---|---|---|
-| `observability` | manual (`-Pobservability`) | `embabel-agent-starter-observability`, `opentelemetry-exporter-zipkin` |
+| `observability` | manual (`-Pobservability`) | Adds `embabel-agent-starter-observability` + `opentelemetry-exporter-zipkin`. |
+| `eval` | manual (`-Peval`) | Flips Surefire to run **only** `@Tag("eval")` tests (the eval lane); the default build **excludes** that tag via `<excludedGroups>eval</excludedGroups>`. Needs a provider key or the cases self-skip. See [Run the eval lane](../how-to/run-the-eval-lane.md). |
 
 Pinned versions: `embabel-agent.version` = `0.5.0`, `java.version` = `21`, Spring Boot parent =
 `3.5.13`.

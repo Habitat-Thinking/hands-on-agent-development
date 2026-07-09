@@ -10,8 +10,15 @@
 > sentence, tied to the thing on screen — then get back to the code. The whole point of the day is
 > that the framing is *felt* in the labs, not lectured. Sources are cited so you can go deeper in
 > Q&A: **[SE]** = *The Sovereign Engineer* (Russ Miles; chapter names from its contents);
-> **[AMM]** = `reference/agentic-maturity-model.md`; **[CL]** = `reference/cognitive-ladder.md`;
-> **[M]** = the manifesto.
+> **[AMM]** = the Agentic Experience maturity model; **[CL]** = the cognitive ladder / Habitat Build
+> Gap; **[M]** = the manifesto.
+>
+> **Where the sources live:** these raw source docs (`agentic-maturity-model.md`,
+> `cognitive-ladder.md`, `thesovereignengineer.pdf`) sit in the presenter's `reference/` folder,
+> which is **not shipped in the repo** (the book is copyrighted — get it on
+> [Leanpub](https://leanpub.com/thesovereignengineer); the [manifesto](https://github.com/Habitat-Thinking/manifesto)
+> is public). The distilled essentials you actually need are **tracked**: this sheet, the M0 notes
+> (`slides/notes/m0-orientation.md`), and `docs/explanation/the-dual-harness.md`.
 
 ---
 
@@ -208,8 +215,10 @@ deliberately, and often.* **[M, © 2026 Russ Miles, CC BY-SA 4.0]**
 2. **The ritual is habitat-tending.** Read the plan, read the trace, confirm the acceptance check —
    in either harness. That's not a checklist; it's what keeping a good place to live *feels like*.
 
-> Provenance for Q&A: the full framing is in the repo's `reference/` (`thesovereignengineer.pdf`,
-> `agentic-maturity-model.md`, `cognitive-ladder.md`) and the
-> [manifesto](https://github.com/Habitat-Thinking/manifesto). The M0 speaker notes
-> (`m0-orientation.md`) carry the verbatim book quotes and citations; this sheet maps them onto
-> where each one *lands* in the day.
+> Provenance for Q&A: the raw framing lives in the presenter's `reference/` source materials
+> (`thesovereignengineer.pdf`, `agentic-maturity-model.md`, `cognitive-ladder.md`) — **not shipped in
+> the repo** (the book is on [Leanpub](https://leanpub.com/thesovereignengineer)) — plus the public
+> [manifesto](https://github.com/Habitat-Thinking/manifesto). Everything you need at delivery is
+> tracked: the M0 speaker notes (`m0-orientation.md`) carry the verbatim book quotes,
+> `docs/explanation/the-dual-harness.md` carries the ladders, and this sheet maps them onto where
+> each one *lands* in the day.

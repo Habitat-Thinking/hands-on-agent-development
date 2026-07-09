@@ -27,7 +27,7 @@ what to do in their codebase this week.
    day; most climbed a rung or two. Then hand them the *cognitive* ladder as the take-home:
    score your three disciplines (context engineering, architectural constraints, guardrail
    design) — **the weakest one is your ceiling** (strong specs with weak verification is L2,
-   not L4 — `reference/cognitive-ladder.md`). The claim to leave them with: the higher rungs
+   not L4 — from the cognitive-ladder source, presenter materials). The claim to leave them with: the higher rungs
    are not "more automation," they're **more judgement per keystroke** — attention shifts from
    typing to reading plans and gating reviews.
 4. **The punchline slide (the through-line, cashed in).** Track C's orchestrator named a goal and

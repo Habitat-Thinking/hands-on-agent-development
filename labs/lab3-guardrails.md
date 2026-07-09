@@ -118,7 +118,12 @@ broken schedule.
   attendee request for prompt-injection markers before any model sees it — deterministic, no LLM
   spend on a rejected request. It is attached with `.withGuardRails(...)` on the prompt runner in
   `ConfPlanningCapabilities.extractProfile`, and `RequestContentGuardRailTest` proves it bites
-  with no keys. Try adding a marker of your own and watching the test catch it — then compare
-  this to Lab 1's belt-and-braces: DICE protects the schedule from a model that slips; the
-  content guard protects the model from input that lies. (See the how-to guide *Add a guardrail*
-  for the recipe.)
+  with no keys. Be honest about what it is: a **cheap deterministic pre-filter** over a handful of
+  enumerated phrases, **not a security boundary** — a competent attacker rephrases around a fixed
+  deny-list in seconds. Its value is dropping low-effort garbage before you spend on a model call;
+  the real guarantee against a *successful* injection is structural — a poisoned `assembleSchedule`
+  still can't satisfy `noDoubleBooking`, so the schedule invariant holds whether or not this filter
+  caught anything. Try adding a marker of your own and watch the test catch it — then compare
+  this to Lab 1's belt-and-braces: DICE protects the schedule from a model that slips; the content
+  guard cheaply screens input that lies, and the structural invariant catches what it misses. (See
+  the how-to guide *Add a guardrail* for the recipe.)

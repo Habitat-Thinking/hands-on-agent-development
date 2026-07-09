@@ -85,6 +85,8 @@
   - Headline: "Same knob, different question: what if this step's data can't leave the building?"
   - Sub: "Bind `cheapest` to an Ollama tag under a Spring profile. Code unchanged. Trade named —
     latency and some quality for residency — and RECORDED in `MODEL_ROUTING.md`."
+- **Notes:** hands-on recipe (key-free, `local` profile → Ollama) is
+  `docs/how-to/route-a-step-to-a-local-model.md`; full notes in `../notes/m6-model-routing.md` beat 5.
 
 ## Slide 9 — Measure before optimising
 - **Layout:** comparison card (NEW — 0.4.0 content).

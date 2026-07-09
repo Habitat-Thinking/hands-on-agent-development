@@ -81,7 +81,9 @@ x "I'm a senior platform engineer into Kubernetes, resilience and DevEx" -p -r
 ## If a step's data cannot leave the building
 
 Point its role at a local model (e.g. an Ollama tag) under a Spring profile, and note the
-latency/quality trade-off in the token-budget table in `MODEL_ROUTING.md`.
+latency/quality trade-off in the token-budget table in `MODEL_ROUTING.md`. For the step-by-step
+recipe (the `local` profile, the OpenAI-compatible endpoint, and the keyless run), see
+[Route a step to a local model](route-a-step-to-a-local-model.md).
 
 ---
 

@@ -117,6 +117,7 @@ src/main/java/com/russmiles/confplanner/
   shell/         ConfPlannerShell — run a goal programmatically
 src/main/resources/catalog/uberconf-sample-catalog.json   ← SYNTHETIC, fictional
 labs/            one worksheet per lab
+quizzes/         one short section quiz per module (M0–M7) — the tutor administers them
 slides/OUTLINE.md  module-by-module slide spine
 HABITS.md · SETUP.md · MODEL_ROUTING.md
 CLAUDE.md · AGENTS.md · HARNESS.md · REFLECTION_LOG.md     ← build-time harness
